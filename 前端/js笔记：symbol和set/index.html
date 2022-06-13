@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"qghost.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="记录一下symbol和set的一些知识点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js笔记：symbol、set和map">
+<meta property="og:url" content="https://qghost.gitee.io/%E5%89%8D%E7%AB%AF/js%E7%AC%94%E8%AE%B0%EF%BC%9Asymbol%E5%92%8Cset/index.html">
+<meta property="og:site_name" content="Wyatex&#96;s blog">
+<meta property="og:description" content="记录一下symbol和set的一些知识点">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-06T13:04:27.000Z">
+<meta property="article:modified_time" content="2022-06-13T08:38:12.820Z">
+<meta property="article:author" content="Wyatex">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://qghost.gitee.io/%E5%89%8D%E7%AB%AF/js%E7%AC%94%E8%AE%B0%EF%BC%9Asymbol%E5%92%8Cset/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://qghost.gitee.io/%E5%89%8D%E7%AB%AF/js%E7%AC%94%E8%AE%B0%EF%BC%9Asymbol%E5%92%8Cset/","path":"前端/js笔记：symbol和set/","title":"js笔记：symbol、set和map"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>js笔记：symbol、set和map | Wyatex`s blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Wyatex`s blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">67</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">18</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">111</span></a></li><li class="menu-item menu-item-编程"><a href="/programming/" rel="section"><i class="fa fa-book fa-fw"></i>编程</a></li><li class="menu-item menu-item-干货"><a href="/resources/" rel="section"><i class="fa fa-paperclip fa-fw"></i>干货</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Symbol"><span class="nav-number">1.</span> <span class="nav-text">Symbol</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.1.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Symbol%E7%9A%84for%E5%92%8CkeyFor%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">Symbol的for和keyFor方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%80%A6%E5%90%88%E9%97%AE%E9%A2%98"><span class="nav-number">1.3.</span> <span class="nav-text">解决字符串耦合问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E7%BC%93%E5%AD%98%E5%AE%B9%E5%99%A8%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.4.</span> <span class="nav-text">在缓存容器中的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E4%BF%9D%E6%8A%A4"><span class="nav-number">1.5.</span> <span class="nav-text">属性保护</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Set"><span class="nav-number">2.</span> <span class="nav-text">Set</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="nav-number">2.2.</span> <span class="nav-text">类型转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%8D%E5%8E%86"><span class="nav-number">2.3.</span> <span class="nav-text">遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E9%9B%86-x2F-%E4%BA%A4%E9%9B%86-x2F-%E5%B7%AE%E9%9B%86%E7%AE%97%E6%B3%95"><span class="nav-number">2.4.</span> <span class="nav-text">并集&#x2F;交集&#x2F;差集算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WeakSet"><span class="nav-number">3.</span> <span class="nav-text">WeakSet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Map%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">Map类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#map%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%92%8C%E9%81%8D%E5%8E%86"><span class="nav-number">4.1.</span> <span class="nav-text">map类型的增删改查和遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#map%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="nav-number">4.2.</span> <span class="nav-text">map的类型转换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WeakMap"><span class="nav-number">5.</span> <span class="nav-text">WeakMap</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Wyatex"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Wyatex</p>
+  <div class="site-description" itemprop="description">这里是我用来做笔记的网站哟~</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wyatex" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wyatex" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wyatex@qq.com" title="E-Mail → mailto:wyatex@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.microloong.me/" title="https:&#x2F;&#x2F;blog.microloong.me" rel="noopener" target="_blank">MicroLOONG</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://qghost.gitee.io/%E5%89%8D%E7%AB%AF/js%E7%AC%94%E8%AE%B0%EF%BC%9Asymbol%E5%92%8Cset/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Wyatex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wyatex`s blog">
+      <meta itemprop="description" content="这里是我用来做笔记的网站哟~">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="js笔记：symbol、set和map | Wyatex`s blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          js笔记：symbol、set和map
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-08-06 21:04:27" itemprop="dateCreated datePublished" datetime="2020-08-06T21:04:27+08:00">2020-08-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-13 16:38:12" itemprop="dateModified" datetime="2022-06-13T16:38:12+08:00">2022-06-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>记录一下symbol和set的一些知识点</p>
+<span id="more"></span>
+
+<h1 id="Symbol"><a href="#Symbol" class="headerlink" title="Symbol"></a>Symbol</h1><h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>Symbol是一个新增的数据类型，下面先描述一下symbol的一个使用场景，比如在一个游戏中，用户需要选择角色的种族：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> race = &#123;</span><br><span class="line">    <span class="attr">protoss</span>: <span class="string">&#x27;protoss&#x27;</span>,   <span class="comment">// 神族</span></span><br><span class="line">    <span class="attr">terran</span>: <span class="string">&#x27;terran&#x27;</span>,     <span class="comment">// 人族</span></span><br><span class="line">    <span class="attr">zerg</span>: <span class="string">&#x27;zerg&#x27;</span>          <span class="comment">// 虫族</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">createRole</span>(<span class="params">type</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(type === race.<span class="property">protoss</span>)&#123;</span><br><span class="line">        <span class="comment">//创建神族角色</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(type === race.<span class="property">terran</span>)&#123;</span><br><span class="line">        <span class="comment">//创建人族角色</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(type === race.<span class="property">zerg</span>)&#123;</span><br><span class="line">        <span class="comment">//创建虫族角色</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么用户选择种族后，就需要调用 createRole 来创建角色：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 传入字符串</span></span><br><span class="line"><span class="title function_">createRole</span>(<span class="string">&#x27;zerg&#x27;</span>) </span><br><span class="line"><span class="comment">// 或者传入变量</span></span><br><span class="line"><span class="title function_">createRole</span>(race.<span class="property">zerg</span>)</span><br></pre></td></tr></table></figure>
+<p>一般传入字符串被认为是不好的做法，所以使用 createRole(race.zerg) 的更多。</p>
+<p>如果使用 createRole(race.zerg)，那么就会存在一个问题：race.protoss、race.terran、race.zerg 的值为多少并不重要。</p>
+<p>改为如下写法，对 createRole(race.zerg) 毫无影响：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> race = &#123;</span><br><span class="line">    <span class="attr">protoss</span>: <span class="string">&#x27;askdjaslkfjas;lfkjas;flkj&#x27;</span>, <span class="comment">// 神族</span></span><br><span class="line">    <span class="attr">terran</span>: <span class="string">&#x27;;lkfalksjfl;askjfsfal;skfj&#x27;</span>, <span class="comment">// 人族</span></span><br><span class="line">    <span class="attr">zerg</span>: <span class="string">&#x27;qwieqwoirqwoiruoiwqoisrqwroiu&#x27;</span> <span class="comment">// 虫族</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也就是说，只要 <code>race.zerg</code> 的值和另外两个不一样就行了，而Symbol的用处就出来了，Symbol可以创建一个独一无二的值，下面可以改写成：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> race = &#123;</span><br><span class="line">  <span class="attr">protoss</span>: <span class="title class_">Symbol</span>(),</span><br><span class="line">  <span class="attr">terran</span>: <span class="title class_">Symbol</span>(),</span><br><span class="line">  <span class="attr">zerg</span>: <span class="title class_">Symbol</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>甚至可以给他起个名字：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> race = &#123;</span><br><span class="line">  <span class="attr">protoss</span>: <span class="title class_">Symbol</span>(<span class="string">&#x27;protoss&#x27;</span>),</span><br><span class="line">  <span class="attr">terran</span>: <span class="title class_">Symbol</span>(<span class="string">&#x27;terran&#x27;</span>),</span><br><span class="line">  <span class="attr">zerg</span>: <span class="title class_">Symbol</span>(<span class="string">&#x27;zerg&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不给这个值只是一个描述，和Symbol没有任何关系。</p>
+<h2 id="Symbol的for和keyFor方法"><a href="#Symbol的for和keyFor方法" class="headerlink" title="Symbol的for和keyFor方法"></a>Symbol的for和keyFor方法</h2><p>可以使用 <code>Symbol.for()</code> 来创建一个全局的变量，也就是说又可以能不唯一了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="title class_">Symbol</span>.<span class="title function_">for</span>(<span class="string">&quot;xxx&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> b = <span class="title class_">Symbol</span>.<span class="title function_">for</span>(<span class="string">&quot;xxx&quot;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a == b)     <span class="comment">//true</span></span><br><span class="line"><span class="keyword">let</span> c = <span class="title class_">Symbol</span>()</span><br><span class="line"><span class="keyword">let</span> d = <span class="title class_">Symbol</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a !== b)    <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p>使用 <code>keyFor</code> 可以读取使用 <code>Symbol.for()</code> 创建的变量:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="title class_">Symbol</span>()</span><br><span class="line"><span class="keyword">let</span> b = <span class="title class_">Symbol</span>.<span class="title function_">for</span>(<span class="string">&#x27;123&#x27;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Symbol</span>.<span class="title function_">keyFor</span>(a))  <span class="comment">//undefined</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Symbol</span>.<span class="title function_">keyFor</span>(b))  <span class="comment">//123</span></span><br></pre></td></tr></table></figure>
+<h2 id="解决字符串耦合问题"><a href="#解决字符串耦合问题" class="headerlink" title="解决字符串耦合问题"></a>解决字符串耦合问题</h2><p>比如有一个记录成绩的变量，但是可能在一个班里面存在两个同名的人：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> user1 = <span class="string">&#x27;张三&#x27;</span></span><br><span class="line"><span class="keyword">let</span> user2 = <span class="string">&#x27;张三&#x27;</span></span><br><span class="line"><span class="keyword">let</span> grade = &#123;</span><br><span class="line">    [user1]: &#123;<span class="attr">c</span>:<span class="number">95</span>, <span class="attr">sql</span>:<span class="number">89</span>&#125;,</span><br><span class="line">    [user2]: &#123;<span class="attr">c</span>:<span class="number">86</span>,<span class="attr">sql</span>:<span class="number">78</span>&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(grade)  <span class="comment">//&#123;张三:&#123;c:86,sql:78&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>因为<code>[user1]</code>和<code>[user2]</code>最终都会解析成字符串，所以相当于第二次把第一次覆盖了。可以改成这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> user1 = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">    <span class="attr">key</span>: <span class="title class_">Symbol</span>()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> user2 = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">    <span class="attr">key</span>: <span class="title class_">Symbol</span>()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> grade = &#123;</span><br><span class="line">    [user1.<span class="property">key</span>]: &#123;<span class="attr">c</span>:<span class="number">95</span>, <span class="attr">sql</span>:<span class="number">89</span>&#125;,</span><br><span class="line">    [user2.<span class="property">key</span>]: &#123;<span class="attr">c</span>:<span class="number">86</span>,<span class="attr">sql</span>:<span class="number">78</span>&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(grade[user1.<span class="property">key</span>])   <span class="comment">//&#123;c: 95, sql: 89&#125;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(grade[user2.<span class="property">key</span>])   <span class="comment">//&#123;c: 86, sql: 78&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="在缓存容器中的使用"><a href="#在缓存容器中的使用" class="headerlink" title="在缓存容器中的使用"></a>在缓存容器中的使用</h2><p>比如在一个系统中，有很多模块，和一个为所有模块提供一个储存空间的容器，如果没有Symbol可能是这样的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Cache</span>&#123;</span><br><span class="line">    <span class="keyword">static</span> data = &#123;&#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="title function_">set</span>(<span class="params">name, value</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> (<span class="variable language_">this</span>.<span class="property">data</span>[name] = value)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="title function_">get</span>(<span class="params">name</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">data</span>[name]</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">let</span> user = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;apple&quot;</span>,</span><br><span class="line">    <span class="attr">desc</span>: <span class="string">&quot;用户资料&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> cart = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;apple&quot;</span>,</span><br><span class="line">    <span class="attr">desc</span>: <span class="string">&quot;购物车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//为了把这两个变量存进Cache里面，可能要这样：</span></span><br><span class="line"><span class="title class_">Cache</span>.<span class="title function_">set</span>(<span class="string">&quot;user-apple&quot;</span>, user)</span><br><span class="line"><span class="title class_">Cache</span>.<span class="title function_">set</span>(<span class="string">&quot;cart-apple&quot;</span>, cart)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Cache</span>.<span class="title function_">get</span>(<span class="string">&quot;cart-apple&quot;</span>));</span><br></pre></td></tr></table></figure>
+<p>当我们有symbol后可以改成这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//省略类定义</span></span><br><span class="line"><span class="keyword">let</span> user = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;apple&quot;</span>,</span><br><span class="line">    <span class="attr">desc</span>: <span class="string">&quot;用户资料&quot;</span>,</span><br><span class="line">    <span class="attr">key</span>: <span class="title class_">Symbol</span>()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> cart = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;apple&quot;</span>,</span><br><span class="line">    <span class="attr">desc</span>: <span class="string">&quot;购物车&quot;</span>,</span><br><span class="line">    <span class="attr">key</span>: <span class="title class_">Symbol</span>()</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Cache</span>.<span class="title function_">set</span>(user.<span class="property">key</span>, user)</span><br><span class="line"><span class="title class_">Cache</span>.<span class="title function_">set</span>(cart.<span class="property">key</span>, cart)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Cache</span>.<span class="title function_">get</span>(cart.<span class="property">key</span>));   <span class="comment">//&#123;name: &quot;apple&quot;, desc: &quot;购物车&quot;...&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="属性保护"><a href="#属性保护" class="headerlink" title="属性保护"></a>属性保护</h2><p>Symbol有个特性就是无法用 <code>for in</code> 得到对象中的Symbol属性：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="title class_">Symbol</span>()</span><br><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;my name&quot;</span>,</span><br><span class="line">    [s]: <span class="string">&quot;Symbol&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">in</span> obj)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(key)</span><br><span class="line">&#125;   <span class="comment">//只输出name</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>可以通过 <code>Object.getOwnPropertySymbols</code> 方法获得：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 省略声明定义</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">of</span> <span class="title class_">Object</span>.<span class="title function_">getOwnPropertySymbols</span>(obj))&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(key)</span><br><span class="line">&#125;   <span class="comment">// Symbol()</span></span><br></pre></td></tr></table></figure>
+<p>但是这种情况又获取不到非隐藏的属性，可以通过反射拿到所有属性：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">of</span> <span class="title class_">Reflect</span>。<span class="title function_">ownKeys</span>(obj))&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(key)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//name</span></span><br><span class="line"><span class="comment">//Symbol()</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h1><h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><p>ES6 提供了新的数据结构 Set。它类似于数组，但是成员的值都是唯一的，没有重复的值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> s = <span class="keyword">new</span> <span class="title class_">Set</span>();</span><br><span class="line"></span><br><span class="line">[<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">2</span>].<span class="title function_">forEach</span>(<span class="function"><span class="params">x</span> =&gt;</span> s.<span class="title function_">add</span>(x));</span><br><span class="line"><span class="comment">// Set结构不会添加重复的值</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">of</span> s) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// ## 初始化</span></span><br><span class="line"><span class="comment">// 例一 可以接受一个数组作为参数</span></span><br><span class="line"><span class="keyword">const</span> set = <span class="keyword">new</span> <span class="title class_">Set</span>([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">4</span>,]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...将一个数组转为用逗号分隔的参数序列</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>([...set]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 例二</span></span><br><span class="line"><span class="keyword">const</span> items = <span class="keyword">new</span> <span class="title class_">Set</span>([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,]);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(items.<span class="property">size</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 例三 可以接受具有iterable接口的其他数据结构作为参数</span></span><br><span class="line"><span class="keyword">const</span> set2 = <span class="keyword">new</span> <span class="title class_">Set</span>(<span class="variable language_">document</span>.<span class="title function_">querySelectorAll</span>(<span class="string">&#x27;div&#x27;</span>));</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(set2.<span class="property">size</span>);         <span class="comment">//一个div为1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 类似于</span></span><br><span class="line"><span class="keyword">const</span> set2 = <span class="keyword">new</span> <span class="title class_">Set</span>();</span><br><span class="line"><span class="variable language_">document</span></span><br><span class="line">    .<span class="title function_">querySelectorAll</span>(<span class="string">&#x27;div&#x27;</span>)</span><br><span class="line">    .<span class="title function_">forEach</span>(<span class="function"><span class="params">div</span> =&gt;</span> set.<span class="title function_">add</span>(div));</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(set.<span class="property">size</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// set中NaN等于自身，其余比较相当于 ===</span></span><br><span class="line"><span class="keyword">let</span> set3 = <span class="keyword">new</span> <span class="title class_">Set</span>();</span><br><span class="line"><span class="keyword">let</span> a = <span class="title class_">NaN</span>;</span><br><span class="line"><span class="keyword">let</span> b = <span class="title class_">NaN</span>;</span><br><span class="line">set3.<span class="title function_">add</span>(a);</span><br><span class="line">set3.<span class="title function_">add</span>(b);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(set3)   <span class="comment">//set(1) &#123;Nan=N&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 两个对象总是不相等的</span></span><br><span class="line"><span class="keyword">let</span> set4 = <span class="keyword">new</span> <span class="title class_">Set</span>();</span><br><span class="line">set4.<span class="title function_">add</span>(&#123;&#125;);  </span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(set4.<span class="property">size</span>); <span class="comment">//1</span></span><br><span class="line"></span><br><span class="line">set4.<span class="title function_">add</span>(&#123;&#125;); </span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(set4.<span class="property">size</span>); <span class="comment">//2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">let</span> set5 = <span class="keyword">new</span> <span class="title class_">Set</span>(<span class="string">&quot;abc&quot;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(set5.<span class="property">size</span>)  <span class="comment">//3</span></span><br><span class="line"><span class="comment">//相当于 Set([...&quot;abc&quot;])</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除,取值，清空</span></span><br><span class="line"><span class="keyword">let</span> set6 = <span class="keyword">new</span> <span class="title class_">Set</span>(<span class="string">&quot;abc&quot;</span>)</span><br><span class="line">set6.<span class="title function_">delete</span>(<span class="string">&quot;b&quot;</span>)            <span class="comment">//成功删除返回true，元素不存在返回false</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(set6)           <span class="comment">//Set(2) &#123;&quot;a&quot;, &quot;c&quot;&#125;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(set6.<span class="title function_">values</span>())  <span class="comment">//SetIterator &#123;&quot;a&quot;, &quot;c&quot;&#125;</span></span><br><span class="line">set6.<span class="title function_">clear</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(set6)           <span class="comment">//Set(0) &#123;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2><p>转换成数组：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> set = <span class="keyword">new</span> <span class="title class_">Set</span>([<span class="string">&quot;abc&quot;</span>, <span class="string">&quot;def&quot;</span>])</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Array</span>.<span class="title function_">from</span>(set))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>([...set])</span><br></pre></td></tr></table></figure>
+<p>去除数组中重复的值：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>]</span><br><span class="line">arr = [...<span class="keyword">new</span> <span class="title class_">Set</span>(arr)]</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr)            <span class="comment">//(4) [1, 2, 3, 4]</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用forEach</span></span><br><span class="line"><span class="keyword">let</span> set = <span class="keyword">new</span> <span class="title class_">Set</span>(<span class="string">&quot;12345&quot;</span>)</span><br><span class="line">set.<span class="title function_">forEach</span>(<span class="keyword">function</span>(<span class="params">value, key, set</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(value,key,set)  <span class="comment">//其中value和key相同</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">//使用for of</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> value <span class="keyword">of</span> set) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(value)  <span class="comment">//输出1到5</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="并集-x2F-交集-x2F-差集算法"><a href="#并集-x2F-交集-x2F-差集算法" class="headerlink" title="并集&#x2F;交集&#x2F;差集算法"></a>并集&#x2F;交集&#x2F;差集算法</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//并集</span></span><br><span class="line"><span class="keyword">let</span> a = <span class="keyword">new</span> <span class="title class_">Set</span>(<span class="string">&quot;12345&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> <span class="title class_">Set</span>(<span class="string">&quot;2478&quot;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">new</span> <span class="title class_">Set</span>([...a, ...b]))</span><br><span class="line"></span><br><span class="line"><span class="comment">//交集</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(</span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">Set</span>([...a].<span class="title function_">filter</span>(<span class="keyword">function</span>(<span class="params">item</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> b.<span class="title function_">has</span>(item)</span><br><span class="line">    &#125;))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">//差集</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(</span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">Set</span>([...a].<span class="title function_">filter</span>(<span class="keyword">function</span>(<span class="params">item</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> !b.<span class="title function_">has</span>(item)</span><br><span class="line">    &#125;))</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h1 id="WeakSet"><a href="#WeakSet" class="headerlink" title="WeakSet"></a>WeakSet</h1><p>因为WeakSet的弱引用特性，不能使用keys、values等方法，for of也是不能用。WeakSet与Set相比，WeakSet只能是<strong>对象的集合</strong>，不能是任意类型的任意值。如果没有其他的对WeakSet中对象的引用，那么这些对象会被当成垃圾回收掉。 这也意味着WeakSet中没有存储当前对象的列表。 正因为这样，WeakSet 是不可枚举的。</p>
+<h1 id="Map类型"><a href="#Map类型" class="headerlink" title="Map类型"></a>Map类型</h1><p>Map是ES6之后的哈希结构，算是对object类型的修补。在以往的Object类型中只是把字符串作为键名，而Map可以任意类型：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">    <span class="number">1</span>: <span class="string">&quot;我是1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;1&quot;</span>: <span class="string">&quot;我还是1&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(obj)    <span class="comment">//&#123;1: &quot;我还是1&quot;&#125;</span></span><br><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="title class_">Map</span>([</span><br><span class="line">    [<span class="number">1</span>, <span class="string">&quot;a&quot;</span>],</span><br><span class="line">    [<span class="string">&quot;1&quot;</span>, <span class="string">&quot;b&quot;</span>]</span><br><span class="line">])</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(map)    <span class="comment">//Map(2) &#123;1 =&gt; &quot;a&quot;, &quot;1&quot; =&gt; &quot;b&quot;&#125;</span></span><br><span class="line">map.<span class="title function_">set</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;&#125;, <span class="string">&quot;我是一个函数&quot;</span>)</span><br><span class="line">map.<span class="title function_">set</span>(&#123;&#125;, <span class="string">&quot;我是一个对象&quot;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(map)</span><br><span class="line"><span class="comment">//Map(4) &#123;1 =&gt; &quot;a&quot;, &quot;1&quot; =&gt; &quot;b&quot;, ƒ =&gt; &quot;我是一个函数&quot;, &#123;…&#125; =&gt; &quot;我是一个对象&quot;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>set方法也支持链式操作：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="title class_">Map</span>()</span><br><span class="line">map.<span class="title function_">set</span>(<span class="number">1</span>,<span class="string">&quot;a&quot;</span>).<span class="title function_">set</span>(<span class="number">2</span>,<span class="string">&quot;b&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="map类型的增删改查和遍历"><a href="#map类型的增删改查和遍历" class="headerlink" title="map类型的增删改查和遍历"></a>map类型的增删改查和遍历</h2><p>增删改查等操作</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="title class_">Map</span>();</span><br><span class="line"><span class="comment">//增&amp;改</span></span><br><span class="line">map.<span class="title function_">set</span>(<span class="string">&quot;key&quot;</span>, <span class="string">&quot;value&quot;</span>)</span><br><span class="line"><span class="comment">//查</span></span><br><span class="line">map.<span class="title function_">get</span>(key)</span><br><span class="line"><span class="comment">//删</span></span><br><span class="line">map.<span class="title function_">delete</span>(key)</span><br><span class="line"><span class="comment">//或者</span></span><br><span class="line"><span class="keyword">delete</span> map[key]</span><br><span class="line"><span class="comment">//清除</span></span><br><span class="line">map.<span class="title function_">clear</span>()</span><br><span class="line"><span class="comment">//查看有没有某个元素</span></span><br><span class="line">map.<span class="title function_">has</span>(key)</span><br></pre></td></tr></table></figure>
+<p>遍历操作</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="title class_">Map</span>();</span><br><span class="line"><span class="comment">//for of</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">of</span> map.<span class="title function_">key</span>()) &#123;</span><br><span class="line">    <span class="comment">//可以拿到map的键</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">of</span> map.<span class="title function_">value</span>()) &#123;</span><br><span class="line">    <span class="comment">//可以拿到map的值</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> [key, value] <span class="keyword">of</span> map.<span class="title function_">entries</span>()) &#123;</span><br><span class="line">    <span class="comment">//可以拿到map的键值对</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//forEach</span></span><br><span class="line">hd.<span class="title function_">forEach</span>(<span class="function">(<span class="params">value, key</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//一样可以拿到键值对</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="map的类型转换"><a href="#map的类型转换" class="headerlink" title="map的类型转换"></a>map的类型转换</h2><p>数组转换，可以使用展开语法或者 <code>Array.form</code> 方法转换。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> hd = <span class="keyword">new</span> <span class="title class_">Map</span>([[<span class="string">&quot;houdunren&quot;</span>, <span class="string">&quot;后盾人&quot;</span>], [<span class="string">&quot;hdcms&quot;</span>, <span class="string">&quot;开源系统&quot;</span>]]);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(...hd); <span class="comment">//(2) [&quot;houdunren&quot;, &quot;后盾人&quot;] (2) [&quot;hdcms&quot;, &quot;开源系统&quot;]</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(...hd.<span class="title function_">entries</span>()); <span class="comment">//(2) [&quot;houdunren&quot;, &quot;后盾人&quot;] (2) [&quot;hdcms&quot;, &quot;开源系统&quot;]</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(...hd.<span class="title function_">values</span>()); <span class="comment">//后盾人 开源系统</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(...hd.<span class="title function_">keys</span>()); <span class="comment">//houdunren hdcms</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="WeakMap"><a href="#WeakMap" class="headerlink" title="WeakMap"></a>WeakMap</h1><p>和WeakSet相似，WeakMap对键名是弱引用，键值是正常引用。</p>
+<ul>
+<li>键名必须是对象</li>
+<li>垃圾回收不考虑WeaMap的键名，不会改变引用计数器，键在其他地方不被引用时即删除</li>
+<li>因为WeakMap 是弱引用，由于其他地方操作成员可能会不存在，所以不可以进行<code>forEach( )</code>遍历等操作</li>
+<li>也是因为弱引用，WeaMap 结构没有keys( )，values( )，entries( )等方法和 size 属性</li>
+<li>当键的外部引用删除时，希望自动删除数据时使用 <code>WeakMap</code></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Wyatex
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://qghost.gitee.io/%E5%89%8D%E7%AB%AF/js%E7%AC%94%E8%AE%B0%EF%BC%9Asymbol%E5%92%8Cset/" title="js笔记：symbol、set和map">https://qghost.gitee.io/前端/js笔记：symbol和set/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/%E5%89%8D%E7%AB%AF/js%E7%AC%94%E8%AE%B0%EF%BC%9AES6%E6%96%B0%E5%A2%9E%E8%AF%AD%E6%B3%95/" rel="prev" title="js笔记：ES6新增语法">
+                  <i class="fa fa-chevron-left"></i> js笔记：ES6新增语法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E5%89%8D%E7%AB%AF/js%E7%AC%94%E8%AE%B0%EF%BC%9A%E5%AF%B9%E8%B1%A1-1/" rel="next" title="js笔记：对象-1">
+                  js笔记：对象-1 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wyatex</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"qghost.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="老师提到要考的知识点和课后习题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="人工智能导论学习笔记">
+<meta property="og:url" content="https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Wyatex&#96;s blog">
+<meta property="og:description" content="老师提到要考的知识点和课后习题">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-16T13:41:36.000Z">
+<meta property="article:modified_time" content="2022-06-13T08:38:12.897Z">
+<meta property="article:author" content="Wyatex">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="人工智能">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/","path":"学习笔记/人工智能导论学习笔记/","title":"人工智能导论学习笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>人工智能导论学习笔记 | Wyatex`s blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Wyatex`s blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">67</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">18</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">111</span></a></li><li class="menu-item menu-item-编程"><a href="/programming/" rel="section"><i class="fa fa-book fa-fw"></i>编程</a></li><li class="menu-item menu-item-干货"><a href="/resources/" rel="section"><i class="fa fa-paperclip fa-fw"></i>干货</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">第一章 基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD"><span class="nav-number">1.1.1.</span> <span class="nav-text">人工智能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%99%BA%E8%83%BD%E7%9A%84%E7%89%B9%E5%BE%81"><span class="nav-number">1.1.2.</span> <span class="nav-text">智能的特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%A0%94%E7%A9%B6%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%86%85%E5%AE%B9"><span class="nav-number">1.1.3.</span> <span class="nav-text">人工智能研究的基本内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E4%B8%89%E5%A4%A7%E5%AD%A6%E6%B4%BE"><span class="nav-number">1.1.4.</span> <span class="nav-text">人工智能三大学派</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.1.5.</span> <span class="nav-text">知识表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%9B%AE%E6%A0%87"><span class="nav-number">1.1.6.</span> <span class="nav-text">人工智能目标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.2.</span> <span class="nav-text">第二章 知识表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86"><span class="nav-number">1.2.1.</span> <span class="nav-text">知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86%E7%9A%84%E7%89%B9%E6%80%A7"><span class="nav-number">1.2.2.</span> <span class="nav-text">知识的特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86%E7%9A%84%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.2.3.</span> <span class="nav-text">知识的表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E9%A2%98"><span class="nav-number">1.2.4.</span> <span class="nav-text">命题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%93%E8%AF%8D"><span class="nav-number">1.2.5.</span> <span class="nav-text">谓词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E9%98%B6%E8%B0%93%E8%AF%8D"><span class="nav-number">1.2.6.</span> <span class="nav-text">一阶谓词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A7%E7%94%9F%E5%BC%8F"><span class="nav-number">1.2.7.</span> <span class="nav-text">产生式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A7%E7%94%9F%E5%BC%8F%E8%A1%A8%E7%A4%BA%E6%B3%95%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">1.2.8.</span> <span class="nav-text">产生式表示法的特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6"><span class="nav-number">1.2.9.</span> <span class="nav-text">框架</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%8E%A8%E7%90%86%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">第三章 确定性推理方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E7%90%86"><span class="nav-number">1.3.1.</span> <span class="nav-text">推理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%B2%E7%AA%81%E6%B6%88%E8%A7%A3"><span class="nav-number">1.3.2.</span> <span class="nav-text">冲突消解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E7%84%B6%E6%BC%94%E7%BB%8E%E6%8E%A8%E7%90%86"><span class="nav-number">1.3.3.</span> <span class="nav-text">自然演绎推理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%93%E8%AF%8D%E5%85%AC%E5%BC%8F%E5%8C%96%E4%B8%BA%E5%AD%90%E5%8F%A5%E9%9B%86%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.3.4.</span> <span class="nav-text">谓词公式化为子句集步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%B2%81%E5%AE%BE%E9%80%8A%E5%BD%92%E7%BB%93%E5%8E%9F%E7%90%86"><span class="nav-number">1.3.5.</span> <span class="nav-text">鲁宾逊归结原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%8E%A8%E7%90%86%E6%96%B9%E6%B3%95"><span class="nav-number">1.4.</span> <span class="nav-text">第四章 不确定性推理方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E7%90%86-1"><span class="nav-number">1.4.1.</span> <span class="nav-text">推理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%8E%A8%E7%90%86"><span class="nav-number">1.4.2.</span> <span class="nav-text">不确定性推理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86%E7%9A%84%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.4.3.</span> <span class="nav-text">知识的不确定性表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E4%BF%A1%E5%BA%A6%E6%96%B9%E6%B3%95"><span class="nav-number">1.4.4.</span> <span class="nav-text">可信度方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C%EF%BC%8DF%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.4.5.</span> <span class="nav-text">C－F模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E7%9A%84%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.4.6.</span> <span class="nav-text">知识不确定性的表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%81%E6%8D%AE%E7%9A%84%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.4.7.</span> <span class="nav-text">证据的不确定性表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E8%AF%81%E6%8D%AE%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E7%9A%84%E7%AE%97%E6%B3%95"><span class="nav-number">1.4.8.</span> <span class="nav-text">组合证据不确定性的算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E7%9A%84%E4%BC%A0%E9%80%92%E7%AE%97%E6%B3%95"><span class="nav-number">1.4.9.</span> <span class="nav-text">不确定性的传递算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E7%9A%84%E5%90%88%E6%88%90%E7%AE%97%E6%B3%95"><span class="nav-number">1.4.10.</span> <span class="nav-text">结论不确定性的合成算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E7%B3%8A%E9%9B%86%E5%90%88"><span class="nav-number">1.4.11.</span> <span class="nav-text">模糊集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E7%B3%8A%E9%9B%86%E5%90%88%E7%9A%84%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95"><span class="nav-number">1.4.12.</span> <span class="nav-text">模糊集合的表示方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E7%B3%8A%E9%9B%86%E5%90%88%E8%BF%90%E7%AE%97"><span class="nav-number">1.4.13.</span> <span class="nav-text">模糊集合运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E7%B3%8A%E5%85%B3%E7%B3%BB%E5%90%88%E6%88%90"><span class="nav-number">1.4.14.</span> <span class="nav-text">模糊关系合成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E7%B3%8A%E5%86%B3%E7%AD%96"><span class="nav-number">1.4.15.</span> <span class="nav-text">模糊决策</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%90%9C%E7%B4%A2%E6%B1%82%E8%A7%A3%E7%AD%96%E7%95%A5"><span class="nav-number">1.5.</span> <span class="nav-text">第五章 搜索求解策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95"><span class="nav-number">1.5.1.</span> <span class="nav-text">问题求解基本方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E4%B8%AD%E9%9C%80%E8%A6%81%E8%A7%A3%E5%86%B3%E7%9A%84%E5%9F%BA%E6%9C%AC%E9%97%AE%E9%A2%98"><span class="nav-number">1.5.2.</span> <span class="nav-text">搜索中需要解决的基本问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E7%9A%84%E4%B8%BB%E8%A6%81%E8%BF%87%E7%A8%8B"><span class="nav-number">1.5.3.</span> <span class="nav-text">搜索的主要过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E7%AD%96%E7%95%A5"><span class="nav-number">1.5.4.</span> <span class="nav-text">搜索策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8F%91%E5%BC%8F%E6%90%9C%E7%B4%A2%E5%92%8C%E7%9B%B2%E7%9B%AE%E6%90%9C%E7%B4%A2"><span class="nav-number">1.5.5.</span> <span class="nav-text">启发式搜索和盲目搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B2%E7%9B%AE%E7%9A%84%E5%9B%BE%E6%90%9C%E7%B4%A2%E7%AD%96%E7%95%A5"><span class="nav-number">1.5.6.</span> <span class="nav-text">盲目的图搜索策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E6%BA%AF%E6%90%9C%E7%B4%A2%E7%9A%84%E7%AE%97%E6%B3%95%E7%94%A8%E4%B8%89%E5%BC%A0%E8%A1%A8%E6%9D%A5%E4%BF%9D%E5%AD%98%E7%8A%B6%E6%80%81%E7%A9%BA%E9%97%B4"><span class="nav-number">1.5.7.</span> <span class="nav-text">回溯搜索的算法用三张表来保存状态空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%BD%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2"><span class="nav-number">1.5.8.</span> <span class="nav-text">宽度优先搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%EF%BC%9A"><span class="nav-number">1.5.9.</span> <span class="nav-text">深度优先搜索：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%B0%E4%BB%B7%E5%87%BD%E6%95%B0f%EF%BC%88n%EF%BC%89"><span class="nav-number">1.5.10.</span> <span class="nav-text">估价函数f（n）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95"><span class="nav-number">1.5.11.</span> <span class="nav-text">A搜索算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A-%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95%EF%BC%88%E6%9C%80%E4%BD%B3%E5%9B%BE%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95%EF%BC%89"><span class="nav-number">1.5.12.</span> <span class="nav-text">A*搜索算法（最佳图搜索算法）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%99%BA%E8%83%BD%E8%AE%A1%E7%AE%97%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8"><span class="nav-number">1.6.</span> <span class="nav-text">第六章 智能计算及其应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%88genetic-algorithms%EF%BC%8CGA%EF%BC%89"><span class="nav-number">1.6.1.</span> <span class="nav-text">遗传算法（genetic algorithms，GA）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="nav-number">1.6.2.</span> <span class="nav-text">遗传算法的基本思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E4%BA%94%E4%B8%AA%E5%9F%BA%E6%9C%AC%E8%A6%81%E7%B4%A0"><span class="nav-number">1.6.3.</span> <span class="nav-text">遗传算法五个基本要素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%82%E5%BA%94%E5%BA%A6%E5%87%BD%E6%95%B0"><span class="nav-number">1.6.4.</span> <span class="nav-text">适应度函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E7%89%B9%E7%82%B9"><span class="nav-number">1.6.5.</span> <span class="nav-text">遗传算法特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E7%AB%A0-%E4%B8%93%E5%AE%B6%E7%B3%BB%E7%BB%9F%E4%B8%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"><span class="nav-number">1.7.</span> <span class="nav-text">第七章 专家系统与机器学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC8%E7%AB%A0-%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8"><span class="nav-number">1.8.</span> <span class="nav-text">第8章 人工神经网络及其应用</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Wyatex"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Wyatex</p>
+  <div class="site-description" itemprop="description">这里是我用来做笔记的网站哟~</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wyatex" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wyatex" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wyatex@qq.com" title="E-Mail → mailto:wyatex@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.microloong.me/" title="https:&#x2F;&#x2F;blog.microloong.me" rel="noopener" target="_blank">MicroLOONG</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Wyatex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wyatex`s blog">
+      <meta itemprop="description" content="这里是我用来做笔记的网站哟~">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="人工智能导论学习笔记 | Wyatex`s blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          人工智能导论学习笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-16 21:41:36" itemprop="dateCreated datePublished" datetime="2021-06-16T21:41:36+08:00">2021-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-13 16:38:12" itemprop="dateModified" datetime="2022-06-13T16:38:12+08:00">2022-06-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>老师提到要考的知识点和课后习题</p>
+<span id="more"></span>
+
+<h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id="第一章-基本概念"><a href="#第一章-基本概念" class="headerlink" title="第一章 基本概念"></a>第一章 基本概念</h2><h3 id="人工智能"><a href="#人工智能" class="headerlink" title="人工智能"></a>人工智能</h3><p>它是研究、开发用于模拟、延伸和扩展人的智能的理论、方法、技术及应用系统的一门新的技术科学。<br>或者<br><strong>一门研究如何构造智能机器（智能计算机）或智能系统，使它能模拟、延伸、扩展人类智能的学科</strong>。</p>
+<h3 id="智能的特征"><a href="#智能的特征" class="headerlink" title="智能的特征"></a>智能的特征</h3><ol>
+<li>具有感知能力</li>
+<li>具有记忆能力与思维能力</li>
+<li>具有学习能力</li>
+<li>具有行为能力</li>
+</ol>
+<h3 id="人工智能研究的基本内容"><a href="#人工智能研究的基本内容" class="headerlink" title="人工智能研究的基本内容"></a>人工智能研究的基本内容</h3><ol>
+<li>知识表示：将人类知识形式化或者模型化。</li>
+<li>机器感知：使机器（计算机）具有类似于人的感知能力。以机器视觉(machine vision)与机器听觉为主。</li>
+<li>机器思维：对通过感知得来的外部信息及机器内部的各种工作信息进行有目的的处理。</li>
+<li>机器学习：研究如何使计算机具有类似于人的学习能力，使它能通过学习自动地获取知识。</li>
+<li>机器行为：计算机的表达能力，即“说”、“写”、“画”等能力。</li>
+</ol>
+<h3 id="人工智能三大学派"><a href="#人工智能三大学派" class="headerlink" title="人工智能三大学派"></a>人工智能三大学派</h3><ol>
+<li><strong>符号主义</strong>(symbolicism)，又称为逻辑主义(logicism)、心理学派(psychologism)或计算机学派(computerism)，其原理主要为物理符号系统(即符号操作系统)假设和有限合理性原理。</li>
+<li><strong>连接主义</strong>(connectionism)，又称为仿生学派(bionicsism)或生理学派(physiologism)，其主要原理为神经网络及神经网络间的连接机制与学习算法。</li>
+<li><strong>行为主义</strong>(actionism)，又称为进化主义(evolutionism)或控制论学派(cyberneticsism)，其原理为控制论及感知-动作型控制系统。</li>
+</ol>
+<h3 id="知识表示"><a href="#知识表示" class="headerlink" title="知识表示"></a>知识表示</h3><p>将人类知识形式化或者模型化。表示方法：符号表示法、连接机制表示法。</p>
+<h3 id="人工智能目标"><a href="#人工智能目标" class="headerlink" title="人工智能目标"></a>人工智能目标</h3><p>用机器实现人类的部分智能。近期：实现机器智能，远期：制造智能机器。</p>
+<h2 id="第二章-知识表示"><a href="#第二章-知识表示" class="headerlink" title="第二章 知识表示"></a>第二章 知识表示</h2><h3 id="知识"><a href="#知识" class="headerlink" title="知识"></a>知识</h3><p><strong>把相关信息关联在一起所形成的信息结构</strong>。<br>在长期的生活及社会实践中、在科学研究及实验中积累起来的对客观世界的认识与经验。</p>
+<h3 id="知识的特性"><a href="#知识的特性" class="headerlink" title="知识的特性"></a>知识的特性</h3><ol>
+<li><strong>相对正确性</strong></li>
+<li><strong>不确定性</strong>，包括：由随机性引起的不确定性、由模糊性引起的不确定性、由经验引起的不确定性、由不完全性引起的不确定性</li>
+<li><strong>可表示性与可利用性</strong></li>
+</ol>
+<h3 id="知识的表示"><a href="#知识的表示" class="headerlink" title="知识的表示"></a>知识的表示</h3><p><strong>知识表示就是将人类知识形式化或者模型化。</strong></p>
+<h3 id="命题"><a href="#命题" class="headerlink" title="命题"></a>命题</h3><p><strong>命题是一个非真即假的陈述句</strong>。一个命题能同时即为真又为假，但可以在一种条件下为真，在另一种条件下为假。</p>
+<h3 id="谓词"><a href="#谓词" class="headerlink" title="谓词"></a>谓词</h3><p><strong>用来描述或判断客体性质、特征或客体之间关系的词项</strong>。用于刻画个体的性质、状态或个体间的关系的概念。</p>
+<h3 id="一阶谓词"><a href="#一阶谓词" class="headerlink" title="一阶谓词"></a>一阶谓词</h3><p>在谓词P (x1, x2,…, xn)中，若xi都是个体常量、变元或函数，称它为一阶谓词，即个体都是常量、变元或函数的谓词是一阶谓词。<br>特点：优点：<strong>自然性、精确性、严密性、容易实现</strong>；局限性：<strong>不能表示不确定的知识、组合爆炸、效率低</strong></p>
+<h3 id="产生式"><a href="#产生式" class="headerlink" title="产生式"></a>产生式</h3><p>一个产生式系统由<strong>规则库、控制系统（推理机）、综合数据库</strong>三部分组成。<br>产生式通常用于表示<strong>事实</strong>、<strong>规则以及它们的不确定性度量</strong>，适合于表示<strong>事实性知识和规则性知识</strong>。<br>形式：<strong>确定性规则知识P→Q、不确定性规则知识P→Q(置信度)、确定性事实性知识：（对象，属性，值）、不确定性事实性知识：（对象，属性，值，置信度）</strong></p>
+<h3 id="产生式表示法的特点"><a href="#产生式表示法的特点" class="headerlink" title="产生式表示法的特点"></a>产生式表示法的特点</h3><p>优点：<strong>自然性、模块性、有效性、清晰性</strong><br>缺点：<strong>效率不高、不能表达具有结构性的知识</strong></p>
+<h3 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h3><p><strong>一种描述所论对象（一个事物、事件或概念）属性的数据结构</strong>。<br>特点：<strong>结构性、继承性、自然性</strong></p>
+<h2 id="第三章-确定性推理方法"><a href="#第三章-确定性推理方法" class="headerlink" title="第三章 确定性推理方法"></a>第三章 确定性推理方法</h2><h3 id="推理"><a href="#推理" class="headerlink" title="推理"></a>推理</h3><p><strong>从已知事实出发，按某种策略不断运用知识库中的已知知识，逐步推出结论的过程</strong>。<br>方式：<strong>演绎推理（一般→个别）、归纳推理（个别→一般）、默认推理（缺省推理）</strong><br>推理方向：<strong>正向推理、逆向推理、混合推理、双向推理</strong></p>
+<h3 id="冲突消解"><a href="#冲突消解" class="headerlink" title="冲突消解"></a>冲突消解</h3><p>按一定的策略从匹配成功的多个知识中挑出一个知识用于当前的推理过程。</p>
+<h3 id="自然演绎推理"><a href="#自然演绎推理" class="headerlink" title="自然演绎推理"></a>自然演绎推理</h3><p>从一组已知为真的事实出发，运用经典逻辑的推理规则推出结论的过程。</p>
+<h3 id="谓词公式化为子句集步骤"><a href="#谓词公式化为子句集步骤" class="headerlink" title="谓词公式化为子句集步骤"></a>谓词公式化为子句集步骤</h3><ol>
+<li>消去谓词公式中的→和←→符号</li>
+<li>把否定符号 ¬ 移到紧靠谓词的位置上</li>
+<li>变量标准化（每个辖域变量不同）</li>
+<li>消去存在量词(常量、函数)</li>
+<li>化为前束形（量词提前）</li>
+<li>化为Skolem标准形（合取式）</li>
+<li>略去全称量词</li>
+<li>消去合取词，母式用子句集表示</li>
+<li>子句变量标准化，即使每个子句的变量符号不同</li>
+</ol>
+<h3 id="鲁宾逊归结原理"><a href="#鲁宾逊归结原理" class="headerlink" title="鲁宾逊归结原理"></a>鲁宾逊归结原理</h3><p>消解原理，又称不可满足性原理<br>基本思想：检查子句集S中是否包含空子句，若包含，则S不可满足。若不包含，在S中选择合适的子句进行归结，一旦归结出空子句，就说明S是不可满足的。</p>
+<h2 id="第四章-不确定性推理方法"><a href="#第四章-不确定性推理方法" class="headerlink" title="第四章 不确定性推理方法"></a>第四章 不确定性推理方法</h2><h3 id="推理-1"><a href="#推理-1" class="headerlink" title="推理"></a>推理</h3><p>从<strong>已知事实</strong>（证据）出发，通过运用相关知识逐步推出结论或者证明某个假设成立或不成立的思维过程。</p>
+<h3 id="不确定性推理"><a href="#不确定性推理" class="headerlink" title="不确定性推理"></a>不确定性推理</h3><p>从<strong>不确定性的初始证据</strong>出发，通过运用不确定性的知识，最终推出具有一定程度的不确定性但却是合理或者近乎合理的结论的思维过程。</p>
+<h3 id="知识的不确定性表示"><a href="#知识的不确定性表示" class="headerlink" title="知识的不确定性表示"></a>知识的不确定性表示</h3><p>在专家系统中知识的不确定性一般是由领域专家给出的，通常是一个数值——知识的静态强度</p>
+<h3 id="可信度方法"><a href="#可信度方法" class="headerlink" title="可信度方法"></a>可信度方法</h3><p>是在确定性理论的基础上，结合概率论等提出的一种不确定性推理方法。<br>优点：比较直观、简单、效果比较好。<br>可信度：根据经验对一个事物或者想象为真的相信程度。</p>
+<h3 id="C－F模型"><a href="#C－F模型" class="headerlink" title="C－F模型"></a>C－F模型</h3><p>基于可信度表示的不确定性推理的基本方法。   </p>
+<h3 id="知识不确定性的表示"><a href="#知识不确定性的表示" class="headerlink" title="知识不确定性的表示"></a>知识不确定性的表示</h3><p>C-F模型中，知识是用产生式规则表示，一般形式<br>IF	E	THEN	H	（CF（H，E））<br>CF（H，E）是该条件知识的可信度，称为可信度因子，反映前提条件E与结论H的联系强度。CF &gt; 0 支持H为真，CF &lt; 0 支持H为假，CF &#x3D; 0证据与结论无关。知识的静态强度（当 E 所对应的证据为真时对 H 的影响程度。）</p>
+<h3 id="证据的不确定性表示"><a href="#证据的不确定性表示" class="headerlink" title="证据的不确定性表示"></a>证据的不确定性表示</h3><p>在C-F模型中，证据的不确定性也是用可信度因子表示。CF（E），证据的动态强度</p>
+<h3 id="组合证据不确定性的算法"><a href="#组合证据不确定性的算法" class="headerlink" title="组合证据不确定性的算法"></a>组合证据不确定性的算法</h3><p>组合证据E是多个单一证据（E1、E2）合取时，CF（E）为多个单一证据中可信度最小值。（CF（E）&#x3D; min{CF（E1），CF（E2）}）<br>组合证据E是多个单一证据（E1、E2）析取时，CF（E）为多个单一证据中可信度最大值。（CF（E）&#x3D; max{CF（E1），CF（E2）}）</p>
+<h3 id="不确定性的传递算法"><a href="#不确定性的传递算法" class="headerlink" title="不确定性的传递算法"></a>不确定性的传递算法</h3><p>结论H的可信度计算：CF（H）&#x3D; CF（H，E）× max{0，CF（E）}</p>
+<h3 id="结论不确定性的合成算法"><a href="#结论不确定性的合成算法" class="headerlink" title="结论不确定性的合成算法"></a>结论不确定性的合成算法</h3><p>IF	E1	THEN	H	（CF（H，E1））<br>IF	E2	THEN	H	（CF（H，E2））<br>CF1（H）&#x3D; CF（H，E1）× max{0，CF（E1）}<br>CF2（H）&#x3D; CF（H，E2）× max{0，CF（E2）}<br>CF1,2（H）&#x3D;<br>    若CF1（H）≥ 0，CF2（H）≥ 0<br>        CF1（H）+ CF2（H）-  CF1（H）×CF2（H）<br>    若CF1（H）&lt;  0，CF2（H）&lt;  0<br>        CF1（H）+ CF2（H）+  CF1（H）×CF2（H）<br>    若CF1（H）CF2（H）&lt;  0<br>        CF1（H）+ CF2（H）&#x2F;  1 – min{|CF1（H）|，|CF2（H）|}	</p>
+<h3 id="模糊集合"><a href="#模糊集合" class="headerlink" title="模糊集合"></a>模糊集合</h3><p>论域：所讨论的全体对象<br>元素：论域中的每个对象<br>集合：论域中具有某种相同属性的确定的、可以彼此区别的元素的全体<br>隶属度：模糊逻辑给集合中每一个元素赋予一个介于0和1之间的实数，描述其属于一个集合的强度，该实数称为元素属于一个集合的隶属度<br>隶属函数：集合中所有元素的隶属度全体构成集合的隶属函数</p>
+<h3 id="模糊集合的表示方法"><a href="#模糊集合的表示方法" class="headerlink" title="模糊集合的表示方法"></a>模糊集合的表示方法</h3><ol>
+<li><strong>Zadeh表示法</strong></li>
+<li><strong>序偶表示法</strong></li>
+<li><strong>向量表示法</strong></li>
+</ol>
+<h3 id="模糊集合运算"><a href="#模糊集合运算" class="headerlink" title="模糊集合运算"></a>模糊集合运算</h3><p>包含、相等、并补交（取大取小运算）、代数运算</p>
+<h3 id="模糊关系合成"><a href="#模糊关系合成" class="headerlink" title="模糊关系合成"></a>模糊关系合成</h3><p>模糊关系Q与模糊关系R的合成S是模糊矩阵的叉乘S &#x3D; Q ° R<br>常用计算方法：<strong>最大-最小合成（最大最小运算）</strong>、<strong>最大-代数合成（求和最大运算）</strong></p>
+<h3 id="模糊决策"><a href="#模糊决策" class="headerlink" title="模糊决策"></a>模糊决策</h3><p>(“模糊判决”、“解模糊”或“清晰化”）：由模糊推理得到的结论或者操作是一个模糊向量，转化为确定值的过程。<br>模糊决策方法：最大隶属度法（取最大隶属度量作为推理结构）、加权平均判决法、中位数法</p>
+<h2 id="第五章-搜索求解策略"><a href="#第五章-搜索求解策略" class="headerlink" title="第五章 搜索求解策略"></a>第五章 搜索求解策略</h2><h3 id="问题求解基本方法"><a href="#问题求解基本方法" class="headerlink" title="问题求解基本方法"></a>问题求解基本方法</h3><p>搜索法、归约法、归结法、推理法及产生式等。</p>
+<h3 id="搜索中需要解决的基本问题"><a href="#搜索中需要解决的基本问题" class="headerlink" title="搜索中需要解决的基本问题"></a>搜索中需要解决的基本问题</h3><p>（1）是否一定能找到一个解。<br>（2）找到的解是否是最佳解。<br>（3）时间与空间复杂性如何。<br>（4）是否终止运行或是否会陷入一个死循环。</p>
+<h3 id="搜索的主要过程"><a href="#搜索的主要过程" class="headerlink" title="搜索的主要过程"></a>搜索的主要过程</h3><p>(1) 从初始或目的状态出发，并将它作为当前状态。<br>(2)	扫描操作算子集，将适用当前状态的一些操作算子作用于当前状态而得到新的状态，并建立指向其父结点的指针 。<br>(3) 检查所生成的新状态是否满足结束状态，如果满足，则得到问题的一个解，并可沿着有关指针从结束状态反向到达开始状态，给出一解答路径；否则，将新状态作为当前状态，返回第(2)步再进行搜索</p>
+<h3 id="搜索策略"><a href="#搜索策略" class="headerlink" title="搜索策略"></a>搜索策略</h3><p>数据驱动：从初始状态出发的正向搜索。正向搜索：从问题给出的条件出发。<br>目的驱动：从目的状态出发的逆向搜索。逆向搜索：从想达到的目的入手，看哪些操作算子能产生该目的以及应用这些操作算子产生目的时需要哪些条件。</p>
+<p>双向搜索：从开始状态出发作正向搜索，同时又从目的状态出发作逆向搜索，直到两条路径在中间的某处汇合为止</p>
+<h3 id="启发式搜索和盲目搜索"><a href="#启发式搜索和盲目搜索" class="headerlink" title="启发式搜索和盲目搜索"></a>启发式搜索和盲目搜索</h3><p>盲目搜索：在不具有对特定问题的任何有关信息的条件下，按固定的步骤（依次或随机调用操作算子）进行的搜索。<br>启发式搜索：考虑特定问题领域可应用的知识，动态地确定调用操作算子的步骤，优先选择较适合的操作算子，尽量减少不必要的搜索，以求尽快地到达结束状态。</p>
+<h3 id="盲目的图搜索策略"><a href="#盲目的图搜索策略" class="headerlink" title="盲目的图搜索策略"></a>盲目的图搜索策略</h3><p>回溯策略、宽度（广度）优先搜索策略、深度优先搜索策略</p>
+<h3 id="回溯搜索的算法用三张表来保存状态空间"><a href="#回溯搜索的算法用三张表来保存状态空间" class="headerlink" title="回溯搜索的算法用三张表来保存状态空间"></a>回溯搜索的算法用三张表来保存状态空间</h3><ol>
+<li>PS（path states路径状态）表：保存当前搜索路径上的状态。如果找到了目的，PS就是解路径上的状态有序集。 </li>
+<li>NPS（new path states新的路径状态）表：它包含了等待搜索的状态，其后裔状态还未被搜索到，即未被生成扩展 。</li>
+<li>NSS（no solvable states不可解状态）表：列出了找不到解题路径的状态。如果在搜索中扩展出的状态是它的元素，则可立即将之排除，不必沿该状态继续搜索。</li>
+</ol>
+<p>CS（当前正在被检测的状态），最近加入PS中的状态<br>回溯思想：</p>
+<ol>
+<li>用未处理状态表（NPS）使算法能返回（回溯）到其中任一状态。 </li>
+<li>用一张“死胡同”状态表（NSS）来避免算法重新搜索无解的路径。 </li>
+<li>在PS 表中记录当前搜索路径的状态，当满足目的时可以将它作为结果返回。 </li>
+<li>为避免陷入死循环必须对新生成的子状态进行检查，看它是否在该三张表中 。</li>
+</ol>
+<h3 id="宽度优先搜索"><a href="#宽度优先搜索" class="headerlink" title="宽度优先搜索"></a>宽度优先搜索</h3><p>同一层拓展完再进入下一层</p>
+<p>为了保存状态空间搜索的轨迹，用到了两个表：open表和closed表。<br>Open表与回溯算法中NPS表类似，包含了已经生成出来但其子状态未被搜索的状态。	<br>Open表的排序次序就是搜索的次序。（队列，先进先出）<br>Closed表记录了已被生成拓展过的状态，它相当于回溯算法的PS表和NSS表的合并。</p>
+<h3 id="深度优先搜索："><a href="#深度优先搜索：" class="headerlink" title="深度优先搜索："></a>深度优先搜索：</h3><p>沿一个方向一直扩展下去，直到达到一定的深度。未找到目的状态或无法再拓展时，回溯另一条路径。<br>Open表是个堆栈，先进后出；open表与closed表用途与广度一致；适用解题路径长、搜索有大量分支；易迷失方向<br>并不能保证第一次找到的路径是最短路径、后裔状态先于兄弟状态</p>
+<h3 id="估价函数f（n）"><a href="#估价函数f（n）" class="headerlink" title="估价函数f（n）"></a>估价函数f（n）</h3><p>从初始结点经过n结点到达目的结点的路径的最小代价估计值，其一般形式是：f（n）&#x3D; g（n）+ h（n）<br>其中，g（n）是从初始状态点到n结点的实际代价，h（n）是从n结点到目的结点的最佳路径的估计代价（已经付出代价和即将付出代价）</p>
+<h3 id="A搜索算法"><a href="#A搜索算法" class="headerlink" title="A搜索算法"></a>A搜索算法</h3><p>基于估价函数的一种加权启发式图搜索算法（根据启发信息来排序open表，每次选择估计函数最小值进行拓展；每个状态保留父状态信息）</p>
+<h3 id="A-搜索算法（最佳图搜索算法）"><a href="#A-搜索算法（最佳图搜索算法）" class="headerlink" title="A*搜索算法（最佳图搜索算法）"></a><code>A*搜索算法</code>（最佳图搜索算法）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">定义：h*(n)为状态n到目的状态的最优路径的代价，则当A搜索算法的启发函数h(n)小于等于h*(n)，即h(n)≤h*(n)，对于全部结点n时，称为A*搜索算法。（有解时一定能找到最优解）</span><br><span class="line">A*算法特性：可采纳性（有限步找到最优解）、单调性（局部可采纳性，一个状态和任一子状态差由实际代价所限定）、信息性（启发策略h1（n）&lt; h2（n），则h2具有更多的信息）</span><br></pre></td></tr></table></figure>
+
+<h2 id="第六章-智能计算及其应用"><a href="#第六章-智能计算及其应用" class="headerlink" title="第六章 智能计算及其应用"></a>第六章 智能计算及其应用</h2><h3 id="遗传算法（genetic-algorithms，GA）"><a href="#遗传算法（genetic-algorithms，GA）" class="headerlink" title="遗传算法（genetic algorithms，GA）"></a>遗传算法（genetic algorithms，GA）</h3><p><strong>一类借鉴生物界自然选择和自然遗传机制的随机搜索算法，非常适用于处理传统搜索方法难以解决的复杂和非线性优化问题</strong>。<br>三种基本遗传算子：选择算子、交叉算子和变异算子</p>
+<ul>
+<li>两种数据转换操作：<ul>
+<li>编码：表现型到基因型的转换，将搜索空间的参数或解转换成遗传空间中的染色体	或个体</li>
+<li>解码：基因型到表现型的转换，个体转换成搜索空间的参数<br>遗传算法可广泛应用于组合优化、机器学习、自适应控制、规划设计和人工生命等领域。</li>
+</ul>
+</li>
+</ul>
+<h3 id="遗传算法的基本思想"><a href="#遗传算法的基本思想" class="headerlink" title="遗传算法的基本思想"></a>遗传算法的基本思想</h3><p>在求解问题时从多个解开始，然后通过一定的法则进行逐步迭代以产生新的解。</p>
+<h3 id="遗传算法五个基本要素"><a href="#遗传算法五个基本要素" class="headerlink" title="遗传算法五个基本要素"></a>遗传算法五个基本要素</h3><p><strong>参数编码、初始群体的设定、适应度函数设计、遗传操作设计、控制参数设定</strong></p>
+<h3 id="适应度函数"><a href="#适应度函数" class="headerlink" title="适应度函数"></a>适应度函数</h3><p>是用来区分群体中的个体好坏的标准，是算法演化过程的驱动力，是进行自然选择的唯一依据。</p>
+<h3 id="遗传算法特点"><a href="#遗传算法特点" class="headerlink" title="遗传算法特点"></a>遗传算法特点</h3><ol>
+<li>对结构对象直接操作</li>
+<li>有方向的随机搜索</li>
+<li>采用群体搜索策略</li>
+<li>应用适应度函数值来评估个体</li>
+</ol>
+<p>适应度函数是用来区分群体中的个体好坏的标准，是算法演化过程的驱动力，是进行自然选择的唯一依据</p>
+<h2 id="第七章-专家系统与机器学习"><a href="#第七章-专家系统与机器学习" class="headerlink" title="第七章 专家系统与机器学习"></a>第七章 专家系统与机器学习</h2><p>专家系统：一类包含知识和推理的智能计算机程序。专家系统是一种智能的计算机程序，它运用知识和推理来解决只有专家才能解决的复杂问题。</p>
+<p>专家系统知识三个层次：数据级、知识库级、控制级</p>
+<p>专家系统的特点：</p>
+<ol>
+<li>专业性（具有专家水平的专业知识）</li>
+<li>推理性（能进行有效推理）</li>
+<li>启发性（做出假设，使推理进行）</li>
+<li>灵活性（知识库与推理机相互联系又相互独立）</li>
+<li>透明性（解释推理过程）</li>
+<li>交互性（与专家、工程师进行对话获取知识；从用户获得所需已知事实）</li>
+</ol>
+<p>专家组成：完整的专家系统一般应包括人机接口、推理机、知识库、数据库、知识获取机构和解释机构</p>
+<h2 id="第8章-人工神经网络及其应用"><a href="#第8章-人工神经网络及其应用" class="headerlink" title="第8章 人工神经网络及其应用"></a>第8章 人工神经网络及其应用</h2><ul>
+<li>BP算法的基本思想：将输出误差以某种形式通过隐层向输入层逐层反转。</li>
+<li>BP 网络结构：输入层、隐层、输出层</li>
+<li>输入层：输入与输出线性函数关系</li>
+<li>隐层：输入与输出非线性函数关系</li>
+<li>工作过程：<br>  第一阶段或网络训练阶段：对网络的连接权进行学习和调整，以使该网络实现给定样本的输入输出映射关系。<br>  第二阶段或称工作阶段：把实验数据或实际数据输入到网络，网络在误差范围内预测计算出结果。</li>
+<li>学习算法：<br>  正向传播：输入信息由输入层传至隐层，最终在输出层输出。<br>   反向传播：修改各层神经元的权值，使误差信号最小。</li>
+<li>BP网络的主要优缺点<ul>
+<li>优点：<ul>
+<li>很好的逼近特性。</li>
+<li>具有较强的泛化能力。</li>
+<li>具有较好的容错性。</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>收敛速度慢。</li>
+<li>局部极值。</li>
+<li>难以确定隐层和隐层结点的数目。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Wyatex
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="人工智能导论学习笔记">https://qghost.gitee.io/学习笔记/人工智能导论学习笔记/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+              <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag"># 人工智能</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/%E5%AE%89%E5%8D%93/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E4%B9%8BJetpack%EF%BC%9AMVVM/" rel="prev" title="安卓开发之Jetpack：MVVM">
+                  <i class="fa fa-chevron-left"></i> 安卓开发之Jetpack：MVVM
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%89%A9%E8%81%94%E7%BD%91%E9%80%9A%E4%BF%A1%E7%AC%94%E8%AE%B0/" rel="next" title="物联网通信笔记">
+                  物联网通信笔记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wyatex</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>

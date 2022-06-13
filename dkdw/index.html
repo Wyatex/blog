@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"qghost.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="目录导航入门C 语言 后端开发javagolang 前端开发JavaScript 、TypescriptVueVue前端相关 其他数据库开发相关Git数据结构和算法工具开源项目未分类文件分享 分类C&#x2F;C++ C 语言 printf() 详解之终极无惑 C 语言必须写 main 函数？最简单的 Hello world 你其实一点都不懂！ C 语言指针-从底层原理到花式技巧，用图文和代码帮你">
+<meta property="og:type" content="website">
+<meta property="og:title" content="蹲坑读物系列">
+<meta property="og:url" content="https://qghost.gitee.io/dkdw/index.html">
+<meta property="og:site_name" content="Wyatex&#96;s blog">
+<meta property="og:description" content="目录导航入门C 语言 后端开发javagolang 前端开发JavaScript 、TypescriptVueVue前端相关 其他数据库开发相关Git数据结构和算法工具开源项目未分类文件分享 分类C&#x2F;C++ C 语言 printf() 详解之终极无惑 C 语言必须写 main 函数？最简单的 Hello world 你其实一点都不懂！ C 语言指针-从底层原理到花式技巧，用图文和代码帮你">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-05-08T11:41:53.000Z">
+<meta property="article:modified_time" content="2022-01-22T15:59:59.000Z">
+<meta property="article:author" content="Wyatex">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://qghost.gitee.io/dkdw/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"https://qghost.gitee.io/dkdw/index.html","path":"dkdw/index.html","title":"蹲坑读物系列"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>蹲坑读物系列 | Wyatex`s blog
+</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Wyatex`s blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">67</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">18</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">111</span></a></li><li class="menu-item menu-item-编程"><a href="/programming/" rel="section"><i class="fa fa-book fa-fw"></i>编程</a></li><li class="menu-item menu-item-干货"><a href="/resources/" rel="section"><i class="fa fa-paperclip fa-fw"></i>干货</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E5%AF%BC%E8%88%AA"><span class="nav-number">1.</span> <span class="nav-text">目录导航</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A5%E9%97%A8"><span class="nav-number">1.1.</span> <span class="nav-text">入门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91"><span class="nav-number">1.2.</span> <span class="nav-text">后端开发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91"><span class="nav-number">1.3.</span> <span class="nav-text">前端开发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">1.4.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-x2F-C"><span class="nav-number">2.1.</span> <span class="nav-text">C&#x2F;C++</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java"><span class="nav-number">2.2.</span> <span class="nav-text">Java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Golang"><span class="nav-number">2.3.</span> <span class="nav-text">Golang</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Javascript-x2F-Typescript"><span class="nav-number">2.4.</span> <span class="nav-text">Javascript &#x2F; Typescript</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue"><span class="nav-number">2.5.</span> <span class="nav-text">Vue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React"><span class="nav-number">2.6.</span> <span class="nav-text">React</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E7%9B%B8%E5%85%B3"><span class="nav-number">2.7.</span> <span class="nav-text">前端相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3"><span class="nav-number">2.8.</span> <span class="nav-text">开发相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git"><span class="nav-number">2.9.</span> <span class="nav-text">Git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.10.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95"><span class="nav-number">2.11.</span> <span class="nav-text">数据结构和算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.12.</span> <span class="nav-text">开源项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-number">2.13.</span> <span class="nav-text">工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B5%8C%E5%85%A5%E5%BC%8F%E3%80%81%E5%8D%95%E7%89%87%E6%9C%BA"><span class="nav-number">2.14.</span> <span class="nav-text">嵌入式、单片机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91"><span class="nav-number">2.15.</span> <span class="nav-text">游戏开发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%9C%AA%E5%88%86%E7%B1%BB"><span class="nav-number">2.16.</span> <span class="nav-text">其他未分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%88%86%E4%BA%AB"><span class="nav-number">2.17.</span> <span class="nav-text">文件分享</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Wyatex"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Wyatex</p>
+  <div class="site-description" itemprop="description">这里是我用来做笔记的网站哟~</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wyatex" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wyatex" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wyatex@qq.com" title="E-Mail → mailto:wyatex@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.microloong.me/" title="https:&#x2F;&#x2F;blog.microloong.me" rel="noopener" target="_blank">MicroLOONG</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">蹲坑读物系列
+</h1>
+
+<div class="post-meta-container">
+</div>
+
+</header>
+
+      
+      
+      <div class="post-body">
+          <h1 id="目录导航"><a href="#目录导航" class="headerlink" title="目录导航"></a>目录导航</h1><h2 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h2><p><a href="/%E5%B9%B2%E8%B4%A7/%E5%BC%80%E5%8F%91%E4%BA%A4%E6%B5%81%E7%BE%A4%E5%88%86%E4%BA%AB%E8%AE%B0%E5%BD%95/#C-C">C 语言</a></p>
+<h2 id="后端开发"><a href="#后端开发" class="headerlink" title="后端开发"></a>后端开发</h2><p><a href="/%E5%B9%B2%E8%B4%A7/%E5%BC%80%E5%8F%91%E4%BA%A4%E6%B5%81%E7%BE%A4%E5%88%86%E4%BA%AB%E8%AE%B0%E5%BD%95/#Java">java</a><br><a href="/%E5%B9%B2%E8%B4%A7/%E5%BC%80%E5%8F%91%E4%BA%A4%E6%B5%81%E7%BE%A4%E5%88%86%E4%BA%AB%E8%AE%B0%E5%BD%95/#Golang">golang</a></p>
+<h2 id="前端开发"><a href="#前端开发" class="headerlink" title="前端开发"></a>前端开发</h2><p><a href="/%E5%B9%B2%E8%B4%A7/%E5%BC%80%E5%8F%91%E4%BA%A4%E6%B5%81%E7%BE%A4%E5%88%86%E4%BA%AB%E8%AE%B0%E5%BD%95/#Javascript-Typescript">JavaScript 、Typescript</a><br><a href="/%E5%B9%B2%E8%B4%A7/%E5%BC%80%E5%8F%91%E4%BA%A4%E6%B5%81%E7%BE%A4%E5%88%86%E4%BA%AB%E8%AE%B0%E5%BD%95/#Vue">Vue</a><br><a href="/%E5%B9%B2%E8%B4%A7/%E5%BC%80%E5%8F%91%E4%BA%A4%E6%B5%81%E7%BE%A4%E5%88%86%E4%BA%AB%E8%AE%B0%E5%BD%95/#React">Vue</a><br><a href="/%E5%B9%B2%E8%B4%A7/%E5%BC%80%E5%8F%91%E4%BA%A4%E6%B5%81%E7%BE%A4%E5%88%86%E4%BA%AB%E8%AE%B0%E5%BD%95/#%E5%89%8D%E7%AB%AF%E7%9B%B8%E5%85%B3">前端相关</a></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p><a href="/%E5%B9%B2%E8%B4%A7/%E5%BC%80%E5%8F%91%E4%BA%A4%E6%B5%81%E7%BE%A4%E5%88%86%E4%BA%AB%E8%AE%B0%E5%BD%95/#%E6%95%B0%E6%8D%AE%E5%BA%93">数据库</a><br><a href="/%E5%B9%B2%E8%B4%A7/%E5%BC%80%E5%8F%91%E4%BA%A4%E6%B5%81%E7%BE%A4%E5%88%86%E4%BA%AB%E8%AE%B0%E5%BD%95/#%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3">开发相关</a><br><a href="/%E5%B9%B2%E8%B4%A7/%E5%BC%80%E5%8F%91%E4%BA%A4%E6%B5%81%E7%BE%A4%E5%88%86%E4%BA%AB%E8%AE%B0%E5%BD%95/#Git">Git</a><br><a href="/%E5%B9%B2%E8%B4%A7/%E5%BC%80%E5%8F%91%E4%BA%A4%E6%B5%81%E7%BE%A4%E5%88%86%E4%BA%AB%E8%AE%B0%E5%BD%95/#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95">数据结构和算法</a><br><a href="/%E5%B9%B2%E8%B4%A7/%E5%BC%80%E5%8F%91%E4%BA%A4%E6%B5%81%E7%BE%A4%E5%88%86%E4%BA%AB%E8%AE%B0%E5%BD%95/#%E5%B7%A5%E5%85%B7">工具</a><br><a href="/%E5%B9%B2%E8%B4%A7/%E5%BC%80%E5%8F%91%E4%BA%A4%E6%B5%81%E7%BE%A4%E5%88%86%E4%BA%AB%E8%AE%B0%E5%BD%95/#%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE">开源项目</a><br><a href="/%E5%B9%B2%E8%B4%A7/%E5%BC%80%E5%8F%91%E4%BA%A4%E6%B5%81%E7%BE%A4%E5%88%86%E4%BA%AB%E8%AE%B0%E5%BD%95/#%E5%85%B6%E4%BB%96%E6%9C%AA%E5%88%86%E7%B1%BB">未分类</a><br><a href="/%E5%B9%B2%E8%B4%A7/%E5%BC%80%E5%8F%91%E4%BA%A4%E6%B5%81%E7%BE%A4%E5%88%86%E4%BA%AB%E8%AE%B0%E5%BD%95/#%E6%96%87%E4%BB%B6%E5%88%86%E4%BA%AB">文件分享</a></p>
+<h1 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h1><h2 id="C-x2F-C"><a href="#C-x2F-C" class="headerlink" title="C&#x2F;C++"></a>C&#x2F;C++</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/lFGIH2mk7y4HhtapUmtSZQ">C 语言 printf() 详解之终极无惑</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/PX9pCVHWrZsu7TokarxtTA">C 语言必须写 main 函数？最简单的 Hello world 你其实一点都不懂！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/TwDiDmApmsIVSIFh2h1osQ">C 语言指针-从底层原理到花式技巧，用图文和代码帮你讲解透彻</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/i9p88bjb_sgKHCsCc94y-w">C 语言 | 函数执行成功时，return 1 还是 return 0？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/9xoL92pRwfMgsFLgKq37BA">不懂指针类型，8 个例子给你讲明白</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/vBHDa5-vqRUYvu-2J8jB_w">C++入口不是 main？知乎上打起来了！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-RG2y2dGzYNLD7YNrBCRwQ">面试官问:malloc(0)时程序会返回什么？！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Hftu0FXRtIkZ8ulurm6k6Q">同事 C 代码中的#、##把我秀了~</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BUB1PmiE4E7FjzOnnM13pw">一篇很棒的 C 语言入门笔记，推荐收藏！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/HaNDp7qNeMAqlKdMScb3Bg">利用 Makfile 给多文件、多目录 C 源码建立工程</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/foQcxDODsPfW_7bVAWBxWg">写了一段“高端”C 语言代码</a></li>
+</ul>
+<h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JH6IF-EiPpelTv6ixB-ODg">Java8 Stream 数据流，大数据量下的性能效率怎么样？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/cban7sJW4jXSgbcnf366VQ">还在手动部署 springboot 项目？不妨试试它，让你部署项目飞起来！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/4EfuvEfkvXlJpzXCzXwo8Q">PO,VO,DAO,BO,POJO 之间的区别你懂吗？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/DRYcjLYvS9Tca0PW6funFw">Spring Boot 切面 AOP 实现权限校验（实例演示与注解全解）</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000040038334">卷不动了？300 秒快速了解 Java 9 - 16 新特性，助你脱离内卷</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZjOVGy0uVze3vAQEUYHnlw">一款基于 Spring Boot 的 BBS 系统，APP 和后台管理齐全，拿来即用</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0U8t-iGgq_qznONZ3wT6Uw">Spring Boot + MyBatis + MySQL 读写分离</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/o0-u-DBzx8LWib5_AvCj4Q">SpringBoot 集成 Shiro 极简教程（实战版）</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/E8rHQWfSKqBupIo23oj6JA">一个注解搞定 Spring Boot 接口防刷</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/vYA1cL79yzUzhaqFNyvmiw">如何把 Spring Boot 的 Jar 包做成 exe？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LtXPdM9OOSlGypqCd5Asmw">你还在用分页？试试 MyBatis 流式查询！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0Z1An7hf1e3_b6MQYwM3nA">强烈不建议你用 a.equals(b) 判断对象相等！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/HFQXadkkQnRkyuOlqQ8FBg">同事用单例模式花式实现雪花算法</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ELkPdWhO3jWO404Jbiljlw">让 SpringBoot 不再需要 Controller、Service、Mapper，这款开源工具绝了！！！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-hlB-3KgJiVnQN6b-ToSNw">Guava RateLimiter 实现 API 限流，这才是正确的姿势！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/X-WPNQDTgeiDOoQJghANHw">朋友问我单例模式是什么？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/jq7ec7jXxIvCTX57EMjMvA">面试官：啥是适配器模式？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/nQG_FJXJmi5Q4201T-dadw">第十篇！组合模式</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/9p8-Ps5pYI-uQVz1i43NCA">装饰模式，不难！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/jOuscF3Hx-jlhmT4K81vkQ">1024，我还在啃外观模式！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FW_bHx9SmM0obKXAGg46jQ">常见的代理模式</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/qg0ISx44-9vfIWNzWqz4QQ">Spring 中的 AOP！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/amyAf5mr9k9qhpF28cflmg">原创|MybaitsPlus 快速入门教程</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BvOzzcc2L9PUb4oXl4mxkw">聊聊 Spring 数据库开发</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/VTkA3DXtawc11ZNxdrNYtA">Spring 事务还能这样管理？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/QfvUrG789jr8UY28KQHFNA">老师问我 Spring MVC 的工作流程</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Y90LGtJAn4G5hbx3pkosGg">几行烂代码，我赔了 16 万。</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/3vV5i-5DLlKCP4TWioyzwA">分享 | 后端必会的 Spring MVC 核心类和注解</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/MEtoC9FWL5Pr_WILeCrWdw">SpringBoot 居然有 44 种应用启动器</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/pV5iKnMUw-jqqQZ7Jcdr3A">头条三面：toString()、String.valueOf、(String)强转，有啥区别？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/MKb9le7zLcwn7IWJ_vtGAw">使用 SpringBoot Operator 部署 Spring Boot 到 K8S</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzIyNjE0MDI1NQ==&action=getalbum&album_id=2113998463406227457&scene=173&from_msgid=2247486597&from_itemidx=2&count=3&nolastread=1#wechat_redirect">死磕算法系列，包括《剑指 offer》、leetcode 等等</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/GqHwIxGYRpRqr0Qalx4VXQ">为什么不推荐使用 BeanUtils 属性转换工具</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/DhddlRkI3vbrYzXeGuvRLA">SpringBoot 巧用 @Async 提升 API 接口并发能力！</a></li>
+</ul>
+<h2 id="Golang"><a href="#Golang" class="headerlink" title="Golang"></a>Golang</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JkTVv52WZXhP3KDH1eNLPg">面试官：如何避免 Go 变量被 GC？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/v3VUU_lp9z_FJYz9Z0xWjQ">10 年 Java 经验，转行 Go 的 7 个理由</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/3gwYPLwbEPjAkye4kJfwzg">Go 语言中的零拷贝优化</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0q0k8gGX56SBKJvfMquQkQ">漫谈 Go 语言编译器（01）</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/e8sUwTBfgzXdCXd3ViCNdw">在 Go 中如何用 Redlock 实现分布式锁呢？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/pfYTRuJSw5Pkm6Co9bawhw">全面讲解 Go 中的 interface{}</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YB_mBJMAmRruNrb4NPy8sw">Go select 竟然死锁了</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Je03lXgyO9dVY8oHhPwKjg">Go 与 C 的指针</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/mc0B2ZLBIMXD-og-HThHOw">Golang 泛型要来了吗？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/oITEzd4ynUVAzSfUAo-71g">有趣的面试题：Go 语言中 nil 的比较结果</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/jDRHKRZa3NcezBbF4xk8ww">使用 context、WaitGroup 优雅处理 goroutine</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/MWe5EsAYpU7F-FuXrbfFYA">在 Go 容器里设置 GOMAXPROCS 的正确姿势</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zm5rp4DkgrWIduZAMhzNzA">Go 语言内存逃逸之谜</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ciAQo0bgjFd3Ktq9ryYecQ">如何组织 Go 代码？Go 作者的回答惊呆了</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/T83QgMGrheGdB0_7lwpZ4w">Go：环境变量知多少？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/6aEV4qY6KvL7nb1P8Nwkow">Go interface 原理剖析：类型转换</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SPu0uOcQR8utrsRkoCrP-w">Go1.18 快讯：新增的 Cut 函数太方便了</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZJvGqPYbudzjd8KcAozA_A">一定记住，Go 中不要犯这 5 个错误</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/4P1jRbvCH8NTyNFROrZGmQ">一个 Go 方法，五种变换</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_RPPsUQuZdrsPdzw4OJPTg">Go 如何利用 Linux 内核的负载均衡能力？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7rCsaGy8B2lwbZ4duEC7Nw">命中率极高的 Go 面试题，赶紧收藏！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/gc34RYqmzeMndEJ1-7sOwg">性能优化 | Go Ballast 让内存控制更加丝滑</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Pwg8QK1FqSMsNSA4SahPTQ">用手写一个工具的过程讲清楚 Go 反射的使用方法和应用场景</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg3NjczMjkzMQ==&mid=2247485929&idx=1&sn=f1587865cf4d49a28b57d09fd2895eef">Go 工程师必学 – 信号量的原理与使用</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/1ozBAEYpf07aei0xh3_kNQ">Go 常见错误集锦 | 字符串底层原理及常见错误</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg3NjczMjkzMQ==&mid=2247485933&idx=1&sn=9dee187b13c1bd3953d41472f243f4c3">在 Go 中创建 CLI 应用，就用 Cobra 神器</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/XdRe_yOiFGI8NiR9eWLEoQ">万字长文：Go error 处理最佳实践</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg3NjczMjkzMQ==&mid=2247485937&idx=1&sn=b7dede971a9b219a4542b5aa9df7976b">图解 Go 运行时调度器，原来这么简单</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5XMmVqdcji8jpRnC2p0F3w">什么是 Go runtime.KeepAlive?</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/jsU2DoUSk2-7g1giOClfXQ">Go 源码里的这些 &#x2F;&#x2F;go: 指令，你知道吗？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/PkOYRAoJyemMe5LGb-_eQA">Go 编程模式：详解函数式选项模式</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/9yLd7kkYzmbCriolhbvK_g">Go 程序崩了？煎鱼教你用 PProf 工具来救火！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/mH51UmolTqCAb7E0LxEjDA">Go 读者提问：值为 nil 能调用函数吗？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/nLwUS47e6ZL7Yi8kwLXzmg">Go 实现一个简单而强大的反向代理</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/g_LpPZPO_vhF6ZFhLd3TSA">必看！6 步入门 Go</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/IFwyg14raR4HJa5Y_pYMcw">Go：最简单的服务响应时长优化方法，没有之一</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg3NjczMjkzMQ==&mid=2247485976&idx=1&sn=875b8ae41e9c5076af859b2132dd0079">Google：12 条 Golang 最佳实践</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/UcuKgKnt4fwrg3c-UHc3sw">「GoCN 酷 Go 推荐」go 语言位操作库 — bitset</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/XY6sPZQcDa27JdXMNptJvA">『每周译 Go』Rust 与 Go: 为何相得益彰</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg3NjczMjkzMQ==&mid=2247485981&idx=1&sn=642d7032ff216b3b57b0f0b6def801bb">深度细节 | Go 的 panic 秘密都在这</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg3NjczMjkzMQ==&mid=2247485903&idx=2&sn=105889ef603c38098f3b337a6b089452">Go 面试题 013：Go 中闭包的底层原理是？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/TDIM1tspIEWpQCH_SNGnog">从 CPU 角度理解 Go 中的结构体内存对齐</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JCmIxaHmmIS-mPLW6AYT9Q">吹爆这个 Go 语言万能的通道编程公式</a></li>
+</ul>
+<h2 id="Javascript-x2F-Typescript"><a href="#Javascript-x2F-Typescript" class="headerlink" title="Javascript &#x2F; Typescript"></a>Javascript &#x2F; Typescript</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Do8lTY9j0IB5PGZe0rQj8Q">JavaScript 中的函数式编程</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/F37dMLXqR1nS54vLzVR-JA">34 个 JavaScript 简写优化技术</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/MQXJCM_RW9gbke5NptBlqA">不一样的 JavaScript</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hDM8mrNp2R6P5YTAydTfAA">这 JavaScript 闭包把我的学妹气哭了，学妹的苦衷！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/DfJN6vvSzySYwppzRsMhTg">如何写出干净的 JavaScript 代码</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/vVw61YGYwfbSVBxlz1Yqlg">面试官：说说你对 TypeScript 中类的理解？应用场景？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/c7p4IbGKjKqifVNmErU0Mw">比同事更秀? TS 这 7 个方法，你需要知道的！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ognHGg6ptHmvWOWb9B4bPw">Node.js 底层原理</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/c9SwF1VgM_9c8dT1QfB2VA">这 6 个 TS 新特性经常用到，用了之后我再也离不开它！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/UrkSxuhcKzAjul5-KSiWKg">ES6 面试、复习干货知识点汇总</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/P242wprG9xUiGwqxBwn8cg">常见的数组基本用法</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/2kDURi-4TkShsfFLA9s76Q">ES6 中对象新增扩展盘点</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zbPh2rwdl-YofZZQcOVzNg">该来的还是来了，盘点 ES12 中有新特性！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/9MAKi2NDVF67i-XQ5rYdVw">什么是 Promise.allSettled() ！新手老手都要会？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Acg4p72r14rP7Jhqc06gRQ">一文彻底读懂 ESLint</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/KWk6JUzRrppX8MiO8CmefQ">你会用 ES6，那倒是用啊！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Jgr72y1pV7qu4bIiRkqSWQ">TS 类这十个知识点你都掌握了么？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LT15xiU13NFG5bmdHTAIRw">你不知道的 TypeScript 泛型</a></li>
+<li><a href="/%E5%89%8D%E7%AB%AF/js%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E8%BF%9B%E9%98%B6%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89%EF%BC%9Athis%E6%8C%87%E5%90%91/">js 核心知识进阶笔记：this 指向</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/aHRn0HPmyRTKGYB9_PygVg">这些 JavaScript 细节，你未必知道</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/i-FpapDtMy7izBRIGZZgEQ">【JS】1150- 如何写出更优雅的 JavaScript 代码</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/HS0fwQFOrDRE28MrpLJaQA">未来让人看不懂的那些 JavaScript 语法</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/tYYAh2zfoZuN11RWMkXtMg">面试官：能不能手写一个 Promise？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/yKMHb30LWZC8TM4Ge5rSGQ">[面试] 考验你对 Promise 的熟度之进阶应用题</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/8tJb3Tpw8XVEQbh3vN-Fow">使用 JavaScript 进行数据分组最优雅的方式</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7043348598595158030">给你一个可以中断的 Promise</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/DPtqJVI2GanL7Hmr9S_Y4A">【Babel】1186- 保姆级教学！这次一定学会 Babel 插件开发！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/uIkeydRZnqS-tjoDD1T0Tg">【Web 技术】192- JS 社区臭名昭著的一个问题</a></li>
+</ul>
+<h2 id="Vue"><a href="#Vue" class="headerlink" title="Vue"></a>Vue</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/D9csJDQLAUfzx_76QzuQnw">25 个 Vue 技巧，开发了 5 年了，才知道还能这么用</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/oDxAANZ9-Ni7ks-sh_3zmQ">用这招监听 Vue 的插槽变化</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/sWZn41_Fs-zD9OLQGzZ3Sg">史上最全 Vue 前端代码风格指南</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/lXtWoHpBki83BAogGccDqA">揭秘 Vue.js 九个性能优化技巧</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/cfe25e757d0e">全面解析 Vue3 Reactive 家族和 Ref 家族 API</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/o2i19azCkSBTlAr-I1cAAQ">【总结】1132- 在 Vue 中为什么不推荐用 index 做 key</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/cxWw-LX1CA2_wKLLanETjA">【总结】1143- 10 个建立和维护大型 Vue.js 项目的最佳实践</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/PtrrjMxo9una8m7WKf4hfA">分享 8 个非常实用的 Vue 自定义指令</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/loCsMYMVpGT5IvqHfuEJTw">【前车之鉴】Vue，你真的熟练了么？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/CV6rz73IA-tTI5JAPnJM5Q">Keep-alive 缓存及其缓存优化原理</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wZfK_k2oMpLOk62Esh0UGA">【Vuejs】1156- 聊聊 vue 中的 keep-alive</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/aME6gP4d6TgN5JPUiyHW9g">详解 30 道 Vue 面试题（建议收藏）</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/spTZ-Ga6LS82onP9TE7xOA">做好这 16 个方向，逐步搭建出团队的 vue3 前端架构</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/mPR-aiEhht76KjfIkCW_qA">研究大佬用 Vue 写的倒计时组件，学到了不少东西</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BujIaBnPS5QrVJE_Yh0Xqg">手摸手教你封装几个 Vue3 中很有用的组合式 API</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/mBTxBtlZh05Iduli5JTWNQ">【Web 技术】1173- 用了这么久的 require，你真的懂它的原理吗？</a></li>
+</ul>
+<h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7035628270439809055">探索 React 源码：初探 React fiber</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7040030267636973605">探索 React 源码：React Diff</a></li>
+</ul>
+<h2 id="前端相关"><a href="#前端相关" class="headerlink" title="前端相关"></a>前端相关</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LSAo2wvmP78gQx3oe7DDoA">5 个不常提及的 HTML 技巧</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZBbNzAnlCl6o8fsZ242AbQ">从 10 多秒到 1.05 秒！前端性能优化实践</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wI-_69GV3r55EMG-DaTNUA">应用性能前端监控，字节跳动这些年经验都在这了</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/K_FhwpgQTXDIS0qsKTq9_Q">学姐叫我看 CSS 新出的容器查询，然后把公共组件重构成响应式的！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/B3vVLzkgt8TAcTtMgFeHqg">现代 Web CI&#x2F;CD 系统的搭建</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ECQAxwAXISumKddHeyOIKw">谈谈我这些年对前端框架的理解</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ABsHQVp7plY75OSAmINXYA">不常见但是有用的 Chrome 调试技巧</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/IAWStFP2cCRa4es6liiAFA">灵感 | 12 组简单网页对话框设计</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dKB8FG7zZWUqds5IKMr8KA">使用 Performance 看看浏览器在做些什么</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/tCEsdLMdurcaVg7eOd5Iog">如何创建可扩展和可维护的前端架构</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wWXow0FN8_-qRbSvuRR_cQ">【Web 技术】1130- 有趣的二维码</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Hd_-uRmhC_1iUwf23T1u_A">Microsoft Edge：你不能不知道的 6 个 Web 开发者工具</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/U8Y_9erztwIr0Nve3mbOYA">【总结】1135- 图解虚拟 DOM 之 DIff 算法</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/TTYttwmdpoVxPkT120-HxA">当通用优化已完成，我们应该做什么？ — 飞书文档移动端优化实践</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/kYSs3jiSZ6xxrrLemH1ZaQ">关于 Web Component</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/248pCavOjAQYr_u6OTJvNg">【优化】1141- 网页渲染性能优化 —— 渲染原理</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BPHYIA34M_orajhUzufU9w">「前端基建」带你在 Babel 的世界中畅游</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzk0MDMwMzQyOA==&mid=2247490940&idx=1&sn=72511a0795a954bbaa0125b2cbb42751">2021 年你需要知道的 CSS 工程化技术</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Xm323TiYCvQ2fEforpWt1w">【Web 技术】1159- 浅析 Web 录屏技术方案与实现</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BmH2_BZAI7UveDFPTo5b4g">2021 年在 Web 领域有哪些关键进展？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/9qv6lShXSAw9424ApGvAvQ">Twitter 和微博都在用的 @ 人的功能是如何设计与实现的？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/N-gPNUE7gAJQLrOfnYIYfg">微前端 x 重构实践落地总结</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/DiEuJa8QXt2Ne2DJRW7NIA">当 Vite 遇上微前端</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7051783671455416351">探讨一下 To C 营销页面服务端渲染的必要性以及其背后的原理</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ADw-MOrRco2bxGgOraFGzw">LPL Ban&#x2F;Pick 选人阶段的遮罩效果是如何实现的？</a></li>
+</ul>
+<h2 id="开发相关"><a href="#开发相关" class="headerlink" title="开发相关"></a>开发相关</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzIxMjU5NjEwMA==&mid=2247503225&idx=1&sn=114089c430d1fd940ebfee7f19749a31">傻傻分不清之 Cookie、Session、Token、JWT</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/73aJLxU-rlpo9zxpQl2rpA">1 分钟带你认识从 “�” 到 “锟斤拷”</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Qf4AUlRHr4bvmIIsDRaw9Q">八幅漫画理解使用 JWT 设计的单点登录系统</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/I69v_lX-Wx7jxx9ddjT2Og">localhost 就一定是 localhost 么?</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/leE2DgDOl5z90hG2gG1Urw">听说你 ping 用的很 6 ？给我图解一下 ping 的工作原理！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/xAfgoX9NJCV7aZW6DXYqzg">分布式之接口幂等性</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg5ODUzNzMyNQ==&mid=2247484935&idx=1&sn=8ebc7afb0056b973fbcccdaf64a61c79">记住看小电影前一定要检查一下域名是不是 HTTPS 的，不然……</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA5NzgzODI5NA==&mid=2454062447&idx=2&sn=3d2ada8f61547a9bff735b43f246b213">75 张图带你了解网络设备、网络地址规划、静态路由、实战演练</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/w5yRfmRH6anG8pgW1-5Ykg">面试官问：生成订单 30 分钟未支付，则自动取消，该怎么实现？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/RthQvzLHZRGNo-z6X_7jQQ">把 Redis 当作队列来用，真的合适吗？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_3fkUOGQcKtgaTJyDnOz0w">大一学生想换 Linux 怎么样？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/qetX2j0TnxXwC-PQfnReWw">23 种设计模式，我竟然秒懂了…</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Y807oUfCDCrigFxziRCEMQ">彻底搞懂观察者模式</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/pMK9kI-umUT3g5I9emymqA">在树莓派上构建你的专属 K8S 集群！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7JIvM4gaLYKMv2q4X4rfoA">为啥妹子给我发的 Excel 打开之后是乱码？</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000040846926">就因为这三个知识点，我彻底学废了”正则表达式“</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/3vgv4nqOOXxRlb-Q1RVyBg">开发必掌握！JSON 数据交互和 RESTful 开发</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/RHOiMbLn6PNO4B_ODoGxew">B 站，强的离谱！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ggBydWbbTsYoBsv5PlU6eQ">常用正则表达式速查手册</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000040978572">一文讲透自适应熔断的原理和实现</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZtUapwzgiCkXzC2TiDoG3Q">《赵海平与张宏波谈编程语言》访谈实录</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5NYKCDjJpaK_iPLv592iBg">HTTP Host 头攻击，这是什么鬼？</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1aF411v7hU">IPv6 和 IPv4 的主要区别？子网掩码，二进制转化，地址分类，头部，安全有什么不同？</a></li>
+</ul>
+<h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://backlog.com/git-tutorial/cn/">猴子都能懂的 GIT 入门</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/uEFq9HMJ_1c9oUTbuFaoog">从原理上搞懂 Git，一篇文章就够了！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/KqDlaI_gMLfUN3At1WlBLg">说说对 git pull 和 git fetch 的理解？有什么区别？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/OabE6UjACJQikEMtPo0F1g">Git 各指令的本质，真是通俗易懂啊</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/KuyxyyQpXxinFv0lJEdIog">图解 Git 各种用法，简单明了，一目了然！</a></li>
+</ul>
+<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/C25UbyVaRjqGP3ybIjQr-g">MySQL-InnoDB 究竟如何巧妙实现，4 种事务的隔离级别</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/jITpaKSar7BlG0KVcjsf_A">历经 60 年，数据库的王者终于出现了……</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/iYIf8aAbwX54A3ndypGXKw">ClickHouse SQL 的十项优化规则</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/eWgsR2QX5ef1ZfxVZFjjmQ">面试被问执行 count(1)、count(*) 与 count(列名) 到底有什么区别？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/RSRzKwARDQky0JDqotwiYg">Kubernetes 上使用 Istio 对数据库进行蓝绿部署</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/OFPSsOfHhdQa4HYdvDTaRg">即使删了全库，如何半小时恢复？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/iFWuOiwGGZhj0SrVPApeNA">MySQL 用 limit 为什么会影响性能？</a></li>
+</ul>
+<h2 id="数据结构和算法"><a href="#数据结构和算法" class="headerlink" title="数据结构和算法"></a>数据结构和算法</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzI3NjQyMzI2Ng==&mid=2247491282&idx=1&sn=234ede22e3ec1a14ccb39d74b129a307">据说程序员等电梯的时候都想过调度算法</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg4NDU4Njk2Nw==&mid=2247486653&idx=1&sn=4b2466429e8c9aa4daf2572f52e44543">经典智力面试题：一家人过桥</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/CISO6yks2L7775Pf4j-LMg">图解索引</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/6XvcBIVblFz3Fdj15t6mzA">比冒泡算法还简单的排序算法：看起来满是 bug 的程序，居然是对的</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/yh7CVt_Vl7viTzn1hoH__g">腾讯终面：求两个文件中的 QQ 交集</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/b5kdt9aMs9SD4DmZb8TUmg">超详细教程！手把手带你使用 Raft 分布式共识性算法</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/mb0gMPMRxh3tsQQ3NnhOfw">干货 | 手撕十大经典排序算法</a></li>
+</ul>
+<h2 id="开源项目"><a href="#开源项目" class="headerlink" title="开源项目"></a>开源项目</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzIyMDkwODczNw==&mid=2247498262&idx=1&sn=886534663bb8209d4d9ad32232eb3d5d">推荐 130 个令你眼前一亮的网站，总有一个用得着</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/f2EgnA-aC9aB3XitYI9hog">这个 GitHub 项目能克隆你的声音</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/GBLjmQlTo1PkW-8fQFKHgA">微软开源超强工具箱：PowerToys</a> <a target="_blank" rel="noopener" href="http://d0.ananas.chaoxing.com/download/0e8920eb50dc5a13391d359f7ce18447?at_=1620895454009&ak_=1996d2e1303e43e24bd4d213a7175ec2&ad_=98eb4fe6f58518090ccae24362d5d582&fn=PowerToysSetup-0.37.2-x64.exe">(右键复制链接地址打开新窗口下载)</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/TZD8_3vLiWTWAU-jNtnLUQ">手痒想写项目？我挑了 10 个开源项目送你</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/aPCjaPkQYS7DS-WnBOqBsw">推荐一个基于 SpringBoot2 + MybatisPlus 的商城管理系统</a> ：<a target="_blank" rel="noopener" href="https://gitee.com/guchengwuyue/yshopmall">yshop 意象商城系统</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/TVs4CIwIu5RsthzoI68ROQ">前端进阶道路上不可错过的 21 个开源项目</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SfLIkU8E2b3sAO1qSUkyXA">无恒实验室联合 GORM 推出安全好用的 ORM 框架-GEN</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/NtmEKePOgymQPlS5PmvDig">终于，Python 也可以写前端了</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/TIDZ8q7RwZQ6-c4zdMQG_Q">都 2021 年了，你还在用 Jenkins ？赶快看看这些替代方案吧！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/DHqkGojwyWrj7gIaelIGsQ">一行命令堆出你的新垣结衣（已开源），有点牛！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7FZBI4zUUjK5D8-lhYwt6A">RedisJson 横空出世，性能碾压 ES 和 Mongo！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SpPcKEHnaGtQEkgv08V6Sg">2021 年 JavaScript 明星项目公布，最受欢迎的竟是它？</a></li>
+</ul>
+<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JQA4Noq2FQYISKJRwtl99A">带有 WebUI 的 HTTP Benchmark 小工具你用过吗？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/TvJ8Ev7uP-FrVlGHHHUr8A">让你纵横 GitHub 的五大神器</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/fLX_Yx_sUl8m9R2ZSmUjPQ">一文全面解析 postman 工具</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/QjwT2voiRhllnkvSpG4FyQ">这个开源工作流自动化工具，用了就不想丢！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/TpECaPdn2BIADpL0hiJLuQ">使用插件直接访问谷歌大陆镜像网站</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/8oYJ-GjtsCULHUWEGlwrHQ">再见 Typora！这款 Markdown 神器绝了！</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/8gAGMW_3V2WLrrd2Qo-CQA">字节工程师自研基于 IntelliJ 的终极文档套件</a></li>
+</ul>
+<h2 id="嵌入式、单片机"><a href="#嵌入式、单片机" class="headerlink" title="嵌入式、单片机"></a>嵌入式、单片机</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/NUVxNqOz7efVvGgK8RjLfA">STM32 夺命 100 问！你知道几个？</a></li>
+</ul>
+<h2 id="游戏开发"><a href="#游戏开发" class="headerlink" title="游戏开发"></a>游戏开发</h2><h2 id="其他未分类"><a href="#其他未分类" class="headerlink" title="其他未分类"></a>其他未分类</h2><ul>
+<li><a href="/%E5%B9%B2%E8%B4%A7/developer-roadmap">程序员学习路线</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/PZbV0hjn_vxazUnelM1xEg">常见代码重构技巧</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LZqaFG7CHGoHmrnSR4Nouw">萌新第一次用鸿蒙跑 hello world</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/gysYSMhHEBFej0YxhKdn9A">深度剖析 Linux 的 3 种“拷贝”命令</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Mf4y1a7PZ">OpenHarmony 鸿蒙内核 Liteos-a 最小系统移植教程(IMX6ULL 开发板)</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1eU4y1V73d">HarmonyOS × Ant Design | 鸿蒙图标设计规范评测</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Ry4y1t7Tj">2021 年最全面的 Jetpack 系统学习课程，看他就够了，更新中</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V64y197nj">【设计】Figma 的 Auto Layout 与组件的 Variants ｜ Auto Layout 等于 CSS Flex？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/bUehBVed8AhqTJs-0T5ogQ">FAQ | 使用 Kotlin 进行 Android 开发</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/DC6lMBZ9axCuqgg1Rtkn_Q">剑指 offer | 认识面试</a></li>
+</ul>
+<h2 id="文件分享"><a href="#文件分享" class="headerlink" title="文件分享"></a>文件分享</h2><ol>
+<li>java 华山版：链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/17qqv-p8GmMkLydpx-5bl5Q">https://pan.baidu.com/s/17qqv-p8GmMkLydpx-5bl5Q</a> 提取码: 8hyh</li>
+<li>程序员必知的硬核知识大全：链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1QVs0Cu-F_0AYRHDuU_OXkQ">https://pan.baidu.com/s/1QVs0Cu-F_0AYRHDuU_OXkQ</a> 提取码: ft64</li>
+<li>Git 的奇技淫巧：链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1an4yLUo6brX339vxj0OCzA">https://pan.baidu.com/s/1an4yLUo6brX339vxj0OCzA</a> 提取码: 9tr3</li>
+<li>Linux 高性能服务器编程：链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1SmF9P3YddQu0S3ohTgTP0g">https://pan.baidu.com/s/1SmF9P3YddQu0S3ohTgTP0g</a> 提取码：2333</li>
+<li>计算机程序的构造和解释（SICP 中文第 2 版）：链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/15yy_MbzfG_-NJMvMIdViyQ">https://pan.baidu.com/s/15yy_MbzfG_-NJMvMIdViyQ</a> 提取码：2333</li>
+<li>MySQL 笔记 链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1YjIWGnpAOk1SoOaPalVODw">https://pan.baidu.com/s/1YjIWGnpAOk1SoOaPalVODw</a> 提取码：2333</li>
+<li>机器学习资料：夕小瑶 NLP 全栈手册 链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/18R2dx5_Xm8o9bcAmM0o5FQ">https://pan.baidu.com/s/18R2dx5_Xm8o9bcAmM0o5FQ</a> 提取码：2333</li>
+</ol>
+
+      </div>
+      
+      
+      
+    </div>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wyatex</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"qghost.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="这一节讲解更复杂一点的数据结构，包括：联合类型、交叉类型、枚举类型、泛型。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ts笔记（3）：联合类型、交叉类型、枚举类型、泛型">
+<meta property="og:url" content="https://qghost.gitee.io/TypeScript/ts%E7%AC%94%E8%AE%B0%EF%BC%883%EF%BC%89%EF%BC%9A%E8%81%94%E5%90%88%E7%B1%BB%E5%9E%8B%E3%80%81%E4%BA%A4%E5%8F%89%E7%B1%BB%E5%9E%8B%E3%80%81%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B%E3%80%81%E6%B3%9B%E5%9E%8B/index.html">
+<meta property="og:site_name" content="Wyatex&#96;s blog">
+<meta property="og:description" content="这一节讲解更复杂一点的数据结构，包括：联合类型、交叉类型、枚举类型、泛型。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-02T02:32:30.000Z">
+<meta property="article:modified_time" content="2022-06-13T08:38:12.869Z">
+<meta property="article:author" content="Wyatex">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="TypeScript">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://qghost.gitee.io/TypeScript/ts%E7%AC%94%E8%AE%B0%EF%BC%883%EF%BC%89%EF%BC%9A%E8%81%94%E5%90%88%E7%B1%BB%E5%9E%8B%E3%80%81%E4%BA%A4%E5%8F%89%E7%B1%BB%E5%9E%8B%E3%80%81%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B%E3%80%81%E6%B3%9B%E5%9E%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://qghost.gitee.io/TypeScript/ts%E7%AC%94%E8%AE%B0%EF%BC%883%EF%BC%89%EF%BC%9A%E8%81%94%E5%90%88%E7%B1%BB%E5%9E%8B%E3%80%81%E4%BA%A4%E5%8F%89%E7%B1%BB%E5%9E%8B%E3%80%81%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B%E3%80%81%E6%B3%9B%E5%9E%8B/","path":"TypeScript/ts笔记（3）：联合类型、交叉类型、枚举类型、泛型/","title":"ts笔记（3）：联合类型、交叉类型、枚举类型、泛型"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ts笔记（3）：联合类型、交叉类型、枚举类型、泛型 | Wyatex`s blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Wyatex`s blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">67</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">18</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">111</span></a></li><li class="menu-item menu-item-编程"><a href="/programming/" rel="section"><i class="fa fa-book fa-fw"></i>编程</a></li><li class="menu-item menu-item-干货"><a href="/resources/" rel="section"><i class="fa fa-paperclip fa-fw"></i>干货</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%81%94%E5%90%88%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">联合类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%A4%E5%8F%89%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">交叉类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%88%E5%B9%B6%E6%8E%A5%E5%8F%A3%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text">合并接口类型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%88%E5%B9%B6%E8%81%94%E5%90%88%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">合并联合类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%94%E5%90%88%E3%80%81%E4%BA%A4%E5%8F%89%E7%BB%84%E5%90%88"><span class="nav-number">3.1.</span> <span class="nav-text">联合、交叉组合</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E7%BC%A9%E5%87%8F"><span class="nav-number">4.</span> <span class="nav-text">类型缩减</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B%EF%BC%9A%E8%AF%A6%E8%A7%A3%E5%B8%B8%E8%A7%81%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B%E7%9A%84-7-%E7%A7%8D%E7%94%A8%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">枚举类型：详解常见枚举类型的 7 种用法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9E%9A%E4%B8%BE"><span class="nav-number">5.1.</span> <span class="nav-text">字符串枚举</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%9E%84%E6%9E%9A%E4%B8%BE%EF%BC%88Heterogeneous-enums%EF%BC%89"><span class="nav-number">5.2.</span> <span class="nav-text">异构枚举（Heterogeneous enums）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E9%87%8F%E6%88%90%E5%91%98%E5%92%8C%E8%AE%A1%E7%AE%97%EF%BC%88%E5%80%BC%EF%BC%89%E6%88%90%E5%91%98"><span class="nav-number">5.3.</span> <span class="nav-text">常量成员和计算（值）成员</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE%E6%88%90%E5%91%98%E7%B1%BB%E5%9E%8B%E5%92%8C%E8%81%94%E5%90%88%E6%9E%9A%E4%B8%BE"><span class="nav-number">5.4.</span> <span class="nav-text">枚举成员类型和联合枚举</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E9%87%8F%E6%9E%9A%E4%B8%BE%EF%BC%88const-enums%EF%BC%89"><span class="nav-number">5.5.</span> <span class="nav-text">常量枚举（const enums）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%96%E9%83%A8%E6%9E%9A%E4%B8%BE%EF%BC%88Ambient-enums%EF%BC%89"><span class="nav-number">5.6.</span> <span class="nav-text">外部枚举（Ambient enums）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%9B%E5%9E%8B%EF%BC%9A%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8%E6%B3%9B%E5%9E%8B%E7%BA%A6%E6%9D%9F%E7%B1%BB%E5%9E%8B%E5%8F%98%E9%87%8F%EF%BC%9F"><span class="nav-number">6.</span> <span class="nav-text">泛型：如何正确使用泛型约束类型变量？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%B3%9B%E5%9E%8B%EF%BC%9F"><span class="nav-number">6.1.</span> <span class="nav-text">什么是泛型？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%9B%E5%9E%8B%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0"><span class="nav-number">6.2.</span> <span class="nav-text">泛型类型参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%9B%E5%9E%8B%E7%B1%BB"><span class="nav-number">6.3.</span> <span class="nav-text">泛型类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%9B%E5%9E%8B%E7%B1%BB%E5%9E%8B"><span class="nav-number">6.4.</span> <span class="nav-text">泛型类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%9B%E5%9E%8B%E7%BA%A6%E6%9D%9F"><span class="nav-number">6.5.</span> <span class="nav-text">泛型约束</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Wyatex"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Wyatex</p>
+  <div class="site-description" itemprop="description">这里是我用来做笔记的网站哟~</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wyatex" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wyatex" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wyatex@qq.com" title="E-Mail → mailto:wyatex@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.microloong.me/" title="https:&#x2F;&#x2F;blog.microloong.me" rel="noopener" target="_blank">MicroLOONG</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://qghost.gitee.io/TypeScript/ts%E7%AC%94%E8%AE%B0%EF%BC%883%EF%BC%89%EF%BC%9A%E8%81%94%E5%90%88%E7%B1%BB%E5%9E%8B%E3%80%81%E4%BA%A4%E5%8F%89%E7%B1%BB%E5%9E%8B%E3%80%81%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B%E3%80%81%E6%B3%9B%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Wyatex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wyatex`s blog">
+      <meta itemprop="description" content="这里是我用来做笔记的网站哟~">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ts笔记（3）：联合类型、交叉类型、枚举类型、泛型 | Wyatex`s blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ts笔记（3）：联合类型、交叉类型、枚举类型、泛型
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-02 10:32:30" itemprop="dateCreated datePublished" datetime="2021-11-02T10:32:30+08:00">2021-11-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-13 16:38:12" itemprop="dateModified" datetime="2022-06-13T16:38:12+08:00">2022-06-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/TypeScript/" itemprop="url" rel="index"><span itemprop="name">TypeScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>这一节讲解更复杂一点的数据结构，包括：联合类型、交叉类型、枚举类型、泛型。</p>
+<span id="more"></span>
+
+<h1 id="联合类型"><a href="#联合类型" class="headerlink" title="联合类型"></a>联合类型</h1><p>联合类型（Unions）用来表示变量、参数的类型不是单一原子类型，而可能是多种不同的类型的组合。</p>
+<p>我们主要通过“|”操作符分隔类型的语法来表示联合类型。这里，我们可以把“|”类比为 JavaScript 中的逻辑或 “||”，只不过前者表示可能的类型。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">formatPX</span>(<span class="params">size: <span class="built_in">number</span> | <span class="built_in">string</span></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> size === <span class="string">&#x27;number&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;size&#125;</span>px`</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> size === <span class="string">&#x27;string&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;<span class="built_in">parseInt</span>(size) || <span class="number">0</span>&#125;</span>px`</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">formatPX</span>(<span class="number">13</span>) <span class="comment">// ok</span></span><br><span class="line"><span class="title function_">formatPX</span>(<span class="string">&#x27;13px&#x27;</span>) <span class="comment">// ok</span></span><br><span class="line"><span class="title function_">formatPX</span>(<span class="literal">true</span>) <span class="comment">// ts(2345) &#x27;true&#x27; 类型不能赋予 &#x27;number | string&#x27; 类型</span></span><br><span class="line"><span class="title function_">formatPX</span>(<span class="literal">null</span>) <span class="comment">// ts(2345) &#x27;null&#x27; 类型不能赋予 &#x27;number | string&#x27; 类型</span></span><br></pre></td></tr></table></figure>
+
+<p>当然，我们可以组合任意个、任意类型来构造更满足我们诉求的类型。比如，我们希望给前边的示例再加一个 unit 参数表示可能单位，这个时候就可以声明一个字符串字面类型组成的联合类型，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">formatUnit</span>(<span class="params"></span></span><br><span class="line"><span class="params">  size: <span class="built_in">number</span> | <span class="built_in">string</span>,</span></span><br><span class="line"><span class="params">  unit: <span class="string">&#x27;px&#x27;</span> | <span class="string">&#x27;em&#x27;</span> | <span class="string">&#x27;rem&#x27;</span> | <span class="string">&#x27;%&#x27;</span> = <span class="string">&#x27;px&#x27;</span></span></span><br><span class="line"><span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">formatUnit</span>(<span class="number">1</span>, <span class="string">&#x27;em&#x27;</span>) <span class="comment">// ok</span></span><br><span class="line"><span class="title function_">formatUnit</span>(<span class="string">&#x27;1px&#x27;</span>, <span class="string">&#x27;rem&#x27;</span>) <span class="comment">// ok</span></span><br><span class="line"><span class="title function_">formatUnit</span>(<span class="string">&#x27;1px&#x27;</span>, <span class="string">&#x27;bem&#x27;</span>) <span class="comment">// ts(2345)</span></span><br></pre></td></tr></table></figure>
+
+<p>我们也可以使用类型别名抽离上边的联合类型，然后再将其进一步地联合，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">ModernUnit</span> = <span class="string">&#x27;vh&#x27;</span> | <span class="string">&#x27;vw&#x27;</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Unit</span> = <span class="string">&#x27;px&#x27;</span> | <span class="string">&#x27;em&#x27;</span> | <span class="string">&#x27;rem&#x27;</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">MessedUp</span> = <span class="title class_">ModernUnit</span> | <span class="title class_">Unit</span> <span class="comment">// 类型是 &#x27;vh&#x27; | &#x27;vw&#x27; | &#x27;px&#x27; | &#x27;em&#x27; | &#x27;rem&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>我们也可以把接口类型联合起来表示更复杂的结构，如下所示示例（援引官方示例，顺带复习一下类型断言 as）：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Bird</span> &#123;</span><br><span class="line">  <span class="title function_">fly</span>(): <span class="built_in">void</span></span><br><span class="line">  <span class="title function_">layEggs</span>(): <span class="built_in">void</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Fish</span> &#123;</span><br><span class="line">  <span class="title function_">swim</span>(): <span class="built_in">void</span></span><br><span class="line">  <span class="title function_">layEggs</span>(): <span class="built_in">void</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">getPet</span>: <span class="function">() =&gt;</span> <span class="title class_">Bird</span> | <span class="title class_">Fish</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125; <span class="keyword">as</span> <span class="title class_">Bird</span> | <span class="title class_">Fish</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Pet</span> = <span class="title function_">getPet</span>()</span><br><span class="line"><span class="title class_">Pet</span>.<span class="title function_">layEggs</span>() <span class="comment">// ok</span></span><br><span class="line"><span class="title class_">Pet</span>.<span class="title function_">fly</span>() <span class="comment">// ts(2339) &#x27;Fish&#x27; 没有 &#x27;fly&#x27; 属性; &#x27;Bird | Fish&#x27; 没有 &#x27;fly&#x27; 属性</span></span><br></pre></td></tr></table></figure>
+
+<p>从上边的示例可以看到，在联合类型中，我们可以直接访问各个接口成员都拥有的属性、方法，且不会提示类型错误。但是，如果是个别成员特有的属性、方法，我们就需要区分对待了，此时又要引入类型守卫来区分不同的成员类型。</p>
+<p>只不过，在这种情况下，我们还需要使用基于 in 操作符判断的类型守卫，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="title class_">Pet</span>.<span class="property">fly</span> === <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">  <span class="comment">// ts(2339)</span></span><br><span class="line">  <span class="title class_">Pet</span>.<span class="title function_">fly</span>() <span class="comment">// ts(2339)</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (<span class="string">&#x27;fly&#x27;</span> <span class="keyword">in</span> <span class="title class_">Pet</span>) &#123;</span><br><span class="line">  <span class="title class_">Pet</span>.<span class="title function_">fly</span>() <span class="comment">// ok</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为 Pet 的类型既可能是 Bird 也可能是 Fish，这就意味着在第 1 行可能会通过 Fish 类型获取 fly 属性，但 Fish 类型没有 fly 属性定义，所以会提示一个 ts(2339) 错误。</p>
+<h1 id="交叉类型"><a href="#交叉类型" class="headerlink" title="交叉类型"></a>交叉类型</h1><p>在 TypeScript 中，我们可以使用“&amp;”操作符来声明交叉类型，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Useless</span> = <span class="built_in">string</span> &amp; <span class="built_in">number</span></span><br></pre></td></tr></table></figure>
+
+<p>很显然，如果我们仅仅把原始类型、字面量类型、函数类型等原子类型合并成交叉类型，是没有任何用处的，因为任何类型都不能满足同时属于多种原子类型，比如既是 string 类型又是 number 类型。因此，在上述的代码中，类型别名 Useless 的类型就是个 never。</p>
+<h2 id="合并接口类型"><a href="#合并接口类型" class="headerlink" title="合并接口类型"></a>合并接口类型</h2><p>联合类型真正的用武之地就是将多个接口类型合并成一个类型，从而实现等同接口继承的效果，也就是所谓的合并接口类型，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">IntersectionType</span> = &#123; <span class="attr">id</span>: <span class="built_in">number</span>; <span class="attr">name</span>: <span class="built_in">string</span> &#125; &amp; &#123; <span class="attr">age</span>: <span class="built_in">number</span> &#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">mixed</span>: <span class="title class_">IntersectionType</span> = &#123;</span><br><span class="line">  <span class="attr">id</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;name&#x27;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">18</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述示例中，我们通过交叉类型，使得 IntersectionType 同时拥有了 id、name、age 所有属性，这里我们可以试着将合并接口类型理解为求并集。</p>
+<blockquote>
+<p>如果合并的多个接口类型存在同名属性会是什么效果呢？如果同名属性的类型不兼容，比如上面示例中两个接口类型同名的 name 属性类型一个是 number，另一个是 string，合并后，name 属性的类型就是 number 和 string 两个原子类型的交叉类型，即 never，如下代码所示：</p>
+</blockquote>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">IntersectionTypeConfict</span> = &#123; <span class="attr">id</span>: <span class="built_in">number</span>; <span class="attr">name</span>: <span class="built_in">string</span> &#125; &amp; &#123;</span><br><span class="line">  <span class="attr">age</span>: <span class="built_in">number</span></span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">number</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">mixedConflict</span>: <span class="title class_">IntersectionTypeConfict</span> = &#123;</span><br><span class="line">  <span class="attr">id</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">name</span>: <span class="number">2</span>, <span class="comment">// ts(2322) 错误，&#x27;number&#x27; 类型不能赋给 &#x27;never&#x27; 类型</span></span><br><span class="line">  <span class="attr">age</span>: <span class="number">2</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时，我们赋予 mixedConflict 任意类型的 name 属性值都会提示类型错误。而如果我们不设置 name 属性，又会提示一个缺少必选的 name 属性的错误。在这种情况下，就意味着上述代码中交叉出来的 IntersectionTypeConfict 类型是一个无用类型。</p>
+<p>如果同名属性的类型兼容，比如一个是 number，另一个是 number 的子类型、数字字面量类型，合并后 name 属性的类型就是两者中的子类型。</p>
+<p>如下所示示例中 name 属性的类型就是数字字面量类型 2，因此，我们不能把任何非 2 之外的值赋予 name 属性。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">IntersectionTypeConfict</span> = &#123; <span class="attr">id</span>: <span class="built_in">number</span>; <span class="attr">name</span>: <span class="number">2</span> &#125; &amp; &#123;</span><br><span class="line">  <span class="attr">age</span>: <span class="built_in">number</span></span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">number</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> <span class="attr">mixedConflict</span>: <span class="title class_">IntersectionTypeConfict</span> = &#123;</span><br><span class="line">  <span class="attr">id</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">name</span>: <span class="number">2</span>, <span class="comment">// ok</span></span><br><span class="line">  <span class="attr">age</span>: <span class="number">2</span>,</span><br><span class="line">&#125;</span><br><span class="line">mixedConflict = &#123;</span><br><span class="line">  <span class="attr">id</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">name</span>: <span class="number">22</span>, <span class="comment">// &#x27;22&#x27; 类型不能赋给 &#x27;2&#x27; 类型</span></span><br><span class="line">  <span class="attr">age</span>: <span class="number">2</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="合并联合类型"><a href="#合并联合类型" class="headerlink" title="合并联合类型"></a>合并联合类型</h1><p>另外，我们可以合并联合类型为一个交叉类型，这个交叉类型需要同时满足不同的联合类型限制，也就是提取了所有联合类型的相同类型成员。这里，我们也可以将合并联合类型理解为求交集。在如下示例中，两个联合类型交叉出来的类型 IntersectionUnion 其实等价于 ‘em’ | ‘rem’</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">UnionA</span> = <span class="string">&#x27;px&#x27;</span> | <span class="string">&#x27;em&#x27;</span> | <span class="string">&#x27;rem&#x27;</span> | <span class="string">&#x27;%&#x27;</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">UnionB</span> = <span class="string">&#x27;vh&#x27;</span> | <span class="string">&#x27;em&#x27;</span> | <span class="string">&#x27;rem&#x27;</span> | <span class="string">&#x27;pt&#x27;</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">IntersectionUnion</span> = <span class="title class_">UnionA</span> &amp; <span class="title class_">UnionB</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">intersectionA</span>: <span class="title class_">IntersectionUnion</span> = <span class="string">&#x27;em&#x27;</span> <span class="comment">// ok</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">intersectionB</span>: <span class="title class_">IntersectionUnion</span> = <span class="string">&#x27;rem&#x27;</span> <span class="comment">// ok</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">intersectionC</span>: <span class="title class_">IntersectionUnion</span> = <span class="string">&#x27;px&#x27;</span> <span class="comment">// ts(2322)</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">intersectionD</span>: <span class="title class_">IntersectionUnion</span> = <span class="string">&#x27;pt&#x27;</span> <span class="comment">// ts(2322)</span></span><br></pre></td></tr></table></figure>
+
+<p>既然是求交集，如果多个联合类型中没有相同的类型成员，交叉出来的类型自然就是 never 了，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">UnionC</span> = <span class="string">&#x27;em&#x27;</span> | <span class="string">&#x27;rem&#x27;</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">UnionD</span> = <span class="string">&#x27;px&#x27;</span> | <span class="string">&#x27;pt&#x27;</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">IntersectionUnionE</span> = <span class="title class_">UnionC</span> &amp; <span class="title class_">UnionD</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">intersectionE</span>: <span class="title class_">IntersectionUnionE</span> = <span class="string">&#x27;any&#x27;</span> <span class="keyword">as</span> <span class="built_in">any</span> <span class="comment">// ts(2322) 不能赋予 &#x27;never&#x27; 类型</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="联合、交叉组合"><a href="#联合、交叉组合" class="headerlink" title="联合、交叉组合"></a>联合、交叉组合</h2><p>在前面的示例中，我们把一些联合、交叉类型抽离成了类型别名，再把它作为原子类型进行进一步的联合、交叉。其实，联合、交叉类型本身就可以直接组合使用，这就涉及 |、&amp; 操作符的优先级问题。实际上，联合、交叉运算符不仅在行为上表现一致，还在运算的优先级和 JavaScript 的逻辑或 ||、逻辑与 &amp;&amp; 运算符上表现一致 。</p>
+<p>联合操作符 | 的优先级低于交叉操作符 &amp;，同样，我们可以通过使用小括弧 () 来调整操作符的优先级。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">UnionIntersectionA</span> =</span><br><span class="line">  | (&#123; <span class="attr">id</span>: <span class="built_in">number</span> &#125; &amp; &#123; <span class="attr">name</span>: <span class="built_in">string</span> &#125;)</span><br><span class="line">  | (&#123; <span class="attr">id</span>: <span class="built_in">string</span> &#125; &amp; &#123; <span class="attr">name</span>: <span class="built_in">number</span> &#125;) <span class="comment">// 交叉操作符优先级高于联合操作符</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">UnionIntersectionB</span> =</span><br><span class="line">  | (<span class="string">&#x27;px&#x27;</span> | <span class="string">&#x27;em&#x27;</span> | <span class="string">&#x27;rem&#x27;</span> | <span class="string">&#x27;%&#x27;</span>)</span><br><span class="line">  | (<span class="string">&#x27;vh&#x27;</span> | <span class="string">&#x27;em&#x27;</span> | <span class="string">&#x27;rem&#x27;</span> | <span class="string">&#x27;pt&#x27;</span>) <span class="comment">// 调整优先级</span></span><br></pre></td></tr></table></figure>
+
+<p>进而，我们也可以把分配率、交换律等基本规则引入类型组合中，然后优化出更简洁、清晰的类型，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">UnionIntersectionC</span> = (</span><br><span class="line">  | (&#123; <span class="attr">id</span>: <span class="built_in">number</span> &#125; &amp; &#123; <span class="attr">name</span>: <span class="built_in">string</span> &#125;)</span><br><span class="line">  | &#123; <span class="attr">id</span>: <span class="built_in">string</span> &#125;</span><br><span class="line">) &amp; &#123; <span class="attr">name</span>: <span class="built_in">number</span> &#125;</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">UnionIntersectionD</span> =</span><br><span class="line">  | (&#123; <span class="attr">id</span>: <span class="built_in">number</span> &#125; &amp; &#123; <span class="attr">name</span>: <span class="built_in">string</span> &#125; &amp; &#123; <span class="attr">name</span>: <span class="built_in">number</span> &#125;)</span><br><span class="line">  | (&#123; <span class="attr">id</span>: <span class="built_in">string</span> &#125; &amp; &#123; <span class="attr">name</span>: <span class="built_in">number</span> &#125;) <span class="comment">// 满足分配率</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">UnionIntersectionE</span> = (</span><br><span class="line">  | &#123; <span class="attr">id</span>: <span class="built_in">string</span> &#125;</span><br><span class="line">  | (&#123; <span class="attr">id</span>: <span class="built_in">number</span> &#125; &amp; &#123; <span class="attr">name</span>: <span class="built_in">string</span> &#125;)</span><br><span class="line">) &amp; &#123; <span class="attr">name</span>: <span class="built_in">number</span> &#125; <span class="comment">// 满足交换律</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="类型缩减"><a href="#类型缩减" class="headerlink" title="类型缩减"></a>类型缩减</h1><p>如果将 string 原始类型和“string 字面量类型”组合成联合类型会是什么效果？效果就是类型缩减成 string 了。同样，对于 number、boolean（其实还有枚举类型）也是一样的缩减逻辑，如下所示示例：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">URStr</span> = <span class="string">&#x27;string&#x27;</span> | <span class="built_in">string</span> <span class="comment">// 类型是 string</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">URNum</span> = <span class="number">2</span> | <span class="built_in">number</span> <span class="comment">// 类型是 number</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">URBoolen</span> = <span class="literal">true</span> | <span class="built_in">boolean</span> <span class="comment">// 类型是 boolean</span></span><br><span class="line"><span class="keyword">enum</span> <span class="title class_">EnumUR</span> &#123;</span><br><span class="line">  <span class="variable constant_">ONE</span>,</span><br><span class="line">  <span class="variable constant_">TWO</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">URE</span> = <span class="title class_">EnumUR</span>.<span class="property">ONE</span> | <span class="title class_">EnumUR</span> <span class="comment">// 类型是 EnumUR</span></span><br></pre></td></tr></table></figure>
+
+<p>TypeScript 对这样的场景做了缩减，它把字面量类型、枚举成员类型缩减掉，只保留原始类型、枚举类型等父类型，这是合理的“优化”。可是这个缩减，却极大地削弱了 IDE 自动提示的能力，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">BorderColor</span> = <span class="string">&#x27;black&#x27;</span> | <span class="string">&#x27;red&#x27;</span> | <span class="string">&#x27;green&#x27;</span> | <span class="string">&#x27;yellow&#x27;</span> | <span class="string">&#x27;blue&#x27;</span> | <span class="built_in">string</span> <span class="comment">// 类型缩减成 string</span></span><br></pre></td></tr></table></figure>
+
+<p>在上述代码中，我们希望 IDE 能自动提示显示注解的字符串字面量，但是因为类型被缩减成 string，所有的字符串字面量 black、red 等都无法自动提示出来了。不要慌，TypeScript 官方其实还提供了一个黑魔法，它可以让类型缩减被控制。如下代码所示，我们只需要给父类型添加“&amp; {}”即可。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">BorderColor</span> = <span class="string">&#x27;black&#x27;</span> | <span class="string">&#x27;red&#x27;</span> | <span class="string">&#x27;green&#x27;</span> | <span class="string">&#x27;yellow&#x27;</span> | <span class="string">&#x27;blue&#x27;</span> | (<span class="built_in">string</span> &amp; &#123;&#125;) <span class="comment">// 字面类型都被保留</span></span><br></pre></td></tr></table></figure>
+
+<p>此时，其他字面量类型就不会被缩减掉了，在 IDE 中字符串字面量 black、red 等也就自然地可以自动提示出来了。此外，当联合类型的成员是接口类型，如果满足其中一个接口的属性是另外一个接口属性的子集，这个属性也会类型缩减，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">UnionInterce</span> =</span><br><span class="line">  | &#123;</span><br><span class="line">      <span class="attr">age</span>: <span class="string">&#x27;1&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  | &#123;</span><br><span class="line">      <span class="attr">age</span>: <span class="string">&#x27;1&#x27;</span> | <span class="string">&#x27;2&#x27;</span></span><br><span class="line">      [<span class="attr">key</span>: <span class="built_in">string</span>]: <span class="built_in">string</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里因为 ‘1’ 是 ‘1’ | ‘2’ 的子集，所以 age 的属性变成 ‘1’ | ‘2’</p>
+<p>如何定义如下所示 age 属性是数字类型，而其他不确定的属性是字符串类型的数据结构的对象？比如这样</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">age</span>: <span class="number">1</span>, <span class="comment">// 数字类型</span></span><br><span class="line">  <span class="attr">anyProperty</span>: <span class="string">&#x27;str&#x27;</span>, <span class="comment">// 其他不确定的属性都是字符串类型</span></span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>想必你应该明白了，我们肯定要用到两个接口的联合类型及类型缩减，这个问题的核心在于找到一个既是 number 的子类型，这样 age 类型缩减之后的类型就是 number；同时也是 string 的子类型，这样才能满足属性和 string 索引类型的约束关系。</p>
+<p>哪个类型满足这个条件呢？我们一起回忆一下特殊类型 never。</p>
+<p>never 有一个特性是它是所有类型的子类型，自然也是 number 和 string 的子类型，所以答案如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">UnionInterce</span> =</span><br><span class="line">  | &#123;</span><br><span class="line">      <span class="attr">age</span>: <span class="built_in">number</span></span><br><span class="line">    &#125;</span><br><span class="line">  | &#123;</span><br><span class="line">      <span class="attr">age</span>: <span class="built_in">never</span></span><br><span class="line">      [<span class="attr">key</span>: <span class="built_in">string</span>]: <span class="built_in">string</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">O</span>: <span class="title class_">UnionInterce</span> = &#123;</span><br><span class="line">  <span class="attr">age</span>: <span class="number">2</span>,</span><br><span class="line">  <span class="attr">string</span>: <span class="string">&#x27;string&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述代码中，我们在第 3 行定义了 number 类型的 age 属性，第 6 行定义了 never 类型的 age 属性，等价于 age 属性的类型是由 number 和 never 类型组成的联合类型，所以我们可以把 number 类型的值（比如说数字字面量 1）赋予 age 属性；但是不能把其他任何类型的值（比如说字符串字面量 ‘string’ ）赋予 age。</p>
+<p>同时，我们在第 5 行<del>第 8 行定义的接口类型中，还额外定义了 string 类型的字符串索引签名。因为 never 同时又是 string 类型的子类型，所以 age 属性的类型和字符串索引签名类型不冲突。如第 9 行</del>第 12 行所示，我们可以把一个 age 属性是 2、string 属性是 ‘string’ 的对象字面量赋值给 UnionInterce 类型的变量 O。</p>
+<h1 id="枚举类型：详解常见枚举类型的-7-种用法"><a href="#枚举类型：详解常见枚举类型的-7-种用法" class="headerlink" title="枚举类型：详解常见枚举类型的 7 种用法"></a>枚举类型：详解常见枚举类型的 7 种用法</h1><p>在 TypeScript 中，我们可以使用枚举定义包含被命名的常量的集合，比如 TypeScript 支持数字、字符两种常量值的枚举类型。我们也可以使用 enum 关键字定义枚举类型，格式是 enum + 枚举名字 + 一对花括弧，花括弧里则是被命名了的常量成员。下面我们把前边表示星期的联合类型示例使用枚举类型实现一遍，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">Day</span> &#123;</span><br><span class="line">  <span class="variable constant_">SUNDAY</span>,</span><br><span class="line">  <span class="variable constant_">MONDAY</span>,</span><br><span class="line">  <span class="variable constant_">TUESDAY</span>,</span><br><span class="line">  <span class="variable constant_">WEDNESDAY</span>,</span><br><span class="line">  <span class="variable constant_">THURSDAY</span>,</span><br><span class="line">  <span class="variable constant_">FRIDAY</span>,</span><br><span class="line">  <span class="variable constant_">SATURDAY</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>转译为 JavaScript 后:</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">Day</span> = <span class="built_in">void</span> <span class="number">0</span></span><br><span class="line">;(<span class="keyword">function</span> (<span class="params">Day</span>) &#123;</span><br><span class="line">  <span class="title class_">Day</span>[(<span class="title class_">Day</span>[<span class="string">&#x27;SUNDAY&#x27;</span>] = <span class="number">0</span>)] = <span class="string">&#x27;SUNDAY&#x27;</span></span><br><span class="line">  <span class="title class_">Day</span>[(<span class="title class_">Day</span>[<span class="string">&#x27;MONDAY&#x27;</span>] = <span class="number">1</span>)] = <span class="string">&#x27;MONDAY&#x27;</span></span><br><span class="line">  <span class="title class_">Day</span>[(<span class="title class_">Day</span>[<span class="string">&#x27;TUESDAY&#x27;</span>] = <span class="number">2</span>)] = <span class="string">&#x27;TUESDAY&#x27;</span></span><br><span class="line">  <span class="title class_">Day</span>[(<span class="title class_">Day</span>[<span class="string">&#x27;WEDNESDAY&#x27;</span>] = <span class="number">3</span>)] = <span class="string">&#x27;WEDNESDAY&#x27;</span></span><br><span class="line">  <span class="title class_">Day</span>[(<span class="title class_">Day</span>[<span class="string">&#x27;THURSDAY&#x27;</span>] = <span class="number">4</span>)] = <span class="string">&#x27;THURSDAY&#x27;</span></span><br><span class="line">  <span class="title class_">Day</span>[(<span class="title class_">Day</span>[<span class="string">&#x27;FRIDAY&#x27;</span>] = <span class="number">5</span>)] = <span class="string">&#x27;FRIDAY&#x27;</span></span><br><span class="line">  <span class="title class_">Day</span>[(<span class="title class_">Day</span>[<span class="string">&#x27;SATURDAY&#x27;</span>] = <span class="number">6</span>)] = <span class="string">&#x27;SATURDAY&#x27;</span></span><br><span class="line">&#125;)(<span class="title class_">Day</span> || (<span class="title class_">Day</span> = &#123;&#125;))</span><br></pre></td></tr></table></figure>
+
+<p>在 TypeScript 中，我们可以通过“枚举名字.常量命名”的格式获取枚举集合里的成员，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">work</span>(<span class="params">d: Day</span>) &#123;</span><br><span class="line">  <span class="keyword">switch</span> (d) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="title class_">Day</span>.<span class="property">SUNDAY</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="title class_">Day</span>.<span class="property">SATURDAY</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&#x27;take a rest&#x27;</span></span><br><span class="line">    <span class="keyword">case</span> <span class="title class_">Day</span>.<span class="property">MONDAY</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="title class_">Day</span>.<span class="property">TUESDAY</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="title class_">Day</span>.<span class="property">WEDNESDAY</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="title class_">Day</span>.<span class="property">THURSDAY</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="title class_">Day</span>.<span class="property">FRIDAY</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&#x27;work hard&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果等效于:</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (d) &#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">  <span class="keyword">case</span> <span class="number">6</span>:</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;take a rest&#x27;</span></span><br><span class="line">  <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">  <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">  <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">  <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">  <span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;work hard&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这就意味着在 JavaScript 中调用 work 函数时，传递的参数无论是 enum 还是数值，逻辑上将没有区别，当然这也符合 TypeScript 静态类型检测规则，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">work</span>(<span class="title class_">Day</span>.<span class="property">SUNDAY</span>) <span class="comment">// ok</span></span><br><span class="line"><span class="title function_">work</span>(<span class="number">0</span>) <span class="comment">// ok</span></span><br></pre></td></tr></table></figure>
+
+<p>如果我们希望枚举值从其他值开始递增，则可以通过“常量命名 &#x3D; 数值” 的格式显示指定枚举成员的初始值，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">Day</span> &#123;</span><br><span class="line">  <span class="variable constant_">SUNDAY</span> = <span class="number">1</span>,</span><br><span class="line">  <span class="variable constant_">MONDAY</span>, <span class="comment">// 2</span></span><br><span class="line">  <span class="variable constant_">TUESDAY</span>, <span class="comment">// 3</span></span><br><span class="line">  <span class="variable constant_">WEDNESDAY</span>, <span class="comment">// ...</span></span><br><span class="line">  <span class="variable constant_">THURSDAY</span>,</span><br><span class="line">  <span class="variable constant_">FRIDAY</span>,</span><br><span class="line">  <span class="variable constant_">SATURDAY</span>, <span class="comment">// 7</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当然我们也可以给任意位置的成员指定值，如下所示示例：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">Day</span> &#123;</span><br><span class="line">  <span class="variable constant_">SUNDAY</span>,</span><br><span class="line">  <span class="variable constant_">MONDAY</span>,</span><br><span class="line">  <span class="variable constant_">TUESDAY</span>,</span><br><span class="line">  <span class="variable constant_">WEDNESDAY</span>,</span><br><span class="line">  <span class="variable constant_">THURSDAY</span>,</span><br><span class="line">  <span class="variable constant_">FRIDAY</span>,</span><br><span class="line">  <span class="variable constant_">SATURDAY</span> = <span class="number">5</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 转移后</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="title class_">Day</span>[(<span class="title class_">Day</span>[<span class="string">&#x27;FRIDAY&#x27;</span>] = <span class="number">5</span>)] = <span class="string">&#x27;FRIDAY&#x27;</span></span><br><span class="line"><span class="title class_">Day</span>[(<span class="title class_">Day</span>[<span class="string">&#x27;SATURDAY&#x27;</span>] = <span class="number">5</span>)] = <span class="string">&#x27;SATURDAY&#x27;</span></span><br><span class="line"><span class="comment">//...</span></span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到 MyDay.FRIDAY 和 MyDay.SATURDAY 的值都是数字 5，这就导致使用 Day 枚举作为 switch 分支条件的函数 work，在接收 MyDay.SATURDAY 作为入参时，也会进入 MyDay.FRIDAY 的分支，从而出现逻辑错误。</p>
+<p>这个经验告诉我们，由于枚举默认的值自递增且完全无法保证稳定性，所以给部分数字类型的枚举成员显式指定数值或给函数传递数值而不是枚举类型作为入参都属于不明智的行为。</p>
+<p>此外，常量命名、结构顺序都一致的两个枚举，即便转译为 JavaScript 后，同名成员的值仍然一样（满足恒等 &#x3D;&#x3D;&#x3D; ）。但在 TypeScript 看来，它们不相同、不满足恒等，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">MyDay</span> &#123;</span><br><span class="line">  <span class="variable constant_">SUNDAY</span>,</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Day</span>.<span class="property">SUNDAY</span> === <span class="title class_">MyDay</span>.<span class="property">SUNDAY</span> <span class="comment">// ts(2367) 两个枚举值恒不相等</span></span><br><span class="line"><span class="title function_">work</span>(<span class="title class_">MyDay</span>.<span class="property">SUNDAY</span>) <span class="comment">// ts(2345) &#x27;MyDay.SUNDAY&#x27; 不能赋予 &#x27;Day&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串枚举"><a href="#字符串枚举" class="headerlink" title="字符串枚举"></a>字符串枚举</h2><p>在 TypeScript 中，我们将定义值是字符串字面量的枚举称之为字符串枚举，字符串枚举转译为 JavaScript 之后也将保持这些值，我们来看下如下所示示例：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">Day</span> &#123;</span><br><span class="line">  <span class="variable constant_">SUNDAY</span> = <span class="string">&#x27;SUNDAY&#x27;</span>,</span><br><span class="line">  <span class="variable constant_">MONDAY</span> = <span class="string">&#x27;MONDAY&#x27;</span>,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 转译后</span></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">Day</span></span><br><span class="line">;(<span class="keyword">function</span> (<span class="params">Day</span>) &#123;</span><br><span class="line">  <span class="title class_">Day</span>[<span class="string">&#x27;SUNDAY&#x27;</span>] = <span class="string">&#x27;SUNDAY&#x27;</span></span><br><span class="line">  <span class="title class_">Day</span>[<span class="string">&#x27;MONDAY&#x27;</span>] = <span class="string">&#x27;MONDAY&#x27;</span></span><br><span class="line">&#125;)(<span class="title class_">Day</span> || (<span class="title class_">Day</span> = &#123;&#125;))</span><br></pre></td></tr></table></figure>
+
+<p>这里我们定义了成员 SUNDAY 的值是 ‘SUNDAY’、MONDAY 的值是 ‘MONDAY’。</p>
+<h2 id="异构枚举（Heterogeneous-enums）"><a href="#异构枚举（Heterogeneous-enums）" class="headerlink" title="异构枚举（Heterogeneous enums）"></a>异构枚举（Heterogeneous enums）</h2><p>从技术上来讲，TypeScript 支持枚举类型同时拥有数字和字符类型的成员，这样的枚举被称之为异构枚举。</p>
+<p>当然，异构枚举也被认为是很“鸡肋”的类型。比如如下示例中，我们定义了成员 SUNDAY 是 ‘SUNDAY’、MONDAY 是 2，很抱歉，我也不知道这样的枚举能在哪些有用的场合进行使用。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">Day</span> &#123;</span><br><span class="line">  <span class="variable constant_">SUNDAY</span> = <span class="string">&#x27;SUNDAY&#x27;</span>,</span><br><span class="line">  <span class="variable constant_">MONDAY</span> = <span class="number">2</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="常量成员和计算（值）成员"><a href="#常量成员和计算（值）成员" class="headerlink" title="常量成员和计算（值）成员"></a>常量成员和计算（值）成员</h2><p>在前边示例中，涉及的枚举成员的值都是字符串、数字字面量和未指定初始值从 0 递增数字常量，都被称作常量成员。</p>
+<p>另外，在转译时，通过被计算的常量枚举表达式定义值的成员，也被称作常量成员，比如如下几种情况：</p>
+<ul>
+<li>引用来自预先定义的常量成员，比如来自当前枚举或其他枚举；</li>
+<li>圆括弧 () 包裹的常量枚举表达式；</li>
+<li>在常量枚举表达式上应用的一元操作符 +、 -、~ ；</li>
+<li>操作常量枚举表达式的二元操作符 +、-、*、&#x2F;、%、&lt;&lt;、&gt;&gt;、&gt;&gt;&gt;、&amp;、|、^。</li>
+</ul>
+<p>除以上这些情况之外，其他都被认为是计算（值）成员。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">FileAccess</span> &#123;</span><br><span class="line">  <span class="comment">// 常量成员</span></span><br><span class="line">  <span class="title class_">None</span>,</span><br><span class="line">  <span class="title class_">Read</span> = <span class="number">1</span> &lt;&lt; <span class="number">1</span>,</span><br><span class="line">  <span class="title class_">Write</span> = <span class="number">1</span> &lt;&lt; <span class="number">2</span>,</span><br><span class="line">  <span class="title class_">ReadWrite</span> = <span class="title class_">Read</span> | <span class="title class_">Write</span>,</span><br><span class="line">  <span class="comment">// 计算成员</span></span><br><span class="line">  G = <span class="string">&#x27;123&#x27;</span>.<span class="property">length</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：关于常量成员和计算成员的划分其实比较难理解，实际上它们也并没有太大的用处，只是告诉我们通过这些途径可以定义枚举成员的值。因此，我们只需记住缺省值（从 0 递增）、数字字面量、字符串字面量肯定是常量成员就够了。</p>
+</blockquote>
+<h2 id="枚举成员类型和联合枚举"><a href="#枚举成员类型和联合枚举" class="headerlink" title="枚举成员类型和联合枚举"></a>枚举成员类型和联合枚举</h2><p>枚举成员和枚举类型之间的关系分两种情况： 如果枚举的成员同时包含字面量和非字面量枚举值，枚举成员的类型就是枚举本身（枚举类型本身也是本身的子类型）；如果枚举成员全部是字面量枚举值，则所有枚举成员既是值又是类型，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">Day</span> &#123;</span><br><span class="line">  <span class="variable constant_">SUNDAY</span>,</span><br><span class="line">  <span class="variable constant_">MONDAY</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">enum</span> <span class="title class_">MyDay</span> &#123;</span><br><span class="line">  <span class="variable constant_">SUNDAY</span>,</span><br><span class="line">  <span class="variable constant_">MONDAY</span> = <span class="title class_">Day</span>.<span class="property">MONDAY</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">mondayIsDay</span>: <span class="title class_">Day</span>.<span class="property">MONDAY</span> = <span class="title class_">Day</span>.<span class="property">MONDAY</span> <span class="comment">// ok: 字面量枚举成员既是值，也是类型</span></span><br><span class="line"><span class="keyword">const</span> mondayIsSunday = <span class="title class_">MyDay</span>.<span class="property">SUNDAY</span> <span class="comment">// ok: 类型是 MyDay，MyDay.SUNDAY 仅仅是值</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">mondayIsMyDay2</span>: <span class="title class_">MyDay</span>.<span class="property">MONDAY</span> = <span class="title class_">MyDay</span>.<span class="property">MONDAY</span> <span class="comment">// ts(2535)，MyDay 包含非字面量值成员，所以 MyDay.MONDAY 不能作为类型，应该是MyDay类型</span></span><br></pre></td></tr></table></figure>
+
+<p>另外，如果枚举仅有一个成员且是字面量成员，那么这个成员的类型等于枚举类型，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">Day</span> &#123;</span><br><span class="line">  <span class="variable constant_">MONDAY</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">mondayIsDay</span>: <span class="title class_">Day</span> = <span class="title class_">Day</span>.<span class="property">MONDAY</span> <span class="comment">// ok</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">mondayIsDay1</span>: <span class="title class_">Day</span>.<span class="property">MONDAY</span> = mondayIsDay <span class="comment">// ok</span></span><br></pre></td></tr></table></figure>
+
+<p>联合类型使得 TypeScript 可以更清楚地枚举集合里的确切值，从而检测出一些永远不会成立的条件判断（俗称 Dead Code），如下所示示例（援引自官方恒为真的示例）：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">Day</span> &#123;</span><br><span class="line">  <span class="variable constant_">SUNDAY</span>,</span><br><span class="line">  <span class="variable constant_">MONDAY</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">work</span> = (<span class="params">x: Day</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (x !== <span class="title class_">Day</span>.<span class="property">SUNDAY</span> || x !== <span class="title class_">Day</span>.<span class="property">MONDAY</span>) &#123;</span><br><span class="line">    <span class="comment">// ts(2367)</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上边示例中，TypeScript 确定 x 的值要么是 Day.SUNDAY，要么是 Day.MONDAY。因为 Day 是纯字面量枚举类型，可以等价地看作联合类型 Day.SUNDAY | Day.MONDAY，所以我们判断出第 7 行的条件语句恒为真，于是提示了一个 ts(2367) 错误。</p>
+<p>不过，如果枚举包含需要计算（值）的成员情况就不一样了。如下示例中，TypeScript 不能区分枚举 Day 中的每个成员。因为每个成员类型都是 Day，所以无法判断出第 7 行的条件语句恒为真，也就不会提示一个 ts(2367) 错误。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">Day</span> &#123;</span><br><span class="line">  <span class="variable constant_">SUNDAY</span> = +<span class="string">&#x27;1&#x27;</span>,</span><br><span class="line">  <span class="variable constant_">MONDAY</span> = <span class="string">&#x27;aa&#x27;</span>.<span class="property">length</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">work</span> = (<span class="params">x: Day</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (x !== <span class="title class_">Day</span>.<span class="property">SUNDAY</span> || x !== <span class="title class_">Day</span>.<span class="property">MONDAY</span>) &#123;</span><br><span class="line">    <span class="comment">// ok</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此外，字面量类型所具有的类型推断、类型缩小的特性，也同样适用于字面量枚举类型，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">Day</span> &#123;</span><br><span class="line">  <span class="variable constant_">SUNDAY</span>,</span><br><span class="line">  <span class="variable constant_">MONDAY</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> <span class="variable constant_">SUNDAY</span> = <span class="title class_">Day</span>.<span class="property">SUNDAY</span> <span class="comment">// 类型是 Day</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">SUNDAY2</span> = <span class="title class_">Day</span>.<span class="property">SUNDAY</span> <span class="comment">// 类型 Day.SUNDAY</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">work</span> = (<span class="params">x: Day</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (x === <span class="title class_">Day</span>.<span class="property">SUNDAY</span>) &#123;</span><br><span class="line">    x <span class="comment">// 类型缩小为 Day.SUNDAY</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="常量枚举（const-enums）"><a href="#常量枚举（const-enums）" class="headerlink" title="常量枚举（const enums）"></a>常量枚举（const enums）</h2><p>我们可以通过添加 const 修饰符定义常量枚举，常量枚举定义转译为 JavaScript 之后会被移除，并在使用常量枚举成员的地方被替换为相应的内联值，因此常量枚举的成员都必须是常量成员（字面量 + 转译阶段可计算值的表达式），如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">enum</span> <span class="title class_">Day</span> &#123;</span><br><span class="line">  <span class="variable constant_">SUNDAY</span>,</span><br><span class="line">  <span class="variable constant_">MONDAY</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">work</span> = (<span class="params">d: Day</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">switch</span> (d) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="title class_">Day</span>.<span class="property">SUNDAY</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&#x27;take a rest&#x27;</span></span><br><span class="line">    <span class="keyword">case</span> <span class="title class_">Day</span>.<span class="property">MONDAY</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&#x27;work hard&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 转译后</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">work</span> = (<span class="params">d</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">switch</span> (d) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">0</span> <span class="comment">/* SUNDAY */</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&#x27;take a rest&#x27;</span></span><br><span class="line">    <span class="keyword">case</span> <span class="number">1</span> <span class="comment">/* MONDAY */</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&#x27;work hard&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="外部枚举（Ambient-enums）"><a href="#外部枚举（Ambient-enums）" class="headerlink" title="外部枚举（Ambient enums）"></a>外部枚举（Ambient enums）</h2><p>在 TypeScript 中，我们可以通过 declare 描述一个在其他地方已经定义过的变量，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span> <span class="keyword">let</span> <span class="attr">$</span>: <span class="built_in">any</span></span><br><span class="line">$(<span class="string">&#x27;#id&#x27;</span>).<span class="title function_">addClass</span>(<span class="string">&#x27;show&#x27;</span>) <span class="comment">// ok</span></span><br></pre></td></tr></table></figure>
+
+<p>第 1 行我们使用 declare 描述类型是 any 的外部变量 $，在第 2 行则立即使用 $ ，此时并不会提示一个找不到 $ 变量的错误。</p>
+<p>同样，我们也可以使用 declare 描述一个在其他地方已经定义过的枚举类型，通过这种方式定义出来的枚举类型，被称之为外部枚举，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span> <span class="keyword">enum</span> <span class="title class_">Day</span> &#123; <span class="comment">// 转译成js后抹除掉</span></span><br><span class="line">  <span class="variable constant_">SUNDAY</span>,</span><br><span class="line">  <span class="variable constant_">MONDAY</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">work</span> = (<span class="params">x: Day</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (x === <span class="title class_">Day</span>.<span class="property">SUNDAY</span>) &#123;</span><br><span class="line">    x <span class="comment">// 类型是 Day</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>外部枚举和常规枚举的差异在于以下几点：</p>
+<ul>
+<li>在外部枚举中，如果没有指定初始值的成员都被当作计算（值）成员，这跟常规枚举恰好相反；</li>
+<li>即便外部枚举只包含字面量成员，这些成员的类型也不会是字面量成员类型，自然完全不具备字面量类型的各种特性。</li>
+</ul>
+<p>我们可以一起使用 declare 和 const 定义外部常量枚举，使得它转译为 JavaScript 之后仍像常量枚举一样。在抹除枚举定义的同时，我们可以使用内联枚举值替换对枚举成员的引用。外部枚举的作用在于为两个不同枚举（实际上是指向了同一个枚举类型）的成员进行兼容、比较、被复用提供了一种途径，这在一定程度上提升了枚举的可用性，让其显得不那么“鸡肋”。</p>
+<h1 id="泛型：如何正确使用泛型约束类型变量？"><a href="#泛型：如何正确使用泛型约束类型变量？" class="headerlink" title="泛型：如何正确使用泛型约束类型变量？"></a>泛型：如何正确使用泛型约束类型变量？</h1><p>接下来就是 ts 类型的精华：泛型</p>
+<h2 id="什么是泛型？"><a href="#什么是泛型？" class="headerlink" title="什么是泛型？"></a>什么是泛型？</h2><p>关于什么是泛型这个问题不是太好回答，比如在面试中，如果有候选人反过来问我这个问题，可能我也给不出一个特别标准的答案。</p>
+<p>不过，我们可以借用 Java 中泛型的释义来回答这个问题：泛型指的是类型参数化，即将原来某种具体的类型进行参数化。和定义函数参数一样，我们可以给泛型定义若干个类型参数，并在调用时给泛型传入明确的类型参数。设计泛型的目的在于有效约束类型成员之间的关系，比如函数参数和返回值、类或者接口成员和方法之间的关系。</p>
+<h2 id="泛型类型参数"><a href="#泛型类型参数" class="headerlink" title="泛型类型参数"></a>泛型类型参数</h2><p>泛型最常用的场景是用来约束函数参数的类型，我们可以给函数定义若干个被调用时才会传入明确类型的参数。比如以下定义的一个 reflect 函数 ，它可以接收一个任意类型的参数，并原封不动地返回参数的值和类型，那我们该如何描述这个函数呢？好像得用上 unknown 了（其实我想说的是 any，因为 any is 魔鬼，所以还是用 unknown 吧）。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">reflect</span>(<span class="params">param: <span class="built_in">unknown</span></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> param</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> str = <span class="title function_">reflect</span>(<span class="string">&#x27;string&#x27;</span>) <span class="comment">// str 类型是 unknown</span></span><br><span class="line"><span class="keyword">const</span> num = <span class="title function_">reflect</span>(<span class="number">1</span>) <span class="comment">// num 类型 unknown</span></span><br></pre></td></tr></table></figure>
+
+<p>这时候可以用泛型来约束：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> reflect&lt;P&gt;(<span class="attr">param</span>: P): P &#123;</span><br><span class="line">  <span class="keyword">return</span> param</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> reflectStr = reflect&lt;<span class="built_in">string</span>&gt;(<span class="string">&#x27;string&#x27;</span>) <span class="comment">// str 类型是 string</span></span><br><span class="line"><span class="keyword">const</span> reflectNum = reflect&lt;<span class="built_in">number</span>&gt;(<span class="number">1</span>) <span class="comment">// num 类型 number</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果调用泛型函数时受泛型约束的参数有传值，泛型参数的入参可以从参数的类型中进行推断，而无须再显式指定类型（可缺省）</span></span><br><span class="line"><span class="keyword">const</span> reflectStr2 = <span class="title function_">reflect</span>(<span class="string">&#x27;string&#x27;</span>) <span class="comment">// str 类型是 string</span></span><br><span class="line"><span class="keyword">const</span> reflectNum2 = <span class="title function_">reflect</span>(<span class="number">1</span>) <span class="comment">// num 类型 number</span></span><br></pre></td></tr></table></figure>
+
+<p>泛型不仅可以约束函数整个参数的类型，还可以约束参数属性、成员的类型，比如参数的类型可以是数组、对象，如下示例：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> reflectArray&lt;P&gt;(<span class="attr">param</span>: P[]) &#123;</span><br><span class="line">  <span class="keyword">return</span> param</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> reflectArr = <span class="title function_">reflectArray</span>([<span class="number">1</span>, <span class="string">&#x27;1&#x27;</span>]) <span class="comment">// reflectArr 是 (string | number)[]</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：函数的泛型入参必须和参数&#x2F;参数成员建立有效的约束关系才有实际意义。</p>
+</blockquote>
+<p>我们可以给函数定义任何个数的泛型入参，如下：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> reflectExtraParams&lt;P, Q&gt;(<span class="attr">p1</span>: P, <span class="attr">p2</span>: Q): [P, Q] &#123;</span><br><span class="line">  <span class="keyword">return</span> [p1, p2]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="泛型类"><a href="#泛型类" class="headerlink" title="泛型类"></a>泛型类</h2><p>在类的定义中，我们还可以使用泛型用来约束构造函数、属性、方法的类型，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Memory</span>&lt;S&gt; &#123;</span><br><span class="line">  <span class="attr">store</span>: S</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">store: S</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">store</span> = store</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">set</span>(<span class="params">store: S</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">store</span> = store</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">get</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">store</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> numMemory = <span class="keyword">new</span> <span class="title class_">Memory</span>&lt;<span class="built_in">number</span>&gt;(<span class="number">1</span>) <span class="comment">// &lt;number&gt; 可缺省</span></span><br><span class="line"><span class="keyword">const</span> getNumMemory = numMemory.<span class="title function_">get</span>() <span class="comment">// 类型是 number</span></span><br><span class="line">numMemory.<span class="title function_">set</span>(<span class="number">2</span>) <span class="comment">// 只能写入 number 类型</span></span><br><span class="line"><span class="keyword">const</span> strMemory = <span class="keyword">new</span> <span class="title class_">Memory</span>(<span class="string">&#x27;&#x27;</span>) <span class="comment">// 缺省 &lt;string&gt;</span></span><br><span class="line"><span class="keyword">const</span> getStrMemory = strMemory.<span class="title function_">get</span>() <span class="comment">// 类型是 string</span></span><br><span class="line">strMemory.<span class="title function_">set</span>(<span class="string">&#x27;string&#x27;</span>) <span class="comment">// 只能写入 string 类型</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="泛型类型"><a href="#泛型类型" class="headerlink" title="泛型类型"></a>泛型类型</h2><p>我们可以使用 Array&lt;类型&gt; 的语法来定义数组类型，这里的 Array 本身就是一种类型。在 TypeScript 中，类型本身就可以被定义为拥有不明确的类型参数的泛型，并且可以接收明确类型作为入参，从而衍生出更具体的类型，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">reflectFn</span>: &lt;P&gt;<span class="function">(<span class="params">param: P</span>) =&gt;</span> P = reflect <span class="comment">// ok</span></span><br></pre></td></tr></table></figure>
+
+<p>我们也可以把 reflectFn 的类型注解提取为一个能被复用的类型别名或者接口，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">ReflectFuncton</span> = &lt;P&gt;<span class="function">(<span class="params">param: P</span>) =&gt;</span> P</span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">IReflectFuncton</span> &#123;</span><br><span class="line">  &lt;P&gt;(<span class="attr">param</span>: P): P</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">reflectFn2</span>: <span class="title class_">ReflectFuncton</span> = reflect</span><br><span class="line"><span class="keyword">const</span> <span class="attr">reflectFn3</span>: <span class="title class_">IReflectFuncton</span> = reflect</span><br></pre></td></tr></table></figure>
+
+<p>将类型入参的定义移动到类型别名或接口名称后，此时定义的一个接收具体类型入参后返回一个新类型的类型就是泛型类型。如下示例中，我们定义了两个可以接收入参 P 的泛型类型（GenericReflectFunction 和 IGenericReflectFunction ）。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">GenericReflectFunction</span>&lt;P&gt; = <span class="function">(<span class="params">param: P</span>) =&gt;</span> P</span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">IGenericReflectFunction</span>&lt;P&gt; &#123;</span><br><span class="line">  (<span class="attr">param</span>: P): P</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">reflectFn4</span>: <span class="title class_">GenericReflectFunction</span>&lt;<span class="built_in">string</span>&gt; = reflect <span class="comment">// 具象化泛型</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">reflectFn5</span>: <span class="title class_">IGenericReflectFunction</span>&lt;<span class="built_in">number</span>&gt; = reflect <span class="comment">// 具象化泛型</span></span><br><span class="line"><span class="keyword">const</span> reflectFn3Return = <span class="title function_">reflectFn4</span>(<span class="string">&#x27;string&#x27;</span>) <span class="comment">// 入参和返回值都必须是 string 类型</span></span><br><span class="line"><span class="keyword">const</span> reflectFn4Return = <span class="title function_">reflectFn5</span>(<span class="number">1</span>) <span class="comment">//  入参和返回值都必须是 number 类型</span></span><br></pre></td></tr></table></figure>
+
+<p>在泛型定义中，我们甚至可以使用一些类型操作符进行运算表达，使得泛型可以根据入参的类型衍生出各异的类型，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">StringOrNumberArray</span>&lt;E&gt; = E <span class="keyword">extends</span> <span class="built_in">string</span> | <span class="built_in">number</span> ? E[] : E</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">StringArray</span> = <span class="title class_">StringOrNumberArray</span>&lt;<span class="built_in">string</span>&gt; <span class="comment">// 类型是 string[]</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">NumberArray</span> = <span class="title class_">StringOrNumberArray</span>&lt;<span class="built_in">number</span>&gt; <span class="comment">// 类型是 number[]</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">NeverGot</span> = <span class="title class_">StringOrNumberArray</span>&lt;<span class="built_in">boolean</span>&gt; <span class="comment">// 类型是 boolean</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>发散一下，如果我们给上面这个泛型传入了一个 string | boolean 联合类型作为入参，将会得到什么类型呢？且看如下所示示例：</strong></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">BooleanOrString</span> = <span class="built_in">string</span> | <span class="built_in">boolean</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">WhatIsThis</span> = <span class="title class_">StringOrNumberArray</span>&lt;<span class="title class_">BooleanOrString</span>&gt; <span class="comment">// 好像应该是 string | boolean ?</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">BooleanOrStringGot</span> = <span class="title class_">BooleanOrString</span> <span class="keyword">extends</span> <span class="built_in">string</span> | <span class="built_in">number</span></span><br><span class="line">  ? <span class="title class_">BooleanOrString</span>[]</span><br><span class="line">  : <span class="title class_">BooleanOrString</span> <span class="comment">//  string | boolean</span></span><br></pre></td></tr></table></figure>
+
+<p>但是实际上 WhatIsThis 的类型是<code>boolean | string[]</code>，而 BooleanOrStringGot 变成了<code>string | boolean</code>，为什么呢？</p>
+<p>这个就是所谓的分配条件类型（Distributive Conditional Types），官方的释义：<strong>在条件类型判断的情况下（比如上边示例中出现的 extends），如果入参是联合类型，则会被拆解成一个个独立的（原子）类型（成员）进行类型运算。</strong></p>
+<p>而 BooleanOrStringGot 并没有用到泛型，所以不会有分配条件类型。</p>
+<blockquote>
+<p><strong>注意：枚举类型不支持泛型。</strong></p>
+</blockquote>
+<h2 id="泛型约束"><a href="#泛型约束" class="headerlink" title="泛型约束"></a>泛型约束</h2><p>比如最前边提到的原封不动返回参数的 reflect 函数，我们希望把接收参数的类型限定在几种原始类型的集合中，此时就可以使用“泛型入参名 extends 类型”语法达到这个目的，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> reflectSpecified&lt;P <span class="keyword">extends</span> <span class="built_in">number</span> | <span class="built_in">string</span> | <span class="built_in">boolean</span>&gt;(<span class="attr">param</span>: P): P &#123;</span><br><span class="line">  <span class="keyword">return</span> param</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">reflectSpecified</span>(<span class="string">&#x27;string&#x27;</span>) <span class="comment">// ok</span></span><br><span class="line"><span class="title function_">reflectSpecified</span>(<span class="number">1</span>) <span class="comment">// ok</span></span><br><span class="line"><span class="title function_">reflectSpecified</span>(<span class="literal">true</span>) <span class="comment">// ok</span></span><br><span class="line"><span class="title function_">reflectSpecified</span>(<span class="literal">null</span>) <span class="comment">// ts(2345) &#x27;null&#x27; 不能赋予类型 &#x27;number | string | boolean&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>我们还可以在多个不同的泛型入参之间设置约束关系，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">ObjSetter</span> &#123;</span><br><span class="line">  &lt;O <span class="keyword">extends</span> &#123;&#125;, K <span class="keyword">extends</span> keyof O, V <span class="keyword">extends</span> O[K]&gt;(<span class="attr">obj</span>: O, <span class="attr">key</span>: K, <span class="attr">value</span>: V): V</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">setValueOfObj</span>: <span class="title class_">ObjSetter</span> = <span class="function">(<span class="params">obj, key, value</span>) =&gt;</span> (obj[key] = value)</span><br><span class="line"><span class="title function_">setValueOfObj</span>(&#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">&#x27;name&#x27;</span> &#125;, <span class="string">&#x27;id&#x27;</span>, <span class="number">2</span>) <span class="comment">// ok</span></span><br><span class="line"><span class="title function_">setValueOfObj</span>(&#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">&#x27;name&#x27;</span> &#125;, <span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;new name&#x27;</span>) <span class="comment">// ok</span></span><br><span class="line"><span class="title function_">setValueOfObj</span>(&#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">&#x27;name&#x27;</span> &#125;, <span class="string">&#x27;age&#x27;</span>, <span class="number">2</span>) <span class="comment">// ts(2345)</span></span><br><span class="line"><span class="title function_">setValueOfObj</span>(&#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">&#x27;name&#x27;</span> &#125;, <span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;2&#x27;</span>) <span class="comment">// ts(2345)</span></span><br></pre></td></tr></table></figure>
+
+<p>泛型入参的约束与默认值还可以组合使用，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">ReduxModelMixed</span>&lt;<span class="title class_">State</span> <span class="keyword">extends</span> &#123;&#125; = &#123; <span class="attr">id</span>: <span class="built_in">number</span>; <span class="attr">name</span>: <span class="built_in">string</span> &#125;&gt; &#123;</span><br><span class="line">  <span class="attr">state</span>: <span class="title class_">State</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Wyatex
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://qghost.gitee.io/TypeScript/ts%E7%AC%94%E8%AE%B0%EF%BC%883%EF%BC%89%EF%BC%9A%E8%81%94%E5%90%88%E7%B1%BB%E5%9E%8B%E3%80%81%E4%BA%A4%E5%8F%89%E7%B1%BB%E5%9E%8B%E3%80%81%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B%E3%80%81%E6%B3%9B%E5%9E%8B/" title="ts笔记（3）：联合类型、交叉类型、枚举类型、泛型">https://qghost.gitee.io/TypeScript/ts笔记（3）：联合类型、交叉类型、枚举类型、泛型/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+              <a href="/tags/TypeScript/" rel="tag"># TypeScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/TypeScript/ts%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89%EF%BC%9A%E5%87%BD%E6%95%B0%E3%80%81%E7%B1%BB%E3%80%81%E6%8E%A5%E5%8F%A3%E7%B1%BB%E5%9E%8B%E5%92%8C%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D/" rel="prev" title="ts笔记（2）：函数、类、接口类型和类型别名">
+                  <i class="fa fa-chevron-left"></i> ts笔记（2）：函数、类、接口类型和类型别名
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E5%89%8D%E7%AB%AF/js%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E8%BF%9B%E9%98%B6%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89%EF%BC%9Athis%E6%8C%87%E5%90%91/" rel="next" title="js核心知识进阶笔记（1）：this指向">
+                  js核心知识进阶笔记（1）：this指向 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wyatex</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>

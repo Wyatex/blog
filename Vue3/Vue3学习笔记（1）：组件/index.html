@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"qghost.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="vue3 已经发布到 3.2 版本了，快来一起学习一下吧！不过因为 Vue3 已经通过 ts 进行重写了，所以在学习 vue3 之前最好还是先学习一下 ts 的基本使用哦！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue3学习笔记（1）：组件">
+<meta property="og:url" content="https://qghost.gitee.io/Vue3/Vue3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89%EF%BC%9A%E7%BB%84%E4%BB%B6/index.html">
+<meta property="og:site_name" content="Wyatex&#96;s blog">
+<meta property="og:description" content="vue3 已经发布到 3.2 版本了，快来一起学习一下吧！不过因为 Vue3 已经通过 ts 进行重写了，所以在学习 vue3 之前最好还是先学习一下 ts 的基本使用哦！">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-14T09:13:29.000Z">
+<meta property="article:modified_time" content="2022-06-13T08:38:12.737Z">
+<meta property="article:author" content="Wyatex">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="Vue3">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://qghost.gitee.io/Vue3/Vue3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89%EF%BC%9A%E7%BB%84%E4%BB%B6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://qghost.gitee.io/Vue3/Vue3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89%EF%BC%9A%E7%BB%84%E4%BB%B6/","path":"Vue3/Vue3学习笔记（1）：组件/","title":"Vue3学习笔记（1）：组件"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Vue3学习笔记（1）：组件 | Wyatex`s blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Wyatex`s blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">67</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">18</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">111</span></a></li><li class="menu-item menu-item-编程"><a href="/programming/" rel="section"><i class="fa fa-book fa-fw"></i>编程</a></li><li class="menu-item menu-item-干货"><a href="/resources/" rel="section"><i class="fa fa-paperclip fa-fw"></i>干货</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">组件定义</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#defineComponent-%E8%AE%B2%E8%A7%A3"><span class="nav-number">1.1.</span> <span class="nav-text">defineComponent 讲解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.2.</span> <span class="nav-text">组件的定义</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Wyatex"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Wyatex</p>
+  <div class="site-description" itemprop="description">这里是我用来做笔记的网站哟~</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wyatex" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wyatex" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wyatex@qq.com" title="E-Mail → mailto:wyatex@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.microloong.me/" title="https:&#x2F;&#x2F;blog.microloong.me" rel="noopener" target="_blank">MicroLOONG</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://qghost.gitee.io/Vue3/Vue3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89%EF%BC%9A%E7%BB%84%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Wyatex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wyatex`s blog">
+      <meta itemprop="description" content="这里是我用来做笔记的网站哟~">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Vue3学习笔记（1）：组件 | Wyatex`s blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue3学习笔记（1）：组件
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-14 17:13:29" itemprop="dateCreated datePublished" datetime="2021-10-14T17:13:29+08:00">2021-10-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-13 16:38:12" itemprop="dateModified" datetime="2022-06-13T16:38:12+08:00">2022-06-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Vue3/" itemprop="url" rel="index"><span itemprop="name">Vue3</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>vue3 已经发布到 3.2 版本了，快来一起学习一下吧！<br>不过因为 Vue3 已经通过 ts 进行重写了，所以在学习 vue3 之前最好还是先学习一下 ts 的基本使用哦！</p>
+<span id="more"></span>
+
+<h1 id="组件定义"><a href="#组件定义" class="headerlink" title="组件定义"></a>组件定义</h1><p>在 vue3 中，定义组件主要是通过：<code>defineComponent</code>来定义，而不能向 vue2 一样直接<code>export</code>导出。</p>
+<p>基本用法是先从 vue 依赖导入<code>defineComponent</code>函数，然后再<code>export default defineComponent</code>导出该组件，看起来就像这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; defineComponent &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineComponent</span>(&#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;HelloWorld&#x27;</span>,</span><br><span class="line">  <span class="attr">props</span>: &#123;</span><br><span class="line">    <span class="attr">msg</span>: <span class="title class_">String</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="defineComponent-讲解"><a href="#defineComponent-讲解" class="headerlink" title="defineComponent 讲解"></a>defineComponent 讲解</h2><!-- 在 vscode 或者其他 ide 按住 ctrl 点击`defineComponent`函数跳转到依赖可以查看`defineComponent`的定义。
+可以看到`defineComponent`一共有四种定义，它可以接收不同的参数类型，对应这四种不同的定义。 -->
+
+<p>下载 vue 官方的 vue-next 仓库，查看相关的源码，先看一下 DefineComponent 类型：</p>
+<figure class="highlight ts"><figcaption><span>package/runtime-core/src/apiDefineComponent.ts</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> <span class="title class_">DefineComponent</span>&lt;</span><br><span class="line">  <span class="title class_">PropsOrPropOptions</span> = &#123;&#125;, <span class="comment">// 定义props</span></span><br><span class="line">  <span class="title class_">RawBindings</span> = &#123;&#125;, <span class="comment">// 如果组件setup函数里返回的是对象，那么该对象的属性将会记录在这路</span></span><br><span class="line">  D = &#123;&#125;, <span class="comment">// 组件的data定义</span></span><br><span class="line">  C <span class="keyword">extends</span> <span class="title class_">ComputedOptions</span> = <span class="title class_">ComputedOptions</span>, <span class="comment">// 组件的computed定义</span></span><br><span class="line">  M <span class="keyword">extends</span> <span class="title class_">MethodOptions</span> = <span class="title class_">MethodOptions</span>, <span class="comment">// 组件的methods定义</span></span><br><span class="line">  <span class="title class_">Mixin</span> <span class="keyword">extends</span> <span class="title class_">ComponentOptionsMixin</span> = <span class="title class_">ComponentOptionsMixin</span>, <span class="comment">// 组件的mixin定义</span></span><br><span class="line">  <span class="title class_">Extends</span> <span class="keyword">extends</span> <span class="title class_">ComponentOptionsMixin</span> = <span class="title class_">ComponentOptionsMixin</span>, <span class="comment">// 组件的extends定义</span></span><br><span class="line">  E <span class="keyword">extends</span> <span class="title class_">EmitsOptions</span> = &#123;&#125;, <span class="comment">// 如果组件需要emit一些事件的话，记录在这里</span></span><br><span class="line">  <span class="variable constant_">EE</span> <span class="keyword">extends</span> <span class="built_in">string</span> = <span class="built_in">string</span>,</span><br><span class="line">  <span class="variable constant_">PP</span> = <span class="title class_">PublicProps</span>,</span><br><span class="line">  <span class="title class_">Props</span> = <span class="title class_">Readonly</span>&lt;</span><br><span class="line">    <span class="title class_">PropsOrPropOptions</span> <span class="keyword">extends</span> <span class="title class_">ComponentPropsOptions</span></span><br><span class="line">      ? <span class="title class_">ExtractPropTypes</span>&lt;<span class="title class_">PropsOrPropOptions</span>&gt;</span><br><span class="line">      : <span class="title class_">PropsOrPropOptions</span></span><br><span class="line">  &gt; &amp;</span><br><span class="line">    (&#123;&#125; <span class="keyword">extends</span> E ? &#123;&#125; : <span class="title class_">EmitsToProps</span>&lt;E&gt;),</span><br><span class="line">  <span class="title class_">Defaults</span> = <span class="title class_">ExtractDefaultPropTypes</span>&lt;<span class="title class_">PropsOrPropOptions</span>&gt;</span><br><span class="line">&gt; = <span class="title class_">ComponentPublicInstanceConstructor</span>&lt;</span><br><span class="line">  <span class="comment">// 可以看到返回类型是一个ComponentPublicInstanceConstructor</span></span><br><span class="line">  <span class="title class_">CreateComponentPublicInstance</span>&lt;</span><br><span class="line">    <span class="title class_">Props</span>,</span><br><span class="line">    <span class="title class_">RawBindings</span>,</span><br><span class="line">    D,</span><br><span class="line">    C,</span><br><span class="line">    M,</span><br><span class="line">    <span class="title class_">Mixin</span>,</span><br><span class="line">    <span class="title class_">Extends</span>,</span><br><span class="line">    E,</span><br><span class="line">    <span class="variable constant_">PP</span> &amp; <span class="title class_">Props</span>,</span><br><span class="line">    <span class="title class_">Defaults</span>,</span><br><span class="line">    <span class="literal">true</span></span><br><span class="line">  &gt; &amp;</span><br><span class="line">    <span class="title class_">Props</span></span><br><span class="line">&gt; &amp;</span><br><span class="line">  <span class="title class_">ComponentOptionsBase</span>&lt;</span><br><span class="line">    <span class="title class_">Props</span>,</span><br><span class="line">    <span class="title class_">RawBindings</span>,</span><br><span class="line">    D,</span><br><span class="line">    C,</span><br><span class="line">    M,</span><br><span class="line">    <span class="title class_">Mixin</span>,</span><br><span class="line">    <span class="title class_">Extends</span>,</span><br><span class="line">    E,</span><br><span class="line">    <span class="variable constant_">EE</span>,</span><br><span class="line">    <span class="title class_">Defaults</span></span><br><span class="line">  &gt; &amp;</span><br><span class="line">  <span class="variable constant_">PP</span></span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+
+<p>建议动手下载一下源码，并去查看一下上面提到的一些类型，比如：<code>ComputedOptions</code>、<code>ComponentPublicInstanceConstructor</code>等等，想想为什么要这么写，想不到其实也没关系，其实这就是为了符合 TypeScript 的类型声明的理念。</p>
+<p>通过查看<code>ComponentPublicInstanceConstructor</code>层层类型定义的嵌套，可以找到最终的一个类型定义</p>
+<figure class="highlight ts"><figcaption><span>package/runtime-core/src/componentPublicInstance.ts</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// public properties exposed on the proxy, which is used as the render context</span></span><br><span class="line"><span class="comment">// in templates (as `this` in the render option)</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> <span class="title class_">ComponentPublicInstance</span>&lt;</span><br><span class="line">  P = &#123;&#125;, <span class="comment">// props type extracted from props option</span></span><br><span class="line">  B = &#123;&#125;, <span class="comment">// raw bindings returned from setup()</span></span><br><span class="line">  D = &#123;&#125;, <span class="comment">// return from data()</span></span><br><span class="line">  C <span class="keyword">extends</span> <span class="title class_">ComputedOptions</span> = &#123;&#125;,</span><br><span class="line">  M <span class="keyword">extends</span> <span class="title class_">MethodOptions</span> = &#123;&#125;,</span><br><span class="line">  E <span class="keyword">extends</span> <span class="title class_">EmitsOptions</span> = &#123;&#125;,</span><br><span class="line">  <span class="title class_">PublicProps</span> = P,</span><br><span class="line">  <span class="title class_">Defaults</span> = &#123;&#125;,</span><br><span class="line">  <span class="title class_">MakeDefaultsOptional</span> <span class="keyword">extends</span> <span class="built_in">boolean</span> = <span class="literal">false</span>,</span><br><span class="line">  <span class="title class_">Options</span> = <span class="title class_">ComponentOptionsBase</span>&lt;<span class="built_in">any</span>, <span class="built_in">any</span>, <span class="built_in">any</span>, <span class="built_in">any</span>, <span class="built_in">any</span>, <span class="built_in">any</span>, <span class="built_in">any</span>, <span class="built_in">any</span>, <span class="built_in">any</span>&gt;</span><br><span class="line">&gt; = &#123;</span><br><span class="line">  <span class="attr">$</span>: <span class="title class_">ComponentInternalInstance</span></span><br><span class="line">  <span class="attr">$data</span>: D</span><br><span class="line">  <span class="attr">$props</span>: <span class="title class_">MakeDefaultsOptional</span> <span class="keyword">extends</span> <span class="literal">true</span></span><br><span class="line">    ? <span class="title class_">Partial</span>&lt;<span class="title class_">Defaults</span>&gt; &amp; <span class="title class_">Omit</span>&lt;P &amp; <span class="title class_">PublicProps</span>, keyof <span class="title class_">Defaults</span>&gt;</span><br><span class="line">    : P &amp; <span class="title class_">PublicProps</span></span><br><span class="line">  <span class="attr">$attrs</span>: <span class="title class_">Data</span></span><br><span class="line">  <span class="attr">$refs</span>: <span class="title class_">Data</span></span><br><span class="line">  <span class="attr">$slots</span>: <span class="title class_">Slots</span></span><br><span class="line">  <span class="attr">$root</span>: <span class="title class_">ComponentPublicInstance</span> | <span class="literal">null</span></span><br><span class="line">  <span class="attr">$parent</span>: <span class="title class_">ComponentPublicInstance</span> | <span class="literal">null</span></span><br><span class="line">  <span class="attr">$emit</span>: <span class="title class_">EmitFn</span>&lt;E&gt;</span><br><span class="line">  <span class="attr">$el</span>: <span class="built_in">any</span></span><br><span class="line">  <span class="attr">$options</span>: <span class="title class_">Options</span> &amp; <span class="title class_">MergedComponentOptionsOverride</span></span><br><span class="line">  <span class="attr">$forceUpdate</span>: <span class="function">() =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="attr">$nextTick</span>: <span class="keyword">typeof</span> nextTick</span><br><span class="line">  $watch(</span><br><span class="line">    <span class="attr">source</span>: <span class="built_in">string</span> | <span class="title class_">Function</span>,</span><br><span class="line">    <span class="attr">cb</span>: <span class="title class_">Function</span>,</span><br><span class="line">    options?: <span class="title class_">WatchOptions</span></span><br><span class="line">  ): <span class="title class_">WatchStopHandle</span></span><br><span class="line">&#125; &amp; P &amp;</span><br><span class="line">  <span class="title class_">ShallowUnwrapRef</span>&lt;B&gt; &amp;</span><br><span class="line">  <span class="title class_">UnwrapNestedRefs</span>&lt;D&gt; &amp;</span><br><span class="line">  <span class="title class_">ExtractComputedReturns</span>&lt;C&gt; &amp;</span><br><span class="line">  M &amp;</span><br><span class="line">  <span class="title class_">ComponentCustomProperties</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到上面熟悉的：<code>$data</code>、<code>$refs</code>、<code>$parent</code>等等，这就是最终生成的组件的定义。</p>
+<p>继续看主要内容：<code>defineComponent</code>，下面是四种不同的<code>defineComponent</code>函数的重载</p>
+<figure class="highlight ts"><figcaption><span>package/runtime-core/src/apiDefineComponent.ts</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// defineComponent is a utility that is primarily used for type inference</span></span><br><span class="line"><span class="comment">// when declaring components. Type inference is provided in the component</span></span><br><span class="line"><span class="comment">// options (provided as the argument). The returned value has artificial types</span></span><br><span class="line"><span class="comment">// for TSX / manual render function / IDE support.</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// overload 1: direct setup function</span></span><br><span class="line"><span class="comment">// (uses user defined props interface)</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> defineComponent&lt;<span class="title class_">Props</span>, <span class="title class_">RawBindings</span> = <span class="built_in">object</span>&gt;(</span><br><span class="line">  <span class="attr">setup</span>: <span class="function">(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">    props: Readonly&lt;Props&gt;,</span></span></span><br><span class="line"><span class="params"><span class="function">    ctx: SetupContext</span></span></span><br><span class="line"><span class="params"><span class="function">  </span>) =&gt;</span> <span class="title class_">RawBindings</span> | <span class="title class_">RenderFunction</span></span><br><span class="line">): <span class="title class_">DefineComponent</span>&lt;<span class="title class_">Props</span>, <span class="title class_">RawBindings</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第一种是接收一个setup函数，其中props和ctx作为参数的入参。但是如果用过vue2的props就知道了，props需要通过一个对象去声明，而不能只用ts去声明，所以这种方法去使用的话会有问题，不推荐这样使用。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// overload 2: object format with no props</span></span><br><span class="line"><span class="comment">// (uses user defined props interface)</span></span><br><span class="line"><span class="comment">// return type is for Vetur and TSX support</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> defineComponent&lt;</span><br><span class="line">  <span class="title class_">Props</span> = &#123;&#125;,</span><br><span class="line">  <span class="title class_">RawBindings</span> = &#123;&#125;,</span><br><span class="line">  D = &#123;&#125;,</span><br><span class="line">  C <span class="keyword">extends</span> <span class="title class_">ComputedOptions</span> = &#123;&#125;,</span><br><span class="line">  M <span class="keyword">extends</span> <span class="title class_">MethodOptions</span> = &#123;&#125;,</span><br><span class="line">  <span class="title class_">Mixin</span> <span class="keyword">extends</span> <span class="title class_">ComponentOptionsMixin</span> = <span class="title class_">ComponentOptionsMixin</span>,</span><br><span class="line">  <span class="title class_">Extends</span> <span class="keyword">extends</span> <span class="title class_">ComponentOptionsMixin</span> = <span class="title class_">ComponentOptionsMixin</span>,</span><br><span class="line">  E <span class="keyword">extends</span> <span class="title class_">EmitsOptions</span> = <span class="title class_">EmitsOptions</span>,</span><br><span class="line">  <span class="variable constant_">EE</span> <span class="keyword">extends</span> <span class="built_in">string</span> = <span class="built_in">string</span></span><br><span class="line">&gt;(</span><br><span class="line">  <span class="attr">options</span>: <span class="title class_">ComponentOptionsWithoutProps</span>&lt;</span><br><span class="line">    <span class="title class_">Props</span>,</span><br><span class="line">    <span class="title class_">RawBindings</span>,</span><br><span class="line">    D,</span><br><span class="line">    C,</span><br><span class="line">    M,</span><br><span class="line">    <span class="title class_">Mixin</span>,</span><br><span class="line">    <span class="title class_">Extends</span>,</span><br><span class="line">    E,</span><br><span class="line">    <span class="variable constant_">EE</span></span><br><span class="line">  &gt;</span><br><span class="line">): <span class="title class_">DefineComponent</span>&lt;<span class="title class_">Props</span>, <span class="title class_">RawBindings</span>, D, C, M, <span class="title class_">Mixin</span>, <span class="title class_">Extends</span>, E, <span class="variable constant_">EE</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二种：通过传入一个对象去定义，不传入props，只在对象里进行定义props的接口。但实际上也不推荐。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// overload 3: object format with array props declaration</span></span><br><span class="line"><span class="comment">// props inferred as &#123; [key in PropNames]?: any &#125;</span></span><br><span class="line"><span class="comment">// return type is for Vetur and TSX support</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> defineComponent&lt;</span><br><span class="line">  <span class="title class_">PropNames</span> <span class="keyword">extends</span> <span class="built_in">string</span>,</span><br><span class="line">  <span class="title class_">RawBindings</span>,</span><br><span class="line">  D,</span><br><span class="line">  C <span class="keyword">extends</span> <span class="title class_">ComputedOptions</span> = &#123;&#125;,</span><br><span class="line">  M <span class="keyword">extends</span> <span class="title class_">MethodOptions</span> = &#123;&#125;,</span><br><span class="line">  <span class="title class_">Mixin</span> <span class="keyword">extends</span> <span class="title class_">ComponentOptionsMixin</span> = <span class="title class_">ComponentOptionsMixin</span>,</span><br><span class="line">  <span class="title class_">Extends</span> <span class="keyword">extends</span> <span class="title class_">ComponentOptionsMixin</span> = <span class="title class_">ComponentOptionsMixin</span>,</span><br><span class="line">  E <span class="keyword">extends</span> <span class="title class_">EmitsOptions</span> = <span class="title class_">Record</span>&lt;<span class="built_in">string</span>, <span class="built_in">any</span>&gt;,</span><br><span class="line">  <span class="variable constant_">EE</span> <span class="keyword">extends</span> <span class="built_in">string</span> = <span class="built_in">string</span></span><br><span class="line">&gt;(</span><br><span class="line">  <span class="attr">options</span>: <span class="title class_">ComponentOptionsWithArrayProps</span>&lt;</span><br><span class="line">    <span class="title class_">PropNames</span>,</span><br><span class="line">    <span class="title class_">RawBindings</span>,</span><br><span class="line">    D,</span><br><span class="line">    C,</span><br><span class="line">    M,</span><br><span class="line">    <span class="title class_">Mixin</span>,</span><br><span class="line">    <span class="title class_">Extends</span>,</span><br><span class="line">    E,</span><br><span class="line">    <span class="variable constant_">EE</span></span><br><span class="line">  &gt;</span><br><span class="line">): <span class="title class_">DefineComponent</span>&lt;</span><br><span class="line">  <span class="title class_">Readonly</span>&lt;&#123; [key <span class="keyword">in</span> <span class="title class_">PropNames</span>]?: <span class="built_in">any</span> &#125;&gt;,</span><br><span class="line">  <span class="title class_">RawBindings</span>,</span><br><span class="line">  D,</span><br><span class="line">  C,</span><br><span class="line">  M,</span><br><span class="line">  <span class="title class_">Mixin</span>,</span><br><span class="line">  <span class="title class_">Extends</span>,</span><br><span class="line">  E,</span><br><span class="line">  <span class="variable constant_">EE</span></span><br><span class="line">&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第三种：和第二种类似，但是对象里的props是一个列表，也就是: props: [&#x27;name&#x27;, &#x27;age&#x27;...] 这种写法，但是可以看到官方解释，这种方式得到的prop都是any类型，因为不推荐在ts里使用any类型，所以这种方式也不推荐使用。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// overload 4: object format with object props declaration</span></span><br><span class="line"><span class="comment">// see `ExtractPropTypes` in ./componentProps.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> defineComponent&lt;</span><br><span class="line">  <span class="comment">// the Readonly constraint allows TS to treat the type of &#123; required: true &#125;</span></span><br><span class="line">  <span class="comment">// as constant instead of boolean.</span></span><br><span class="line">  <span class="title class_">PropsOptions</span> <span class="keyword">extends</span> <span class="title class_">Readonly</span>&lt;<span class="title class_">ComponentPropsOptions</span>&gt;,</span><br><span class="line">  <span class="title class_">RawBindings</span>,</span><br><span class="line">  D,</span><br><span class="line">  C <span class="keyword">extends</span> <span class="title class_">ComputedOptions</span> = &#123;&#125;,</span><br><span class="line">  M <span class="keyword">extends</span> <span class="title class_">MethodOptions</span> = &#123;&#125;,</span><br><span class="line">  <span class="title class_">Mixin</span> <span class="keyword">extends</span> <span class="title class_">ComponentOptionsMixin</span> = <span class="title class_">ComponentOptionsMixin</span>,</span><br><span class="line">  <span class="title class_">Extends</span> <span class="keyword">extends</span> <span class="title class_">ComponentOptionsMixin</span> = <span class="title class_">ComponentOptionsMixin</span>,</span><br><span class="line">  E <span class="keyword">extends</span> <span class="title class_">EmitsOptions</span> = <span class="title class_">Record</span>&lt;<span class="built_in">string</span>, <span class="built_in">any</span>&gt;,</span><br><span class="line">  <span class="variable constant_">EE</span> <span class="keyword">extends</span> <span class="built_in">string</span> = <span class="built_in">string</span></span><br><span class="line">&gt;(</span><br><span class="line">  <span class="attr">options</span>: <span class="title class_">ComponentOptionsWithObjectProps</span>&lt;</span><br><span class="line">    <span class="title class_">PropsOptions</span>,</span><br><span class="line">    <span class="title class_">RawBindings</span>,</span><br><span class="line">    D,</span><br><span class="line">    C,</span><br><span class="line">    M,</span><br><span class="line">    <span class="title class_">Mixin</span>,</span><br><span class="line">    <span class="title class_">Extends</span>,</span><br><span class="line">    E,</span><br><span class="line">    <span class="variable constant_">EE</span></span><br><span class="line">  &gt;</span><br><span class="line">): <span class="title class_">DefineComponent</span>&lt;<span class="title class_">PropsOptions</span>, <span class="title class_">RawBindings</span>, D, C, M, <span class="title class_">Mixin</span>, <span class="title class_">Extends</span>, E, <span class="variable constant_">EE</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果使用ts去编写项目，最推荐使用这种方法，在options里定义props的定义。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// implementation, close to no-op</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">defineComponent</span>(<span class="params">options: <span class="built_in">unknown</span></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">isFunction</span>(options) ? &#123; <span class="attr">setup</span>: options, <span class="attr">name</span>: options.<span class="property">name</span> &#125; : options</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 最后一行才是真正去实现defineComponent函数，如果传入一个函数，那么返回一个包装过的对象，如果是传入一个对象则直接返回该对象。</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到真正定义 <code>defineComponent</code> 函数的代码只有三行，其他的都是类型定义。</p>
+<h2 id="组件的定义"><a href="#组件的定义" class="headerlink" title="组件的定义"></a>组件的定义</h2><p>既然上面了解了<code>defineComponent</code>，那么现在尝试去使用一下这个函数，这是一个非常基础的组件的定义：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; defineComponent, <span class="title class_">PropType</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineComponent</span>(&#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;HelloWorld&#x27;</span>,</span><br><span class="line">  <span class="attr">props</span>: &#123;</span><br><span class="line">    <span class="attr">msg</span>: &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="title class_">String</span> <span class="keyword">as</span> <span class="title class_">PropType</span>&lt;<span class="built_in">string</span>&gt;,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">age</span>: &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="title class_">Number</span> <span class="keyword">as</span> <span class="title class_">PropType</span>&lt;<span class="built_in">number</span>&gt;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>上面的<code>String</code>，<code>Number</code>这些其实只是一个类，如果要符合 ts，最正统的应该加上<code>as</code>将该值视为 xxx 类型。如果有些场景不加 as 的话：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineComponent</span>(&#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;HelloWorld&#x27;</span>,</span><br><span class="line">  <span class="attr">props</span>: &#123;</span><br><span class="line">    <span class="attr">config</span>: &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="title class_">Object</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="title function_">mounted</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">config</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>在 vscode 编辑器下，把鼠标放到：<code>this.config</code>上，可以看到 vscode 提示：<code>(property) config?: Record&lt;string, any&gt; | undefined</code></p>
+<p>说明如果不定义类型的话那么 config 的值将会是 any 类型。对于 ts 来说这样可以用，但是 any 对于我们来说始终是不好的东西。我们应该这样去做：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Config</span> &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineComponent</span>(&#123;</span><br><span class="line">  <span class="attr">props</span>: &#123;</span><br><span class="line">    <span class="attr">config</span>: &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="title class_">Object</span> <span class="keyword">as</span> <span class="title class_">PropType</span>&lt;<span class="title class_">Config</span>&gt;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="title function_">mounted</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">config</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>这样我们去看 config 的类型：<code>(property) config?: Config | undefined</code>。<br>可以看到该类型还有可能是<code>undefined</code>，如果不能让他为<code>undefined</code>只需要加上<code>required</code>。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineComponent</span>(&#123;</span><br><span class="line">  <span class="attr">props</span>: &#123;</span><br><span class="line">    <span class="attr">config</span>: &#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="title class_">Object</span> <span class="keyword">as</span> <span class="title class_">PropType</span>&lt;<span class="title class_">Config</span>&gt;,</span><br><span class="line">      <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>最终我们看到 config 类型是：<code>(property) config: Config</code>，因为声明了该 prop 是必传的，所以他肯定是有值的，那就必不可能是<code>undefined</code>。<br>如果上面不设置，直接调用<code>this.config.name</code>那么 TS 编译器则会报错：<code>Object is possibly &#39;undefined&#39;</code>。如果没有 required 去设置的话，你可能还要使用<code>if (this.config)</code>去调用<code>this.config.name</code>，那么如果有 required 的话将不再担心这些，可以直接去调用，这就是 ts 的好处。这样就能提高我们写代码的自信，因为 ts 没给我们报错，那么我们的代码出错的几率就会降低。</p>
+<p>上面就是组件相关的一些内容，下一节开始将深入讲解 props。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Wyatex
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://qghost.gitee.io/Vue3/Vue3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89%EF%BC%9A%E7%BB%84%E4%BB%B6/" title="Vue3学习笔记（1）：组件">https://qghost.gitee.io/Vue3/Vue3学习笔记（1）：组件/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+              <a href="/tags/Vue3/" rel="tag"># Vue3</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/%E5%89%8D%E7%AB%AF/Ajax%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%883%EF%BC%89%EF%BC%9AAxios%E8%BF%9B%E4%B8%80%E6%AD%A5%E5%B0%81%E8%A3%85/" rel="prev" title="Ajax学习笔记（3）：Axios进一步封装">
+                  <i class="fa fa-chevron-left"></i> Ajax学习笔记（3）：Axios进一步封装
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Vue3/Vue3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89%EF%BC%9AProps/" rel="next" title="Vue3学习笔记（2）：Props">
+                  Vue3学习笔记（2）：Props <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wyatex</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>

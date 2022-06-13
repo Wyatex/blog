@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"qghost.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="因为我的课程考试内容只有写出缩写单词的全拼、翻译、名词解释、课后题，所以这里只写这些内容。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="物联网安全导论笔记">
+<meta property="og:url" content="https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%89%A9%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Wyatex&#96;s blog">
+<meta property="og:description" content="因为我的课程考试内容只有写出缩写单词的全拼、翻译、名词解释、课后题，所以这里只写这些内容。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-26T15:01:45.000Z">
+<meta property="article:modified_time" content="2022-06-13T08:38:13.037Z">
+<meta property="article:author" content="Wyatex">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="物联网">
+<meta property="article:tag" content="安全">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%89%A9%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%89%A9%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0/","path":"学习笔记/物联网安全导论笔记/","title":"物联网安全导论笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>物联网安全导论笔记 | Wyatex`s blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Wyatex`s blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">67</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">18</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">111</span></a></li><li class="menu-item menu-item-编程"><a href="/programming/" rel="section"><i class="fa fa-book fa-fw"></i>编程</a></li><li class="menu-item menu-item-干货"><a href="/resources/" rel="section"><i class="fa fa-paperclip fa-fw"></i>干货</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D"><span class="nav-number">1.</span> <span class="nav-text">单词</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86-%E7%89%A9%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">第一部分 物联网安全概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86-%E7%89%A9%E8%81%94%E7%BD%91%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB%E5%B1%82%E5%AE%89%E5%85%A8"><span class="nav-number">1.2.</span> <span class="nav-text">第二部分 物联网感知识别层安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86-%E7%89%A9%E8%81%94%E7%BD%91%E7%BD%91%E7%BB%9C%E6%9E%84%E5%BB%BA%E5%B1%82%E5%AE%89%E5%85%A8"><span class="nav-number">1.3.</span> <span class="nav-text">第三部分 物联网网络构建层安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86-%E7%89%A9%E8%81%94%E7%BD%91%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1%E5%B1%82%E5%AE%89%E5%85%A8"><span class="nav-number">1.4.</span> <span class="nav-text">第四部分 物联网管理服务层安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E9%83%A8%E5%88%86-%E4%BA%92%E8%81%94%E7%BD%91%E7%BB%BC%E5%90%88%E5%BA%94%E7%94%A8%E5%B1%82%E5%AE%89%E5%85%A8"><span class="nav-number">1.5.</span> <span class="nav-text">第五部分 互联网综合应用层安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E9%83%A8%E5%88%86-%E7%89%A9%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8%E6%A0%87%E5%87%86%E5%92%8C%E5%AE%89%E5%85%A8%E4%BD%93%E7%B3%BB"><span class="nav-number">1.6.</span> <span class="nav-text">第六部分 物联网安全标准和安全体系</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%8D%E8%AF%8D%E8%A7%A3%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">名词解析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%BE%E5%90%8E%E4%B9%A0%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">课后习题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0"><span class="nav-number">3.1.</span> <span class="nav-text">第一章</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%A6%81%E8%AF%B4%E6%98%8E%E7%89%A9%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8%E7%9A%84%E9%80%BB%E8%BE%91%E5%B1%82%E6%AC%A1"><span class="nav-number">3.1.1.</span> <span class="nav-text">概要说明物联网安全的逻辑层次</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E8%81%94%E7%BD%91%E9%9D%A2%E5%AF%B9%E7%9A%84%E7%89%B9%E6%AE%8A%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-number">3.1.2.</span> <span class="nav-text">物联网面对的特殊安全问题有哪些？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB%E5%B1%82%E5%8F%AF%E8%83%BD%E9%81%87%E5%88%B0%E7%9A%84%E5%AE%89%E5%85%A8%E6%8C%91%E6%88%98%E5%8C%85%E6%8B%AC%E5%93%AA%E5%87%A0%E7%A7%8D%E6%83%85%E5%86%B5%EF%BC%9F"><span class="nav-number">3.1.3.</span> <span class="nav-text">感知识别层可能遇到的安全挑战包括哪几种情况？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0"><span class="nav-number">3.2.</span> <span class="nav-text">第二章</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%B5%E5%AD%90%E7%AD%BE%E8%AF%81%E6%9C%BA%E5%85%B3%EF%BC%88CA%EF%BC%89%E7%9A%84%E6%A6%82%E5%BF%B5%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">3.2.1.</span> <span class="nav-text">电子签证机关（CA）的概念是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E8%81%94%E7%BD%91%E4%B8%AD%E7%9A%84%E5%8A%A0%E5%AF%86%E6%9C%BA%E5%88%B6%E5%AE%9E%E6%96%BD%E6%98%AF%E7%9A%84%E4%B8%BB%E8%A6%81%E5%9B%B0%E9%9A%BE%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">3.2.2.</span> <span class="nav-text">物联网中的加密机制实施是的主要困难是什么？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0"><span class="nav-number">3.3.</span> <span class="nav-text">第三章</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%EF%BC%88%E5%8D%B3%E5%85%AC%E5%BC%80%E5%AF%86%E9%92%A5%E7%B3%BB%E7%BB%9F%EF%BC%8C%E7%AE%80%E7%A7%B0%E5%85%AC%E9%92%A5%EF%BC%89%EF%BC%9F"><span class="nav-number">3.3.1.</span> <span class="nav-text">什么是非对称加密（即公开密钥系统，简称公钥）？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E8%BF%B0%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E7%9A%84%E6%A6%82%E5%BF%B5%E5%8F%8A%E5%BA%94%E7%94%A8"><span class="nav-number">3.3.2.</span> <span class="nav-text">简述数字签名的概念及应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%B5%E5%AD%90ID%E8%BA%AB%E4%BB%BD%E8%AF%86%E5%88%AB%E4%B8%BB%E8%A6%81%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F"><span class="nav-number">3.3.3.</span> <span class="nav-text">电子ID身份识别主要有哪几种方式？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E%E7%9A%84%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">3.3.4.</span> <span class="nav-text">基于零知识证明的识别技术原理是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E8%81%94%E7%BD%91%E5%AF%86%E9%92%A5%E7%AE%A1%E7%90%86%E6%B5%81%E7%A8%8B%E6%9C%89%E5%93%AA%E4%BA%9B%E6%AD%A5%E9%AA%A4%EF%BC%9F"><span class="nav-number">3.3.5.</span> <span class="nav-text">物联网密钥管理流程有哪些步骤？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0"><span class="nav-number">3.4.</span> <span class="nav-text">第四章</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RFID%E6%94%BB%E5%87%BB%E6%A8%A1%E5%BC%8F%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D%EF%BC%9F"><span class="nav-number">3.4.1.</span> <span class="nav-text">RFID攻击模式有哪几种？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RFID%E6%8A%80%E6%9C%AF%E4%B8%AD%E6%9C%89%E5%93%AA%E4%BA%9B%E9%9A%90%E7%A7%81%E9%97%AE%E9%A2%98%EF%BC%9F%E5%85%B6%E4%BF%9D%E6%8A%A4%E6%8E%AA%E6%96%BD%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">3.4.2.</span> <span class="nav-text">RFID技术中有哪些隐私问题？其保护措施是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E7%89%A9%E7%90%86%E9%80%94%E5%BE%84%E6%9D%A5%E4%BF%9D%E6%8A%A4RFID%E6%A0%87%E7%AD%BE%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%EF%BC%9F"><span class="nav-number">3.4.3.</span> <span class="nav-text">如何使用物理途径来保护RFID标签的安全性？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E9%87%87%E7%94%A8%E5%AF%86%E7%A0%81%E6%9C%BA%E5%88%B6%E8%A7%A3%E5%86%B3RFID%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%EF%BC%9F%E4%B8%BE%E4%B8%A4%E4%B8%89%E4%B8%AA%E4%BE%8B%E5%AD%90%E5%AF%B9RFID%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E8%BF%9B%E8%A1%8C%E8%AF%B4%E6%98%8E%E3%80%82"><span class="nav-number">3.4.4.</span> <span class="nav-text">如何采用密码机制解决RFID的安全问题？举两三个例子对RFID安全协议进行说明。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RFID%E8%AE%A4%E8%AF%81%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.4.5.</span> <span class="nav-text">RFID认证通信协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RFID%E7%B3%BB%E7%BB%9F%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9E%8B%EF%BC%9A"><span class="nav-number">3.4.6.</span> <span class="nav-text">RFID系统通信模型：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#M1%E5%8D%A1%E4%B8%89%E9%87%8D%E8%AE%A4%E8%AF%81"><span class="nav-number">3.4.7.</span> <span class="nav-text">M1卡三重认证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0"><span class="nav-number">3.5.</span> <span class="nav-text">第五章</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C%E7%9A%84%E6%94%BB%E5%87%BB%E5%BD%A2%E5%BC%8F%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D"><span class="nav-number">3.5.1.</span> <span class="nav-text">无线传感器网络的攻击形式有哪几种?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%98%E5%9B%BE%E6%8F%8F%E8%BF%B0%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-number">3.5.2.</span> <span class="nav-text">绘图描述无线传感器网络安全体系结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E9%87%87%E7%94%A8%E5%AE%89%E5%85%A8%E8%B7%AF%E7%94%B1%E6%9D%A5%E5%A2%9E%E5%8A%A0%E7%BD%91%E7%BB%9C%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7-%E6%9C%89%E5%93%AA%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">3.5.3.</span> <span class="nav-text">如何采用安全路由来增加网络的安全性?有哪些常用的方法?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E8%9E%8D%E5%90%88%E5%AE%89%E5%85%A8%E5%92%8C%E6%95%B0%E6%8D%AE%E8%AE%A4%E8%AF%81"><span class="nav-number">3.5.4.</span> <span class="nav-text">什么是无线传感器网络中的数据融合安全和数据认证?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFZigBee%E4%BF%A1%E4%BB%BB%E4%B8%AD%E5%BF%83-%E5%AE%83%E8%83%BD%E6%8F%90%E4%BE%9B%E5%93%AA%E5%87%A0%E7%A7%8D%E5%8A%9F%E8%83%BD"><span class="nav-number">3.5.5.</span> <span class="nav-text">什么是ZigBee信任中心?它能提供哪几种功能?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BA%86%E6%BB%A1%E8%B6%B3%E5%AE%89%E5%85%A8%E6%80%A7%E9%9C%80%E8%A6%81-ZigBee%E6%A0%87%E5%87%86%E4%BD%BF%E7%94%A8%E5%93%AA%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95%E6%9D%A5%E7%A1%AE%E4%BF%9D%E5%AE%89%E5%85%A8"><span class="nav-number">3.5.6.</span> <span class="nav-text">为了满足安全性需要,ZigBee标准使用哪几种方法来确保安全?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0"><span class="nav-number">3.6.</span> <span class="nav-text">第六章</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E7%BA%BF%E9%80%9A%E4%BF%A1%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E4%B8%8D%E5%AE%89%E5%85%A8%E5%9B%A0%E7%B4%A0%E4%B8%BB%E8%A6%81%E6%9C%89%E5%93%AA%E5%87%A0%E4%B8%AA%E6%96%B9%E9%9D%A2"><span class="nav-number">3.6.1.</span> <span class="nav-text">无线通信网络中的不安全因素主要有哪几个方面?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E8%BF%B0WAP%E5%BA%94%E7%94%A8%E9%9D%A2%E4%B8%B4%E7%9A%84%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E3%80%82"><span class="nav-number">3.6.2.</span> <span class="nav-text">简述WAP应用面临的安全威胁。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%8E%AA%E6%96%BD%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D"><span class="nav-number">3.6.3.</span> <span class="nav-text">无线网络安全技术的实现措施有哪几种?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E8%BF%B0UWB%E9%9D%A2%E4%B8%B4%E7%9A%84%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E3%80%82"><span class="nav-number">3.6.4.</span> <span class="nav-text">简述UWB面临的信息安全威胁。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E7%AB%A0"><span class="nav-number">3.7.</span> <span class="nav-text">第七章</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E6%94%BB%E5%87%BB%E7%9A%84%E5%BD%A2%E5%BC%8F%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D"><span class="nav-number">3.7.1.</span> <span class="nav-text">网络安全攻击的形式有哪几种?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%88%AB%E7%AE%80%E8%BF%B0%E5%8C%85%E8%BF%87%E6%BB%A4%E9%98%B2%E7%81%AB%E5%A2%99%E3%80%81%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%98%B2%E7%81%AB%E5%A2%99%E5%92%8C%E7%8A%B6%E6%80%81%E7%9B%91%E8%A7%86%E5%99%A8%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%8A%80%E6%9C%AF%E5%8E%9F%E7%90%86%E3%80%82"><span class="nav-number">3.7.2.</span> <span class="nav-text">分别简述包过滤防火墙、代理服务器防火墙和状态监视器防火墙的技术原理。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFIPSec%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE-IPSec-%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%89%B9%E7%82%B9%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">3.7.3.</span> <span class="nav-text">什么是IPSec安全协议? IPSec 协议的特点是什么?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VPN%E4%B8%BB%E8%A6%81%E9%87%87%E7%94%A8%E5%93%AA4%E9%A1%B9%E6%8A%80%E6%9C%AF%E6%9D%A5%E4%BF%9D%E8%AF%81%E5%AE%89%E5%85%A8"><span class="nav-number">3.7.4.</span> <span class="nav-text">VPN主要采用哪4项技术来保证安全?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E9%98%B2%E6%AD%A2%E9%BB%91%E5%AE%A2%E6%94%BB%E5%87%BB%EF%BC%8C%E9%80%9A%E5%B8%B8%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E5%93%AA%E5%87%A0%E7%A7%8D%E9%98%B2%E8%8C%83%E6%8E%AA%E6%96%BD"><span class="nav-number">3.7.5.</span> <span class="nav-text">为防止黑客攻击，通常可以使用哪几种防范措施?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%85%AB%E7%AB%A0%E4%B9%8B%E5%90%8E"><span class="nav-number">3.8.</span> <span class="nav-text">第八章之后</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E5%8A%A0%E5%AF%86%E5%92%8C%E9%9A%90%E8%97%8F%E5%8F%AF%E4%BB%A5%E5%88%86%E4%B8%BA%E5%93%AA3%E7%A7%8D%E6%A8%A1%E5%BC%8F%EF%BC%9F"><span class="nav-number">3.8.1.</span> <span class="nav-text">信息加密和隐藏可以分为哪3种模式？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%98%E5%9B%BE%E8%AF%B4%E6%98%8E%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F%E7%9A%84%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9E%8B%E3%80%82"><span class="nav-number">3.8.2.</span> <span class="nav-text">绘图说明信息隐藏的通用模型。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9A%90%E5%86%99%E6%9C%AF%E5%8F%AF%E4%BB%A5%E5%88%86%E4%B8%BA%E5%93%AA%E5%87%A0%E7%B1%BB%EF%BC%9F"><span class="nav-number">3.8.3.</span> <span class="nav-text">数据隐写术可以分为哪几类？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E6%B0%B4%E5%8D%B0%E5%85%B7%E6%9C%89%E5%93%AA%E4%BA%9B%E7%89%B9%E7%82%B9%EF%BC%9F%E4%B8%BB%E8%A6%81%E5%BA%94%E7%94%A8%E4%BA%8E%E5%93%AA%E4%BA%9B%E9%A2%86%E5%9F%9F%EF%BC%9F"><span class="nav-number">3.8.4.</span> <span class="nav-text">数字水印具有哪些特点？主要应用于哪些领域？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LBS%E7%B3%BB%E7%BB%9F%E7%94%B1%E5%93%AA%E4%BA%9B%E9%83%A8%E5%88%86%E7%BB%84%E6%88%90%EF%BC%9F"><span class="nav-number">3.8.5.</span> <span class="nav-text">LBS系统由哪些部分组成？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E8%BF%B0%E9%9A%90%E7%A7%81%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">3.8.6.</span> <span class="nav-text">简述隐私的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E8%A6%81%E8%AF%B4%E6%98%8E%E4%BE%B5%E7%8A%AF%E7%BD%91%E7%BB%9C%E9%9A%90%E7%A7%81%E6%9D%83%E7%9A%84%E4%B8%BB%E8%A6%81%E6%8A%80%E6%9C%AF%E6%89%8B%E6%AE%B5%E3%80%82"><span class="nav-number">3.8.7.</span> <span class="nav-text">简要说明侵犯网络隐私权的主要技术手段。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%B4%E6%98%8E%E4%BD%8D%E7%BD%AE%E6%9C%8D%E5%8A%A1%E4%B8%8E%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4%E7%9A%84%E5%85%B3%E7%B3%BB%E3%80%82"><span class="nav-number">3.8.8.</span> <span class="nav-text">说明位置服务与隐私保护的关系。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E8%BF%B0LBS%E4%B8%AD%E7%9A%843%E7%A7%8D%E5%9F%BA%E6%9C%AC%E7%9A%84%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4%E6%96%B9%E6%B3%95"><span class="nav-number">3.8.9.</span> <span class="nav-text">简述LBS中的3种基本的隐私保护方法</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Wyatex"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Wyatex</p>
+  <div class="site-description" itemprop="description">这里是我用来做笔记的网站哟~</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wyatex" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wyatex" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wyatex@qq.com" title="E-Mail → mailto:wyatex@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.microloong.me/" title="https:&#x2F;&#x2F;blog.microloong.me" rel="noopener" target="_blank">MicroLOONG</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%89%A9%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Wyatex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wyatex`s blog">
+      <meta itemprop="description" content="这里是我用来做笔记的网站哟~">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="物联网安全导论笔记 | Wyatex`s blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          物联网安全导论笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-26 23:01:45" itemprop="dateCreated datePublished" datetime="2021-04-26T23:01:45+08:00">2021-04-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-13 16:38:13" itemprop="dateModified" datetime="2022-06-13T16:38:13+08:00">2022-06-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>因为我的课程考试内容只有写出缩写单词的全拼、翻译、名词解释、课后题，所以这里只写这些内容。</p>
+<span id="more"></span>
+
+<h1 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h1><h2 id="第一部分-物联网安全概述"><a href="#第一部分-物联网安全概述" class="headerlink" title="第一部分 物联网安全概述"></a>第一部分 物联网安全概述</h2><p>物联网安全需求分析、安全技术框架、密码与身份认证</p>
+<ul>
+<li>T2T,H2T,H2H: T&#x3D;&gt;Thing, H&#x3D;&gt;Human</li>
+<li>DAS: Direct Attached Storage, 直连存储</li>
+<li><strong>NAS</strong>: Network Attached Storage, 网络附加存储</li>
+<li>SAN: Storage Area Network, 专用存储区域网络</li>
+<li>DCM: Device Connect Manage, 结合互联网</li>
+<li><strong>PKI</strong>: Public Key Infrastructure, 公共密钥基础设施&#x2F;公开密钥体系</li>
+<li>DOS: Denial of Service, 拒绝服务</li>
+<li><strong>DDOS</strong>: Distributed Denial of Service, 分布式拒绝服务</li>
+<li>AKA: Authentication and Key Agreement, 认证与密钥协商</li>
+<li>AC: Asymmetric Cryptography, 非对称密钥密码体系</li>
+<li><strong>CA</strong>: Certificate Authority, 证书颁发机构&#x2F;电子签证机关</li>
+<li>DSA: Digital Signature Algorithm, 数字签名算法</li>
+<li>DEA: Data Encryption Algorithm, 数据加密算法</li>
+<li>SET: Secure Electronic Transaction, 安全电子交易协议</li>
+<li>PKG: Private Key Generation, 私钥生成中心</li>
+<li><strong>RBAC</strong>: Role-Based Access Control, 基于角色的访问控制</li>
+<li>ABAC: Attribute Base Access Control, 基于属性的访问控制</li>
+<li><strong>DES</strong>: Data Encryption Standard, 数据加密标准</li>
+<li><strong>AES</strong>: Advanced Encryption Standard, 高级加密标准</li>
+<li><strong>MD5</strong>: Message Digest Algorithm 5, 信息摘要算法第五版</li>
+<li><strong>SHA</strong>: Secure Hash Algorithm, 安全散列算法</li>
+<li>IDEA: International Data Encryption Algorithm, 国际数据加密算法</li>
+<li>MAC: Message authentication code, 消息认证码</li>
+<li>asymmetric cryptography: 非对称密码学</li>
+<li>digital signature: 数字签名</li>
+<li>sniffer: 数据嗅探&#x2F;窃听</li>
+</ul>
+<h2 id="第二部分-物联网感知识别层安全"><a href="#第二部分-物联网感知识别层安全" class="headerlink" title="第二部分 物联网感知识别层安全"></a>第二部分 物联网感知识别层安全</h2><p>RFID系统安全与隐私、无线传感器网络安全</p>
+<ul>
+<li><strong>RFID</strong>: Radio Frequency Identification, 射频识别</li>
+<li>MITM: Man-in-the-Middle Attack, 中间人攻击</li>
+<li><strong>EPC</strong>: Electronic Product Code, 产品电子代码</li>
+</ul>
+<h2 id="第三部分-物联网网络构建层安全"><a href="#第三部分-物联网网络构建层安全" class="headerlink" title="第三部分 物联网网络构建层安全"></a>第三部分 物联网网络构建层安全</h2><p>无线通信网络安全、互联网网络安全</p>
+<ul>
+<li><strong>WLAN</strong>: Wireless Local Area Network, 无线局域网</li>
+<li><strong>WAP</strong>: Wireless Application Protocol, 无线应用协议</li>
+<li>WML: Wireless Markup Language, 无线标记语言</li>
+<li><strong>SSID</strong>: Service Set Identifier, 服务集标识</li>
+<li>WEP: Wired Equivalent Privacy, 有线等效保密</li>
+<li><strong>UWB</strong>: Ultra Wide Band, 超宽带</li>
+<li>IPSec: Internet Protocol Security</li>
+<li>IKE: Internet key exchange, 网络密钥交换</li>
+<li><strong>SA</strong>: Security Association, 安全联盟</li>
+<li><strong>VPN</strong>: Virtual Private Network, 虚拟专用网络</li>
+<li><strong>QoS</strong>: Quality of Service, 服务质量</li>
+<li>RFC: Request For Comments, 请求注解</li>
+<li><strong>SSL</strong>: Secure Sockets Layer, 安全套接字协议</li>
+<li><strong>TLS</strong>: Transport Layer Security, 安全传输层协议</li>
+<li>WTLS: Wireless Transport Layer Security, 无线传输层协议</li>
+<li><strong>SSH</strong>: Secure Shell, 安全外壳协议</li>
+</ul>
+<h2 id="第四部分-物联网管理服务层安全"><a href="#第四部分-物联网管理服务层安全" class="headerlink" title="第四部分 物联网管理服务层安全"></a>第四部分 物联网管理服务层安全</h2><p>中间件与云计算安全</p>
+<ul>
+<li><strong>OLTP</strong>: on-line transaction processing, 联机事务处理</li>
+<li><strong>OLAP</strong>: On-Line Analytical Processing, 翻译为联机分析处理</li>
+<li>ESB: Enterprise Service Bus, 企业服务总线</li>
+<li>TPM: Transaction Processing Monitor, 事务处理监控器</li>
+<li>DCE: Distributed Computing Environment, 分布式计算环境</li>
+<li><strong>RPC</strong>: Remote Procedure Call, 远程过程调用</li>
+<li>ORB: Object Request Broker, 对象请求代理</li>
+<li><strong>API</strong>: Application Programming Interface, 应用程序接口</li>
+<li>SaaS: Software-as-a-Service, 软件即服务</li>
+<li>PaaS: Platform as a Service, 平台即服务</li>
+<li>IaaS: Infrastructure as a Service, 基础设施即服务</li>
+<li><strong>DDBS</strong>: Distributed Database System, 分布式数据库</li>
+</ul>
+<blockquote>
+<p>拓展一下CaaS、FaaS,分别代表Container，Function，容器即服务、函数即服务</p>
+</blockquote>
+<h2 id="第五部分-互联网综合应用层安全"><a href="#第五部分-互联网综合应用层安全" class="headerlink" title="第五部分 互联网综合应用层安全"></a>第五部分 互联网综合应用层安全</h2><p>信息隐蔽技术、位置信息与隐私保护</p>
+<ul>
+<li>LSB: Least Significant Bit, 最低有效位&#x2F;最低比特位替换</li>
+<li><strong>LBS</strong>: Location Based Services, 基于位置的服务</li>
+<li>PPV: Pay-Per-View</li>
+<li>VOD: Video on Demand</li>
+<li><strong>GSM</strong>: Global System for Mobile Communications, 全球移动通信系统</li>
+<li><strong>CDMA</strong>: Code Division Multiple Access, 码分多址</li>
+<li>GIS: Geographic Information System, 地理信息系统</li>
+<li>PSAP: Public Safety Access Point, 公共安全应答点</li>
+<li>AOA: Angle-of-Arrival, 到达角度测距</li>
+<li>TDOA: Time Difference of Arrival, 到达时间差</li>
+<li>MLC: Mobile Location Centre, 移动定位中心</li>
+<li>SMC: Secure Multi-Party Computation, 安全多方计算</li>
+</ul>
+<h2 id="第六部分-物联网安全标准和安全体系"><a href="#第六部分-物联网安全标准和安全体系" class="headerlink" title="第六部分 物联网安全标准和安全体系"></a>第六部分 物联网安全标准和安全体系</h2><ul>
+<li><strong>ISO</strong>: International Organization for Standardization, 国际标准化组织</li>
+<li><strong>ITU</strong>: International Telecommunication Union, 国际电信联盟 </li>
+<li><strong>IETF</strong>: The Internet Engineering Task Force, 国际互联网工程任务组</li>
+<li>CCSA: China Communications Standards Association, 中国通信标准化协会</li>
+</ul>
+<h1 id="名词解析"><a href="#名词解析" class="headerlink" title="名词解析"></a>名词解析</h1><ol>
+<li>数据加密：数据加密是计算机系统对信息进行保护的一种最可靠的方法，它利用密码技术对信息进行交换，实现信息隐蔽，从而保护信息的安全。</li>
+<li>数据融合安全：无线传感器网络中有大量的节点, 会产生大量的数据。如何把这些数据进行分类,集合出在网络中传输的有效数据并进行数据身份认证是数据融合安全所要解决的问题。 </li>
+<li>对称密钥：（私钥加密）即信息的发送方和接收方用同一个秘钥去加密和解密数据。只有发送方和接收方才知道这一密钥。它的最大优势是加&#x2F;解密速度快，适合于对大数据量进行加密，但密钥管理困难。</li>
+<li>非对称密钥：（公钥密钥加密）它需要使用不同的秘钥来分别完成加密和解密操作，一个公开发布，即公开密钥，另一个由用户自己秘密保存，即私用密钥。信息发送者用公开密钥去加密，而信息接收者则用私用密钥去解密。</li>
+<li>VPN：虚拟专网指依靠ISP和其他NSP（网络服务提供者）在公用网络（如Internet、Frame Relay、ATM）建立专用的数据通信网络的技术。</li>
+<li>数字证书：（数字凭证）使用电子手段来证实一个用户的身份和对网络资源的访问权限。数字证书就是一个数字文件，通常由四个部分组成：第一是证书持有人的姓名、地址等关键信息；第二是证书持有人的公开密钥；第三是证书序号、证书的有效期限；第四是发证单位的数字签名。</li>
+<li>数字签名：指通过一个单向函数对传送的报文进行处理得到的，是一个用以认证报文来源并核实报文是否发生变化的一个字母数字串。用于提供服务不可否认性的安全机制。</li>
+<li>数字水印：是将一些标识信息（即数字水印）直接嵌入数字载体（包括多媒体、文档和软件等）当中，但不影响原载体的使用价值，也不容易被人的知觉系统（如视觉或听觉系统）觉察或注意到。</li>
+<li>CA：电子签证机关，是采用PKI公开密钥技术，专门提供网络身份认证服务，负责签发和管理数字证书，且具有权威性和公正性的第三方信任机构，它的作用就像颁发证件的部门，如护照办理机构。</li>
+<li>PKI：公钥基础设施，是一种遵循既定标准的密钥管理平台，它能够为所有网络应用提供加密和数字签名等密码服务及所必需的密钥和证书管理体系。</li>
+<li>隧道技术：隧道技术是VPN的基本技术，类似于点对点连接技术。它在公用网建立一条数据通道（隧道），让数据包通过这条隧道传输。</li>
+<li>防火墙：防火墙是由软件和硬件构成的系统，是一种特殊编程的路由器，用来在两个网络之间实现接入控制策略，阻挡来自外部通过网络对本网络的威胁和入侵。</li>
+<li>安全路由：由于传感器网络中许多路由协议相对简单，更易受到攻击，所以常常采用安全路由来增加网络的安全性。</li>
+<li>时空匿名：将一个用户的位置通过在时间和空间轴上扩展，变成一个时空区域，达到匿名的效果。</li>
+<li>法拉第笼：是一个由金属网或金属薄片制成的容器, 使得某一频段的无线电信号无法穿透，用于静电屏蔽。</li>
+<li>身份验证：身份验证是指通过一定的手段完成对用户身份的确认。身份验证的目的是确认当前声称为某种身份的用户确实是所声称的用户。</li>
+<li>身份认证：通过检测双方拥有什么或者知道什么来确定同性双方的身份是否合法。</li>
+<li>隐蔽信道：在多级安全水平的系统环境中，那些既不是专门设计的也不打算用来传输信息的通信路径。</li>
+<li>访问控制：按用户身份及其所归属的某预设的定义组限制用户对某些信息项的访问，或限制对某些控制功能的使用。</li>
+<li>污水池攻击：攻击者通过声称自己电源充足、性能可靠且尬笑，使泄密节点在路由算法上对周围节点具有特别的吸引力，吸引周围的节点选择它作为路由路径中的点，引诱该区域几乎所有的数据流通过该泄密节点。</li>
+<li>入侵检测系统（IDS）：是一种对网络传输进行即时监视，在发现可疑传输时发出警报或者采取主动反应措施的网络安全设备。</li>
+<li>DMA：直接存储器访问，它允许不同速度的硬件装置来沟通，而不需要依赖于 CPU 的大量中断负载。</li>
+<li>Hash函数：散列算法也叫哈希算法，就是把任意长度的输入通过散列算法，变换成固定长度的输出，该输出就是散列值。这种转换是一种压缩映射，也就是，散列值的空间通常远小于输入的空间，不同的输入可能会散列成相同的输出，而不可能从散列值来唯一的确定输入值。简单的说就是一种将任意长度的消息压缩到某一固定长度的消息摘要的函数。</li>
+</ol>
+<h1 id="课后习题"><a href="#课后习题" class="headerlink" title="课后习题"></a>课后习题</h1><h2 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h2><h3 id="概要说明物联网安全的逻辑层次"><a href="#概要说明物联网安全的逻辑层次" class="headerlink" title="概要说明物联网安全的逻辑层次"></a>概要说明物联网安全的逻辑层次</h3><p>底层是用来信息采集的感知识别层，中间层是数据传输的网络构建层，顶层则是包括管理服务层和综合应用层的应用&#x2F;中间件层</p>
+<h3 id="物联网面对的特殊安全问题有哪些？"><a href="#物联网面对的特殊安全问题有哪些？" class="headerlink" title="物联网面对的特殊安全问题有哪些？"></a>物联网面对的特殊安全问题有哪些？</h3><ol>
+<li>物联网机器&#x2F;感知节点的本地安全问题</li>
+<li>感知网络的传输与信息安全问题</li>
+<li>核心网络的传输与信息安全问题</li>
+<li>物联网业务的安全问题</li>
+</ol>
+<h3 id="感知识别层可能遇到的安全挑战包括哪几种情况？"><a href="#感知识别层可能遇到的安全挑战包括哪几种情况？" class="headerlink" title="感知识别层可能遇到的安全挑战包括哪几种情况？"></a>感知识别层可能遇到的安全挑战包括哪几种情况？</h3><ol>
+<li>网关节点被敌手控制—安全性全部丢失； </li>
+<li>普通节点被敌手控制（敌手掌握节点密钥）； </li>
+<li>普通节点被敌手捕获（但由于没有得到节点密钥，而没有被控制）； </li>
+<li>节点（普通节点或网关节点）受来自于网络的DOS攻击； </li>
+<li>接入到物联网的超大量节点的标识、识别、认证和控制问题。</li>
+</ol>
+<h2 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h2><h3 id="电子签证机关（CA）的概念是什么？"><a href="#电子签证机关（CA）的概念是什么？" class="headerlink" title="电子签证机关（CA）的概念是什么？"></a>电子签证机关（CA）的概念是什么？</h3><p>CA是采用PKI（公开密钥体系）公开密钥技术，专门提供网络身份认证服务，负责签发和管理数字证书，且具有权威性和公正性的第三方信任机构。</p>
+<h3 id="物联网中的加密机制实施是的主要困难是什么？"><a href="#物联网中的加密机制实施是的主要困难是什么？" class="headerlink" title="物联网中的加密机制实施是的主要困难是什么？"></a>物联网中的加密机制实施是的主要困难是什么？</h3><p>感知层的节点上要运行一个加密&#x2F;解密程序不仅需要存储开销、高速的CPU，而且还要消耗节点的能量</p>
+<h2 id="第三章"><a href="#第三章" class="headerlink" title="第三章"></a>第三章</h2><h3 id="什么是非对称加密（即公开密钥系统，简称公钥）？"><a href="#什么是非对称加密（即公开密钥系统，简称公钥）？" class="headerlink" title="什么是非对称加密（即公开密钥系统，简称公钥）？"></a>什么是非对称加密（即公开密钥系统，简称公钥）？</h3><p>非对称密钥密码体系也称公开密钥技术。需要两个密钥：公开密钥和私有密钥，相对于对称密钥密码体系，最大的特点在于加密和解密使用不同的密钥。</p>
+<h3 id="简述数字签名的概念及应用"><a href="#简述数字签名的概念及应用" class="headerlink" title="简述数字签名的概念及应用"></a>简述数字签名的概念及应用</h3><p>数字签名是指通过一个单向函数对传送的报文进行处理得到的，是一个用以认证报文来源并核实报文是否发生变化的一个字母数字串。<br>数字签名的作用就是了为了鉴别文件或书信真伪，签名起到认证、生效的作用。</p>
+<h3 id="电子ID身份识别主要有哪几种方式？"><a href="#电子ID身份识别主要有哪几种方式？" class="headerlink" title="电子ID身份识别主要有哪几种方式？"></a>电子ID身份识别主要有哪几种方式？</h3><ol>
+<li>通行字识别方式   </li>
+<li>持证的方式</li>
+</ol>
+<h3 id="基于零知识证明的识别技术原理是什么？"><a href="#基于零知识证明的识别技术原理是什么？" class="headerlink" title="基于零知识证明的识别技术原理是什么？"></a>基于零知识证明的识别技术原理是什么？</h3><p>零知识证明的基本思想是向别人证明你知道某种事物或具有某种东西，而且别人并不能通过你的证明知道这个事物或这个东西，也就是不泄露你掌握的这些信息。<br>零知识证明是这样一种技术，即当示证者P掌握某些秘密信息，P设法向验证者V证明自己掌握这些信息，验证者V可以验证P是否真的掌握这些秘密信息,但同时P又不想让V也知道那些信息。</p>
+<h3 id="物联网密钥管理流程有哪些步骤？"><a href="#物联网密钥管理流程有哪些步骤？" class="headerlink" title="物联网密钥管理流程有哪些步骤？"></a>物联网密钥管理流程有哪些步骤？</h3><p>①密钥生成、②密钥分发、③验证密钥、④更新密钥、⑤密钥存储、⑥备份密钥、⑦密钥有效期、⑧销毁密钥、⑨密钥管理</p>
+<h2 id="第四章"><a href="#第四章" class="headerlink" title="第四章"></a>第四章</h2><h3 id="RFID攻击模式有哪几种？"><a href="#RFID攻击模式有哪几种？" class="headerlink" title="RFID攻击模式有哪几种？"></a>RFID攻击模式有哪几种？</h3><p>①窃听、②中间人攻击、③欺骗、重放、和克隆、④拒绝服务攻击、⑤物理破解、⑥篡改信息、⑦RFID病毒 </p>
+<h3 id="RFID技术中有哪些隐私问题？其保护措施是什么？"><a href="#RFID技术中有哪些隐私问题？其保护措施是什么？" class="headerlink" title="RFID技术中有哪些隐私问题？其保护措施是什么？"></a>RFID技术中有哪些隐私问题？其保护措施是什么？</h3><p>位置隐私和信息隐私。<br>保护措施：</p>
+<ol>
+<li>在制定RFID技术标准时就考虑隐私保护问题</li>
+<li>在商业零售中RFID标签可自由除去</li>
+<li>对识别权力进行限制</li>
+<li>电子标签改为可读写式</li>
+</ol>
+<h3 id="如何使用物理途径来保护RFID标签的安全性？"><a href="#如何使用物理途径来保护RFID标签的安全性？" class="headerlink" title="如何使用物理途径来保护RFID标签的安全性？"></a>如何使用物理途径来保护RFID标签的安全性？</h3><ol>
+<li>静电屏蔽  </li>
+<li>阻塞标签  </li>
+<li>主动干扰   </li>
+<li>改变阅读器频率  </li>
+<li>Kill命令机制</li>
+</ol>
+<h3 id="如何采用密码机制解决RFID的安全问题？举两三个例子对RFID安全协议进行说明。"><a href="#如何采用密码机制解决RFID的安全问题？举两三个例子对RFID安全协议进行说明。" class="headerlink" title="如何采用密码机制解决RFID的安全问题？举两三个例子对RFID安全协议进行说明。"></a>如何采用密码机制解决RFID的安全问题？举两三个例子对RFID安全协议进行说明。</h3><p>利用成熟的密码方案和机制来设计和实现符合RFID安全需求的密码协议 </p>
+<ol>
+<li>哈希锁（Hash-Lock）协议  </li>
+<li>随机哈希锁(randomized hash-lock)协议 </li>
+<li>Hash链协议</li>
+</ol>
+<h3 id="RFID认证通信协议"><a href="#RFID认证通信协议" class="headerlink" title="RFID认证通信协议"></a>RFID认证通信协议</h3><p>基于 RFID 认证协议的解决方案着重于设计适合标签执行的(超)轻量级认证协议。这些协议支持伪随机数生成器(PRNG)、单向哈希函数(HASH)、循环冗余校验码(CRC: Cyclic Redundancy Check)和简单比特位运算，如：异或、与、或等操作。</p>
+<h3 id="RFID系统通信模型："><a href="#RFID系统通信模型：" class="headerlink" title="RFID系统通信模型："></a>RFID系统通信模型：</h3>
+
+<h3 id="M1卡三重认证"><a href="#M1卡三重认证" class="headerlink" title="M1卡三重认证"></a>M1卡三重认证</h3><p>M+k的三轮认证（三重认证）是保障M1-k安全的重要手段，读卡器M1卡的读写操作必须n过三轮验证，在该程中M1和读卡器相互发送验证信息来验证密钥，并且该过程也同样被加密。</p>
+
+
+<h2 id="第五章"><a href="#第五章" class="headerlink" title="第五章"></a>第五章</h2><h3 id="无线传感器网络的攻击形式有哪几种"><a href="#无线传感器网络的攻击形式有哪几种" class="headerlink" title="无线传感器网络的攻击形式有哪几种?"></a>无线传感器网络的攻击形式有哪几种?</h3><ol>
+<li>虚假路由信息</li>
+<li>选择性的转发</li>
+<li>污水池(sinkhole)攻击</li>
+<li>Sybil攻击</li>
+<li>蠕虫洞(wormholes)攻击</li>
+<li>Hello洪泛攻击</li>
+<li>选择性转发</li>
+<li>DOS攻击</li>
+</ol>
+<h3 id="绘图描述无线传感器网络安全体系结构"><a href="#绘图描述无线传感器网络安全体系结构" class="headerlink" title="绘图描述无线传感器网络安全体系结构"></a>绘图描述无线传感器网络安全体系结构</h3>
+
+<h3 id="如何采用安全路由来增加网络的安全性-有哪些常用的方法"><a href="#如何采用安全路由来增加网络的安全性-有哪些常用的方法" class="headerlink" title="如何采用安全路由来增加网络的安全性?有哪些常用的方法?"></a>如何采用安全路由来增加网络的安全性?有哪些常用的方法?</h3><p>安全路由常用方式：</p>
+<ol>
+<li>网络中加入容侵策略，提高物联网的安全性。</li>
+<li>用多径路由选择的方法抵御选择性转发攻击。</li>
+<li>在路由设计中加入广播半径限制抵御泛洪攻击。</li>
+<li>在路由设计中加入安全等级策略抵御虫洞攻击和陷洞攻击。</li>
+</ol>
+<h3 id="什么是无线传感器网络中的数据融合安全和数据认证"><a href="#什么是无线传感器网络中的数据融合安全和数据认证" class="headerlink" title="什么是无线传感器网络中的数据融合安全和数据认证?"></a>什么是无线传感器网络中的数据融合安全和数据认证?</h3><p>无线传感器网络中有大量的节点，会产生大量的数据。如何把这些数据进行分类，集合出在网络中传输的有效数据，并进行数据身份认证，是数据融合安全所要解决的问题。<br>数据认证是无线传感器网络安全的基本要求之一。网络中的消息在传输之前都要强制认证，否则敌手能够轻松地将伪造的消息包注人网络，从而耗尽传感器能量，使整个网络瘫痪。</p>
+<h3 id="什么是ZigBee信任中心-它能提供哪几种功能"><a href="#什么是ZigBee信任中心-它能提供哪几种功能" class="headerlink" title="什么是ZigBee信任中心?它能提供哪几种功能?"></a>什么是ZigBee信任中心?它能提供哪几种功能?</h3><p>所谓信任中心是在网络中分配安全密钥的一种令人信任的设备,它允许设备加人网络。并分配密钥，因而确保设备之 间端到端的安全性。在采用安全机制的网络中，网络协调者可成为信任中心。信任中心提供3种功能:</p>
+<ol>
+<li>信任管理。任务是负责对加入网络的设备验证。</li>
+<li>网络管理。任务是负责获取和分配网络密钥给设备。</li>
+<li>配置管理。任务是确保端到端设备的安全。</li>
+</ol>
+<h3 id="为了满足安全性需要-ZigBee标准使用哪几种方法来确保安全"><a href="#为了满足安全性需要-ZigBee标准使用哪几种方法来确保安全" class="headerlink" title="为了满足安全性需要,ZigBee标准使用哪几种方法来确保安全?"></a>为了满足安全性需要,ZigBee标准使用哪几种方法来确保安全?</h3><ol>
+<li>加密技术：ZigBee使用AES-128加密算法。</li>
+<li>鉴权技术：保证信息的原始性，使得信息不被第三方攻击。</li>
+<li>完整性保护：</li>
+<li>帧序更新：通过设置计数器来保证数据更新，通过使用一个有序编号来避免帧重发攻击。</li>
+</ol>
+<h2 id="第六章"><a href="#第六章" class="headerlink" title="第六章"></a>第六章</h2><h3 id="无线通信网络中的不安全因素主要有哪几个方面"><a href="#无线通信网络中的不安全因素主要有哪几个方面" class="headerlink" title="无线通信网络中的不安全因素主要有哪几个方面?"></a>无线通信网络中的不安全因素主要有哪几个方面?</h3><ol>
+<li>无线窃听</li>
+<li>假冒攻击</li>
+<li>信息篡改</li>
+<li>服务后抵赖</li>
+<li>重传攻击</li>
+</ol>
+<h3 id="简述WAP应用面临的安全威胁。"><a href="#简述WAP应用面临的安全威胁。" class="headerlink" title="简述WAP应用面临的安全威胁。"></a>简述WAP应用面临的安全威胁。</h3><ol>
+<li>假冒</li>
+<li>窃听</li>
+<li>非授权访问</li>
+<li>信息否认</li>
+<li>WAP应用模型本身存在的安全漏洞</li>
+</ol>
+<h3 id="无线网络安全技术的实现措施有哪几种"><a href="#无线网络安全技术的实现措施有哪几种" class="headerlink" title="无线网络安全技术的实现措施有哪几种?"></a>无线网络安全技术的实现措施有哪几种?</h3><ol>
+<li>采用128位WEP加密技术，不使用厂商自带的WEP密钥</li>
+<li>使用MAC地址过滤策略</li>
+<li>禁用SSID广播</li>
+<li>采用端口访问技术进行控制，防止非授权的非法接入和访问</li>
+<li>对于密度等级高的网络采用VPN进行连接</li>
+</ol>
+<h3 id="简述UWB面临的信息安全威胁。"><a href="#简述UWB面临的信息安全威胁。" class="headerlink" title="简述UWB面临的信息安全威胁。"></a>简述UWB面临的信息安全威胁。</h3><ol>
+<li>拒绝服务攻击</li>
+<li>密钥泄露</li>
+<li>假冒攻击</li>
+<li>路由攻击</li>
+</ol>
+<h2 id="第七章"><a href="#第七章" class="headerlink" title="第七章"></a>第七章</h2><h3 id="网络安全攻击的形式有哪几种"><a href="#网络安全攻击的形式有哪几种" class="headerlink" title="网络安全攻击的形式有哪几种?"></a>网络安全攻击的形式有哪几种?</h3><ol>
+<li>中断：以可用性作为攻击目标，它毁坏系统资源，使网络不可使用。</li>
+<li>截获：以保密性作为攻击目标，非授权用户通过某种手段获得对系统资源的访问。</li>
+<li>篡改：以完整性作为攻击目标，非授权用户不仅获得访问而且对数据进行修改。</li>
+<li>伪造：以完整性作为攻击目标，非授权用户将伪造的数据插入到正常传输的数据中。</li>
+</ol>
+<h3 id="分别简述包过滤防火墙、代理服务器防火墙和状态监视器防火墙的技术原理。"><a href="#分别简述包过滤防火墙、代理服务器防火墙和状态监视器防火墙的技术原理。" class="headerlink" title="分别简述包过滤防火墙、代理服务器防火墙和状态监视器防火墙的技术原理。"></a>分别简述包过滤防火墙、代理服务器防火墙和状态监视器防火墙的技术原理。</h3><ol>
+<li>包过滤防火墙：通过在网络中的适当位置对数据包进行过滤，根据检查数据流中每个数据包的源地址、目的地址、所有的TCP端口号和TCP链路状态等要素，然后依据一组预定义的规则，以允许合乎逻辑的数据包通过防火墙进入到内部网络，而将不合乎逻辑的数据包加以删除</li>
+<li>代理服务器防火墙：其运行在两个网络之间，当代理服务器接收到用户的请求后，会检查用户请求的站点是否符合公司的要求，如果公司允许用户访问该站点，代理服务器会像一个客户一样去该站点取回所需信息，再转发给客户。</li>
+<li>状态监视器防火墙：安全特性较好。采用了一个在网关上执行网络安全策略的软件引擎，称为检测模块。检测模块在不影响网络正常工作的前提下，采用抽取相关数据的方法对网络通信的各层实施检测，抽取部分数据，即状态信息，并动态地保存起来，作为以后指定安全策略的参考。</li>
+</ol>
+<h3 id="什么是IPSec安全协议-IPSec-协议的特点是什么"><a href="#什么是IPSec安全协议-IPSec-协议的特点是什么" class="headerlink" title="什么是IPSec安全协议? IPSec 协议的特点是什么?"></a>什么是IPSec安全协议? IPSec 协议的特点是什么?</h3><p>IPSec(IP Scourin)是IETF制定的三层隧道加密协议，它为Intemet上传输的数据提供了高质量的、可互操作的、基于密码学的安全保证。特定的通信万之间在IP层通过加密与数据源认证等方式提供了以下的安全服务。</p>
+<ol>
+<li>数据机密性(confidentiality): IPSec发送方在通过网络传输包前对包进行加密。</li>
+<li>数据完整性(data integrity): IPSec 接收方对发送方发送来的包进行认证，以确保数据在传输过程中没有被篡改。</li>
+<li>数据来源认证(datalauthentication): IPSec在接收端可以认证发送IPSec报文的发送端是否合法。</li>
+<li>防重放(anti replay): IPSec接收方可检测并拒绝接收过时或重复的报文。</li>
+</ol>
+<h3 id="VPN主要采用哪4项技术来保证安全"><a href="#VPN主要采用哪4项技术来保证安全" class="headerlink" title="VPN主要采用哪4项技术来保证安全?"></a>VPN主要采用哪4项技术来保证安全?</h3><ol>
+<li>隧道技术</li>
+<li>加解密技术</li>
+<li>密钥管理技术</li>
+</ol>
+<h3 id="为防止黑客攻击，通常可以使用哪几种防范措施"><a href="#为防止黑客攻击，通常可以使用哪几种防范措施" class="headerlink" title="为防止黑客攻击，通常可以使用哪几种防范措施?"></a>为防止黑客攻击，通常可以使用哪几种防范措施?</h3><p>p203</p>
+<h2 id="第八章之后"><a href="#第八章之后" class="headerlink" title="第八章之后"></a>第八章之后</h2><h3 id="信息加密和隐藏可以分为哪3种模式？"><a href="#信息加密和隐藏可以分为哪3种模式？" class="headerlink" title="信息加密和隐藏可以分为哪3种模式？"></a>信息加密和隐藏可以分为哪3种模式？</h3><ol>
+<li>信息加密模式</li>
+<li>信息隐藏模式</li>
+<li>信息加密与隐藏模式</li>
+</ol>
+<h3 id="绘图说明信息隐藏的通用模型。"><a href="#绘图说明信息隐藏的通用模型。" class="headerlink" title="绘图说明信息隐藏的通用模型。"></a>绘图说明信息隐藏的通用模型。</h3><p>被隐藏的信息称为秘密信息，如版权信息、秘密数据和软件序列号等。而用于隐藏秘密信息的公开消息称为载体信息，如视频、图片、音频和文本文件等</p>
+
+
+<h3 id="数据隐写术可以分为哪几类？"><a href="#数据隐写术可以分为哪几类？" class="headerlink" title="数据隐写术可以分为哪几类？"></a>数据隐写术可以分为哪几类？</h3><ol>
+<li>替换系统</li>
+<li>变换域技术</li>
+<li>扩展频谱技术</li>
+<li>统计方法</li>
+<li>失真技术</li>
+<li>载体生成方法</li>
+</ol>
+<h3 id="数字水印具有哪些特点？主要应用于哪些领域？"><a href="#数字水印具有哪些特点？主要应用于哪些领域？" class="headerlink" title="数字水印具有哪些特点？主要应用于哪些领域？"></a>数字水印具有哪些特点？主要应用于哪些领域？</h3><p>特点：</p>
+<ol>
+<li>有效性</li>
+<li>逼真度</li>
+<li>数据容量</li>
+<li>盲检测与明检测</li>
+<li>虚检率</li>
+<li>鲁棒性</li>
+<li>安全性</li>
+</ol>
+<p>应用领域：</p>
+<ol>
+<li>版权保护</li>
+<li>广播监视</li>
+<li>操作跟踪</li>
+<li>内容认证</li>
+<li>访问控制</li>
+<li>指纹</li>
+<li>内容标志</li>
+<li>防伪</li>
+</ol>
+<h3 id="LBS系统由哪些部分组成？"><a href="#LBS系统由哪些部分组成？" class="headerlink" title="LBS系统由哪些部分组成？"></a>LBS系统由哪些部分组成？</h3><p>一个完整的LBS系统主要由空间定位系统、位置服务中心、通信网络和移动终端等部分组成。</p>
+<ol>
+<li>移动终端</li>
+<li>无线网络</li>
+<li>定位平台</li>
+<li>提供位置服务的服务器</li>
+<li>提供位置服务的应用程序</li>
+<li>与位置信息相关的内容</li>
+</ol>
+<h3 id="简述隐私的定义"><a href="#简述隐私的定义" class="headerlink" title="简述隐私的定义"></a>简述隐私的定义</h3><p>隐私就是个人和机构等实体不愿意被外部世界知晓的消息，在具体应用中，隐私为数据所有者不愿意被披露的敏感消息，包括敏感数据以及数据所表征的特性。通常我们所说的隐私都指敏感数据，如个人的薪资、病人的患病记录、公司的财务信息等。</p>
+<h3 id="简要说明侵犯网络隐私权的主要技术手段。"><a href="#简要说明侵犯网络隐私权的主要技术手段。" class="headerlink" title="简要说明侵犯网络隐私权的主要技术手段。"></a>简要说明侵犯网络隐私权的主要技术手段。</h3><ol>
+<li>利用在线注册收集隐私消息</li>
+<li>利用IP地址跟踪用户的位置或行踪</li>
+<li>利用Cookie文件手机用户的隐私信息</li>
+<li>利用特洛伊木马病毒窃取隐私信息</li>
+<li>利用嵌入式软件手机隐私信息</li>
+<li>利用Web Beacon窃取隐私信息</li>
+<li>利用篡改网页收集隐私消息</li>
+</ol>
+<h3 id="说明位置服务与隐私保护的关系。"><a href="#说明位置服务与隐私保护的关系。" class="headerlink" title="说明位置服务与隐私保护的关系。"></a>说明位置服务与隐私保护的关系。</h3><p>隐私保护不是指要保护用户的个人信息不被他人使用，而是指用户对个人信息进行有效控制的权利。位置信息是一种特殊的个人隐私信息，对其进行保护就是要给予所涉及的个人决定和控制自己所处位置的信息何时、如何及在何种程度上被他人获知的权利。</p>
+<h3 id="简述LBS中的3种基本的隐私保护方法"><a href="#简述LBS中的3种基本的隐私保护方法" class="headerlink" title="简述LBS中的3种基本的隐私保护方法"></a>简述LBS中的3种基本的隐私保护方法</h3><ol>
+<li>假位置：通过制造假位置达到以假乱真的效果。</li>
+<li>时空匿名：将一个用户的位置通过在时间和空间轴上扩展，变成一个时空区域，达到	匿名效果。</li>
+<li>空间加密：通过对位置加密达到匿名效果。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Wyatex
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%89%A9%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0/" title="物联网安全导论笔记">https://qghost.gitee.io/学习笔记/物联网安全导论笔记/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+              <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/" rel="tag"># 物联网</a>
+              <a href="/tags/%E5%AE%89%E5%85%A8/" rel="tag"># 安全</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Casbin%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B/" rel="prev" title="Casbin学习笔记：基础模型">
+                  <i class="fa fa-chevron-left"></i> Casbin学习笔记：基础模型
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E5%B9%B2%E8%B4%A7/%E5%BC%80%E5%8F%91%E4%BA%A4%E6%B5%81%E7%BE%A4%E5%88%86%E4%BA%AB%E8%AE%B0%E5%BD%95/" rel="next" title="蹲坑读物系列">
+                  蹲坑读物系列 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wyatex</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>

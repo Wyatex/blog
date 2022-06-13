@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"qghost.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="记录一下正则表达式的使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js正则表达式">
+<meta property="og:url" content="https://qghost.gitee.io/%E5%89%8D%E7%AB%AF/js%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Wyatex&#96;s blog">
+<meta property="og:description" content="记录一下正则表达式的使用">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-07-31T02:11:20.000Z">
+<meta property="article:modified_time" content="2022-06-13T08:38:12.813Z">
+<meta property="article:author" content="Wyatex">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="正则表达式">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://qghost.gitee.io/%E5%89%8D%E7%AB%AF/js%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://qghost.gitee.io/%E5%89%8D%E7%AB%AF/js%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/","path":"前端/js正则表达式/","title":"js正则表达式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>js正则表达式 | Wyatex`s blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Wyatex`s blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">67</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">18</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">111</span></a></li><li class="menu-item menu-item-编程"><a href="/programming/" rel="section"><i class="fa fa-book fa-fw"></i>编程</a></li><li class="menu-item menu-item-干货"><a href="/resources/" rel="section"><i class="fa fa-paperclip fa-fw"></i>干货</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">创建正则表达式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">测试正则表达式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%AD%E7%9A%84%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6"><span class="nav-number">3.</span> <span class="nav-text">正则表达式中的特殊字符</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%B9%E7%95%8C%E7%AC%A6"><span class="nav-number">3.1.</span> <span class="nav-text">边界符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E7%B1%BB"><span class="nav-number">3.2.</span> <span class="nav-text">字符类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8F%E8%AF%8D%E7%AC%A6"><span class="nav-number">3.3.</span> <span class="nav-text">量词符</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8B%AC%E5%8F%B7%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">括号总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%84%E5%AE%9A%E4%B9%89%E7%B1%BB"><span class="nav-number">5.</span> <span class="nav-text">预定义类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E6%9B%BF%E6%8D%A2"><span class="nav-number">6.</span> <span class="nav-text">正则替换</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Wyatex"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Wyatex</p>
+  <div class="site-description" itemprop="description">这里是我用来做笔记的网站哟~</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wyatex" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wyatex" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wyatex@qq.com" title="E-Mail → mailto:wyatex@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.microloong.me/" title="https:&#x2F;&#x2F;blog.microloong.me" rel="noopener" target="_blank">MicroLOONG</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://qghost.gitee.io/%E5%89%8D%E7%AB%AF/js%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Wyatex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wyatex`s blog">
+      <meta itemprop="description" content="这里是我用来做笔记的网站哟~">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="js正则表达式 | Wyatex`s blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          js正则表达式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-07-31 10:11:20" itemprop="dateCreated datePublished" datetime="2020-07-31T10:11:20+08:00">2020-07-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-13 16:38:12" itemprop="dateModified" datetime="2022-06-13T16:38:12+08:00">2022-06-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>记录一下正则表达式的使用</p>
+<span id="more"></span>
+
+<h1 id="创建正则表达式"><a href="#创建正则表达式" class="headerlink" title="创建正则表达式"></a>创建正则表达式</h1><p>使用RegExp对象来创建正则表达式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> rg = <span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="regexp">/123/</span>);</span><br></pre></td></tr></table></figure>
+<p>也可以使用字面量来创建正则表达式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> rg = <span class="regexp">/123/</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="测试正则表达式"><a href="#测试正则表达式" class="headerlink" title="测试正则表达式"></a>测试正则表达式</h1><p>使用方法是 <code>regexObj.test(str)</code> </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> rg = <span class="regexp">/123/</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(rg.<span class="title function_">test</span>(<span class="number">123</span>));  <span class="comment">//ture</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="正则表达式中的特殊字符"><a href="#正则表达式中的特殊字符" class="headerlink" title="正则表达式中的特殊字符"></a>正则表达式中的特殊字符</h1><h2 id="边界符"><a href="#边界符" class="headerlink" title="边界符"></a>边界符</h2><table>
+<thead>
+<tr>
+<th>边界符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>^</td>
+<td>表示匹配行首的文本（以谁开始）</td>
+</tr>
+<tr>
+<td>$</td>
+<td>匹配以谁结束</td>
+</tr>
+</tbody></table>
+<p>比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> rg = <span class="regexp">/abc/</span>;     <span class="comment">//表示含有abc</span></span><br><span class="line"><span class="keyword">var</span> rg1 = <span class="regexp">/^abc/</span>    <span class="comment">//表示开头是abc</span></span><br><span class="line"><span class="keyword">var</span> rg2 = <span class="regexp">/abc$/</span>    <span class="comment">//表示是以abc结束</span></span><br><span class="line"><span class="keyword">var</span> rg3 = <span class="regexp">/^abc$/</span>   <span class="comment">//精准匹配abc</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="字符类"><a href="#字符类" class="headerlink" title="字符类"></a>字符类</h2><p>使用 <code>[]</code> 表示一系列字符可供选择，比如: <code>/[abc]/</code> 表示只要有a或者有b或者有c都能匹配。比如： <code>/^[abc]$/</code> 只能匹配a或者b或者c。</p>
+<p>在方括号里使用 <code>[-]</code> 表示范围，比如 <code>/[a-z]/</code> 表示只要有26个字母都能匹配</p>
+<p>还可以进行字符组合：<code>/^[a-z0-9A-Z_-]$/</code> 这样只要是a到z或者0到9或者A到Z或者_或者-开头和结尾都能匹配。</p>
+<p>在方括号里面加 <code>^</code> 表示取反的意思，比如：<code>/[^0-9a-z]/</code> 表示的是不能取0-9和a-z。</p>
+<h2 id="量词符"><a href="#量词符" class="headerlink" title="量词符"></a>量词符</h2><ol>
+<li><code>*</code> 重复0次或者很多次</li>
+<li><code>+</code> 重复1次或者很多次</li>
+<li><code>?</code> 出现0次或者1次</li>
+<li><code>&#123;3&#125;</code> 重复三次</li>
+<li><code>&#123;3,&#125;</code> 大于等于三次</li>
+<li><code>&#123;3,16&#125;</code> 大于等于3并且小于等于16次<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> rg1 = <span class="regexp">/^a*$/</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(rg1.<span class="title function_">test</span>(<span class="string">&#x27;&#x27;</span>));      <span class="comment">//true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(rg1.<span class="title function_">test</span>(<span class="string">&#x27;a&#x27;</span>));     <span class="comment">//true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(rg1.<span class="title function_">test</span>(<span class="string">&#x27;aaa&#x27;</span>));   <span class="comment">//true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> rg2 = <span class="regexp">/^a+$/</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(rg2.<span class="title function_">test</span>(<span class="string">&#x27;&#x27;</span>));      <span class="comment">//false</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(rg2.<span class="title function_">test</span>(<span class="string">&#x27;a&#x27;</span>));     <span class="comment">//true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> rg3 = <span class="regexp">/^a?$/</span>;   </span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(rg3.<span class="title function_">test</span>(<span class="string">&#x27;aa&#x27;</span>));    <span class="comment">//false</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> rg4 = <span class="regexp">/^a&#123;3&#125;$/</span>;  </span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(rg4.<span class="title function_">test</span>(<span class="string">&#x27;aa&#x27;</span>));    <span class="comment">//false</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(rg4.<span class="title function_">test</span>(<span class="string">&#x27;aaa&#x27;</span>));   <span class="comment">//true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> rg5 = <span class="regexp">/^a&#123;2,&#125;$/</span>;  </span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(rg5.<span class="title function_">test</span>(<span class="string">&#x27;aa&#x27;</span>));    <span class="comment">//true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(rg5.<span class="title function_">test</span>(<span class="string">&#x27;a&#x27;</span>));     <span class="comment">//false</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> rg6 = <span class="regexp">/^a&#123;2,3&#125;$/</span>; </span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(rg6.<span class="title function_">test</span>(<span class="string">&#x27;a&#x27;</span>));     <span class="comment">//false</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(rg6.<span class="title function_">test</span>(<span class="string">&#x27;aa&#x27;</span>));    <span class="comment">//true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(rg6.<span class="title function_">test</span>(<span class="string">&#x27;aaaa&#x27;</span>));  <span class="comment">//false</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="括号总结"><a href="#括号总结" class="headerlink" title="括号总结"></a>括号总结</h1><ol>
+<li>中括号 字符组合：匹配括号中的任意字符</li>
+<li>大括号 量词符：表示重复次数</li>
+<li>小括号 表示优先级<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/^abc&#123;3&#125;$/</span>    <span class="comment">//表示c重复三次 匹配 abccc</span></span><br><span class="line"></span><br><span class="line">reg = <span class="regexp">/^(abc)&#123;3&#125;$/</span>      <span class="comment">//表示abc重复三次 匹配 abcabcabc</span></span><br><span class="line"></span><br><span class="line">reg = <span class="comment">//</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="预定义类"><a href="#预定义类" class="headerlink" title="预定义类"></a>预定义类</h1><p>预定义类指某些常见模式的简写方式</p>
+<table>
+<thead>
+<tr>
+<th>预定义类</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\d</td>
+<td>匹配0-9之间的任意数字，相当于[0-9]</td>
+</tr>
+<tr>
+<td>\D</td>
+<td>匹配0-9以为的字符，相当于[^0-9]</td>
+</tr>
+<tr>
+<td>\w</td>
+<td>匹配任意字母、数字和下划线，相当于[A-Za-z0-9_]</td>
+</tr>
+<tr>
+<td>\W</td>
+<td>匹配任意字母、数字和下划线以外的字符，相当于[^A-Za-z0-9_]</td>
+</tr>
+<tr>
+<td>\s</td>
+<td>匹配空格（包括换行符、制表符），相当于[\t\r\n\v\f]</td>
+</tr>
+<tr>
+<td>\S</td>
+<td>匹配非空格的字符，相当于[^\t\r\n\v\f]</td>
+</tr>
+</tbody></table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/\d/</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(reg.<span class="title function_">test</span>(<span class="string">&#x27;123&#x27;</span>))  <span class="comment">//true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(reg.<span class="title function_">test</span>(<span class="string">&#x27;a&#x27;</span>))  <span class="comment">//false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//座机号码验证 比如 010-12345678或者0530-1234567</span></span><br><span class="line">reg = <span class="regexp">/^\d&#123;3&#125;-\d&#123;8&#125;|\d&#123;4&#125;-\d&#123;7&#125;$/</span>;</span><br><span class="line"><span class="comment">// 其中的 | 表示或者的意思</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="正则替换"><a href="#正则替换" class="headerlink" title="正则替换"></a>正则替换</h1><p>使用 <code>replace</code> 方法可以替换字符串，替换方法可以使用正则表达式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">&#x27;angel和alex&#x27;</span>;</span><br><span class="line"><span class="keyword">var</span> newStr1 = str.<span class="title function_">replace</span>(<span class="string">&#x27;tom&#x27;</span>, <span class="string">&#x27;rin&#x27;</span>);    <span class="comment">//rin和jack</span></span><br><span class="line"><span class="keyword">var</span> newStr2 = str.<span class="title function_">replace</span>(<span class="regexp">/a/</span>, <span class="string">&#x27;*&#x27;</span>);    <span class="comment">//*ngel和alex</span></span><br></pre></td></tr></table></figure>
+<p>可以看到只替换了第一个a，没有替换掉后面的，这时候就需要使用到匹配模式了。</p>
+<blockquote>
+<p>&#x2F;regexp&#x2F;[switch]</p>
+</blockquote>
+<p>switch(修饰符)可以选择按照什么模式来匹配，有三个值：</p>
+<ul>
+<li>g: 全局模式</li>
+<li>i: 忽略大小写</li>
+<li>gi: 全局加忽略大小写</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">&#x27;angel和alex&#x27;</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="keyword">new</span> = str.<span class="title function_">replace</span>(<span class="regexp">/a|l/g</span>, <span class="string">&#x27;*&#x27;</span>);  <span class="comment">//*nge*和**ex</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Wyatex
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://qghost.gitee.io/%E5%89%8D%E7%AB%AF/js%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" title="js正则表达式">https://qghost.gitee.io/前端/js正则表达式/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+              <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag"># 正则表达式</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/%E5%89%8D%E7%AB%AF/js%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%AC%94%E8%AE%B0-2/" rel="prev" title="js面向对象笔记-2">
+                  <i class="fa fa-chevron-left"></i> js面向对象笔记-2
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E5%89%8D%E7%AB%AF/js%E7%AC%94%E8%AE%B0%EF%BC%9AES6%E6%96%B0%E5%A2%9E%E8%AF%AD%E6%B3%95/" rel="next" title="js笔记：ES6新增语法">
+                  js笔记：ES6新增语法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wyatex</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>

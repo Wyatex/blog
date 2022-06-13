@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"qghost.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="继续记录对象的一些特性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js笔记：对象-2">
+<meta property="og:url" content="https://qghost.gitee.io/%E5%89%8D%E7%AB%AF/js%E7%AC%94%E8%AE%B0%EF%BC%9A%E5%AF%B9%E8%B1%A1-2/index.html">
+<meta property="og:site_name" content="Wyatex&#96;s blog">
+<meta property="og:description" content="继续记录对象的一些特性">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-11T08:55:13.000Z">
+<meta property="article:modified_time" content="2022-06-13T08:38:12.829Z">
+<meta property="article:author" content="Wyatex">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://qghost.gitee.io/%E5%89%8D%E7%AB%AF/js%E7%AC%94%E8%AE%B0%EF%BC%9A%E5%AF%B9%E8%B1%A1-2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://qghost.gitee.io/%E5%89%8D%E7%AB%AF/js%E7%AC%94%E8%AE%B0%EF%BC%9A%E5%AF%B9%E8%B1%A1-2/","path":"前端/js笔记：对象-2/","title":"js笔记：对象-2"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>js笔记：对象-2 | Wyatex`s blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Wyatex`s blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">67</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">18</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">111</span></a></li><li class="menu-item menu-item-编程"><a href="/programming/" rel="section"><i class="fa fa-book fa-fw"></i>编程</a></li><li class="menu-item menu-item-干货"><a href="/resources/" rel="section"><i class="fa fa-paperclip fa-fw"></i>干货</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E7%89%B9%E5%BE%81"><span class="nav-number">1.</span> <span class="nav-text">属性特征</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7%E7%89%B9%E5%BE%81"><span class="nav-number">1.1.</span> <span class="nav-text">查看对象的属性特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E7%9A%84%E5%9B%9B%E4%B8%AA%E7%89%B9%E5%BE%81"><span class="nav-number">1.2.</span> <span class="nav-text">属性的四个特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%89%B9%E5%BE%81"><span class="nav-number">1.3.</span> <span class="nav-text">设置特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%81%E6%AD%A2%E6%B7%BB%E5%8A%A0"><span class="nav-number">1.4.</span> <span class="nav-text">禁止添加</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%81%E9%97%AD%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.5.</span> <span class="nav-text">封闭对象</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%BB%E7%BB%93%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">冻结对象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E8%AE%BF%E9%97%AE%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">属性访问器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#getter-x2F-setter"><span class="nav-number">3.1.</span> <span class="nav-text">getter&#x2F;setter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E5%99%A8%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="nav-number">3.2.</span> <span class="nav-text">访问器描述符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AD%E5%8C%85%E8%AE%BF%E9%97%AE%E5%99%A8"><span class="nav-number">3.3.</span> <span class="nav-text">闭包访问器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%90%86%E6%8B%A6%E6%88%AA"><span class="nav-number">4.</span> <span class="nav-text">代理拦截</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">4.1.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%90%86%E5%87%BD%E6%95%B0"><span class="nav-number">4.2.</span> <span class="nav-text">代理函数</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Wyatex"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Wyatex</p>
+  <div class="site-description" itemprop="description">这里是我用来做笔记的网站哟~</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wyatex" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wyatex" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wyatex@qq.com" title="E-Mail → mailto:wyatex@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.microloong.me/" title="https:&#x2F;&#x2F;blog.microloong.me" rel="noopener" target="_blank">MicroLOONG</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://qghost.gitee.io/%E5%89%8D%E7%AB%AF/js%E7%AC%94%E8%AE%B0%EF%BC%9A%E5%AF%B9%E8%B1%A1-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Wyatex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wyatex`s blog">
+      <meta itemprop="description" content="这里是我用来做笔记的网站哟~">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="js笔记：对象-2 | Wyatex`s blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          js笔记：对象-2
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-09-11 16:55:13" itemprop="dateCreated datePublished" datetime="2020-09-11T16:55:13+08:00">2020-09-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-13 16:38:12" itemprop="dateModified" datetime="2022-06-13T16:38:12+08:00">2022-06-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>继续记录对象的一些特性</p>
+<span id="more"></span>
+
+
+<h1 id="属性特征"><a href="#属性特征" class="headerlink" title="属性特征"></a>属性特征</h1><p>JS中可以对属性的访问特性进行控制</p>
+<h2 id="查看对象的属性特征"><a href="#查看对象的属性特征" class="headerlink" title="查看对象的属性特征"></a>查看对象的属性特征</h2><p>使用 <code>Object.getOwnPropertyDescriptor</code> 或者 <code>Object.getOwnPropertyDescriptor</code> 查看属性的一些特征</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> foo = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;foo&quot;</span>,</span><br><span class="line">    <span class="attr">age</span>: <span class="number">18</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(<span class="title class_">Object</span>.<span class="title function_">getOwnPropertyDescriptor</span>(foo, <span class="string">&quot;name&quot;</span>), <span class="literal">null</span>, <span class="number">2</span>));</span><br><span class="line"><span class="comment">// &#123;</span></span><br><span class="line"><span class="comment">//   &quot;value&quot;: &quot;foo&quot;,</span></span><br><span class="line"><span class="comment">//   &quot;writable&quot;: true,</span></span><br><span class="line"><span class="comment">//   &quot;enumerable&quot;: true,</span></span><br><span class="line"><span class="comment">//   &quot;configurable&quot;: true</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(<span class="title class_">Object</span>.<span class="title function_">getOwnPropertyDescriptors</span>(foo), <span class="literal">null</span>, <span class="number">2</span>));</span><br><span class="line"><span class="comment">// &#123;</span></span><br><span class="line"><span class="comment">//   &quot;name&quot;: &#123;</span></span><br><span class="line"><span class="comment">//     &quot;value&quot;: &quot;foo&quot;,</span></span><br><span class="line"><span class="comment">//     &quot;writable&quot;: true,</span></span><br><span class="line"><span class="comment">//     &quot;enumerable&quot;: true,</span></span><br><span class="line"><span class="comment">//     &quot;configurable&quot;: true</span></span><br><span class="line"><span class="comment">//   &#125;,</span></span><br><span class="line"><span class="comment">//   &quot;age&quot;: &#123;</span></span><br><span class="line"><span class="comment">//     &quot;value&quot;: 18,</span></span><br><span class="line"><span class="comment">//     &quot;writable&quot;: true,</span></span><br><span class="line"><span class="comment">//     &quot;enumerable&quot;: true,</span></span><br><span class="line"><span class="comment">//     &quot;configurable&quot;: true</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="属性的四个特征"><a href="#属性的四个特征" class="headerlink" title="属性的四个特征"></a>属性的四个特征</h2><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>意义</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>value</td>
+<td>当前属性的值</td>
+<td>undefined</td>
+</tr>
+<tr>
+<td>writable</td>
+<td>是否可被修改</td>
+<td>false</td>
+</tr>
+<tr>
+<td>enumerable</td>
+<td>是否可被for in 遍历</td>
+<td>false</td>
+</tr>
+<tr>
+<td>configurable</td>
+<td>是否可被删除</td>
+<td>false</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>上面三个特征默认值为 <code>false</code> 是对于 <code>defineProperty</code> 来说的，如果只是使用点来定义的话，全部都是true。</p>
+</blockquote>
+<h2 id="设置特征"><a href="#设置特征" class="headerlink" title="设置特征"></a>设置特征</h2><p>在<a href="/JavaScript/js%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%AC%94%E8%AE%B0-2/#Object-defineProperty%E6%96%B9%E6%B3%95">js面向对象笔记-2</a>中有说明</p>
+<h2 id="禁止添加"><a href="#禁止添加" class="headerlink" title="禁止添加"></a>禁止添加</h2><p><code>Object.preventExtensions</code> 禁止向对象添加属性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> foo = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;foo&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">preventExtensions</span>(foo);</span><br><span class="line">foo.<span class="property">age</span> = <span class="number">18</span>; <span class="comment">//Error</span></span><br></pre></td></tr></table></figure>
+
+<p><code>Object.isExtensible</code> 判断是否能向对象中添加属性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> foo = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;foo&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">preventExtensions</span>(foo);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Object</span>.<span class="title function_">isExtensible</span>(foo)); <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="封闭对象"><a href="#封闭对象" class="headerlink" title="封闭对象"></a>封闭对象</h2><p><code>Object.seal()</code> 方法封闭一个对象，阻止添加新属性并将所有现有属性标记为 <code>configurable: false</code> ，<code>Object.isSealed</code> 方法判断是否封闭</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> foo = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;foo&quot;</span>,</span><br><span class="line">    <span class="attr">age</span>: <span class="number">18</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">seal</span>(foo);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(<span class="title class_">Object</span>.<span class="title function_">getOwnPropertyDescriptors</span>(foo), <span class="literal">null</span>, <span class="number">2</span>))</span><br><span class="line"><span class="comment">// &#123;</span></span><br><span class="line"><span class="comment">//   &quot;name&quot;: &#123;</span></span><br><span class="line"><span class="comment">//     &quot;value&quot;: &quot;foo&quot;,</span></span><br><span class="line"><span class="comment">//     &quot;writable&quot;: true,</span></span><br><span class="line"><span class="comment">//     &quot;enumerable&quot;: true,</span></span><br><span class="line"><span class="comment">//     &quot;configurable&quot;: false</span></span><br><span class="line"><span class="comment">//   &#125;,</span></span><br><span class="line"><span class="comment">//   &quot;age&quot;: &#123;</span></span><br><span class="line"><span class="comment">//     &quot;value&quot;: 18,</span></span><br><span class="line"><span class="comment">//     &quot;writable&quot;: true,</span></span><br><span class="line"><span class="comment">//     &quot;enumerable&quot;: true,</span></span><br><span class="line"><span class="comment">//     &quot;configurable&quot;: false</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Object</span>.<span class="title function_">isSealed</span>(foo));  <span class="comment">// ture</span></span><br><span class="line"><span class="keyword">delete</span> foo.<span class="property">name</span>; <span class="comment">//Error</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="冻结对象"><a href="#冻结对象" class="headerlink" title="冻结对象"></a>冻结对象</h1><p><code>Object.freeze</code> 冻结对象后不允许添加、删除、修改属性，<code>writable</code>、<code>configurable</code>都标记为<code>false</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> foo = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;foo&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">freeze</span>(foo);</span><br><span class="line">foo.<span class="property">age</span> = <span class="number">18</span>; <span class="comment">//Error</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="属性访问器"><a href="#属性访问器" class="headerlink" title="属性访问器"></a>属性访问器</h1><p>getter方法用于获得属性值，setter方法用于设置属性，这是JS提供的存取器特性即使用函数来管理属性。</p>
+<ul>
+<li>用于避免错误的赋值</li>
+<li>需要动态监测值的改变</li>
+<li>属性只能在访问器和普通属性任选其一，不能共同存在</li>
+</ul>
+<h2 id="getter-x2F-setter"><a href="#getter-x2F-setter" class="headerlink" title="getter&#x2F;setter"></a>getter&#x2F;setter</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> user = &#123;</span><br><span class="line">    <span class="attr">data</span>: &#123;<span class="attr">name</span>: <span class="string">&quot;foo&quot;</span>, <span class="attr">age</span>: <span class="literal">null</span>&#125;,</span><br><span class="line">    <span class="keyword">set</span> <span class="title function_">age</span>(<span class="params">value</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> value != <span class="string">&quot;number&quot;</span> || value &gt; <span class="number">100</span> || value &lt; <span class="number">10</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;年龄格式错误&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">data</span>.<span class="property">age</span> = value;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">get</span> <span class="title function_">age</span>() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">`年龄是：<span class="subst">$&#123;<span class="variable language_">this</span>.data.age&#125;</span>`</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">user.<span class="property">age</span> = <span class="number">18</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(user.<span class="property">age</span>)   <span class="comment">//年龄是：18</span></span><br></pre></td></tr></table></figure>
+<p>下面使用getter设置只读的课程总价</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="title class_">Lesson</span> = &#123;</span><br><span class="line">  <span class="attr">lists</span>: [</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&quot;js&quot;</span>, <span class="attr">price</span>: <span class="number">100</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&quot;mysql&quot;</span>, <span class="attr">price</span>: <span class="number">212</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">&quot;vue.js&quot;</span>, <span class="attr">price</span>: <span class="number">98</span> &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">total</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">lists</span>.<span class="title function_">reduce</span>(<span class="function">(<span class="params">t, b</span>) =&gt;</span> t + b.<span class="property">price</span>, <span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Lesson</span>.<span class="property">total</span>); <span class="comment">//410</span></span><br><span class="line"><span class="title class_">Lesson</span>.<span class="property">total</span> = <span class="number">30</span>; <span class="comment">//无效</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Lesson</span>.<span class="property">total</span>); <span class="comment">//410</span></span><br></pre></td></tr></table></figure>
+<p>批量设置属性的使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> web = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;百度&quot;</span>,</span><br><span class="line">  <span class="attr">url</span>: <span class="string">&quot;baidu.com&quot;</span>,</span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">site</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;<span class="variable language_">this</span>.name&#125;</span> <span class="subst">$&#123;<span class="variable language_">this</span>.url&#125;</span>`</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="keyword">set</span> <span class="title function_">site</span>(<span class="params">value</span>) &#123;</span><br><span class="line">    [<span class="variable language_">this</span>.<span class="property">name</span>, <span class="variable language_">this</span>.<span class="property">url</span>] = value.<span class="title function_">split</span>(<span class="string">&quot;,&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">web.<span class="property">site</span> = <span class="string">&quot;好123,hao123.com&quot;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(web.<span class="property">site</span>);</span><br></pre></td></tr></table></figure>
+<p>下面是设置token储取的示例，将业务逻辑使用 <code>getter/setter</code> 处理更方便，也方便其他业务的复用。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="title class_">Request</span> = &#123;</span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">token</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> con = <span class="variable language_">localStorage</span>.<span class="title function_">getItem</span>(<span class="string">&#x27;token&#x27;</span>);</span><br><span class="line">    <span class="keyword">if</span> (!con) &#123;</span><br><span class="line">    	<span class="title function_">alert</span>(<span class="string">&#x27;请登录后获取token&#x27;</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    	<span class="keyword">return</span> con;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="keyword">set</span> <span class="title function_">token</span>(<span class="params">con</span>) &#123;</span><br><span class="line">  	<span class="variable language_">localStorage</span>.<span class="title function_">setItem</span>(<span class="string">&#x27;token&#x27;</span>, con);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="title class_">Request</span>.<span class="property">token</span> = <span class="string">&#x27;Bearer xxxxx&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Request</span>.<span class="property">token</span>);   <span class="comment">//Bearer xxxxx</span></span><br></pre></td></tr></table></figure>
+<p>定义内部私有属性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> user = &#123;</span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">name</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">_name</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="keyword">set</span> <span class="title function_">name</span>(<span class="params">value</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (value.<span class="property">length</span> &lt;= <span class="number">3</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;用户名不能小于三位&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_name</span> = value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;    </span><br><span class="line">user.<span class="property">name</span> = <span class="string">&quot;foo&quot;</span>;          <span class="comment">//Uncaught Error</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(user.<span class="property">name</span>);</span><br><span class="line">user.<span class="property">name</span> = <span class="string">&quot;foo and bar&quot;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(user.<span class="property">name</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="访问器描述符"><a href="#访问器描述符" class="headerlink" title="访问器描述符"></a>访问器描述符</h2><p>使用 <code>defineProperty</code> 可以模拟定义私有属性，从而使用面向对象的抽象特性。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">User</span>(<span class="params">name, age</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> data = &#123; name, age &#125;</span><br><span class="line">  <span class="title class_">Object</span>.<span class="title function_">defineProperties</span>(<span class="variable language_">this</span>, &#123;</span><br><span class="line">    <span class="attr">name</span>: &#123;</span><br><span class="line">      <span class="title function_">get</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> data.<span class="property">name</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="title function_">set</span>(<span class="params">value</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (value.<span class="title function_">trim</span>() == <span class="string">&quot;&quot;</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;无效用户名&quot;</span>)</span><br><span class="line">        data.<span class="property">name</span> = value</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">age</span>: &#123;</span><br><span class="line">      <span class="title function_">get</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> data.<span class="property">name</span>;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="title function_">set</span>(<span class="params">value</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (value.<span class="title function_">trim</span>() == <span class="string">&quot;&quot;</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;无效的用户名&quot;</span>);</span><br><span class="line">        data.<span class="property">name</span> = value;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> foo = <span class="keyword">new</span> <span class="title class_">User</span>(<span class="string">&quot;foo&quot;</span>, <span class="number">3</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(foo.<span class="property">name</span>)   <span class="comment">//foo</span></span><br><span class="line">foo.<span class="property">name</span> = <span class="string">&quot;bar&quot;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(foo.<span class="property">name</span>)   <span class="comment">//bar</span></span><br></pre></td></tr></table></figure>
+<p>也可以使用es6之后的class语法糖定义：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="variable constant_">DATA</span> = <span class="title class_">Symbol</span>();</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">name, age</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>[<span class="variable constant_">DATA</span>] = &#123; name, age &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">name</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>[<span class="variable constant_">DATA</span>].<span class="property">name</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">set</span> <span class="title function_">name</span>(<span class="params">value</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (value.<span class="title function_">trim</span>() == <span class="string">&quot;&quot;</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;无效的用户名&quot;</span>);</span><br><span class="line">    <span class="variable language_">this</span>[<span class="variable constant_">DATA</span>].<span class="property">name</span> = value;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">age</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>[<span class="variable constant_">DATA</span>].<span class="property">name</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">set</span> <span class="title function_">age</span>(<span class="params">value</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (value.<span class="title function_">trim</span>() == <span class="string">&quot;&quot;</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;无效的用户名&quot;</span>);</span><br><span class="line">    <span class="variable language_">this</span>[<span class="variable constant_">DATA</span>].<span class="property">name</span> = value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="闭包访问器"><a href="#闭包访问器" class="headerlink" title="闭包访问器"></a>闭包访问器</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> data = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;foo&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> [key, value] <span class="keyword">of</span> <span class="title class_">Object</span>.<span class="title function_">entries</span>(data)) &#123;</span><br><span class="line">  <span class="title function_">observer</span>(data, key, value)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">observer</span>(<span class="params">data, key, v</span>) &#123;</span><br><span class="line">  <span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(data, key, &#123;</span><br><span class="line">    <span class="title function_">get</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> v</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">set</span>(<span class="params">newValue</span>) &#123;</span><br><span class="line">      v = newValue</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">data.<span class="property">name</span> = <span class="string">&#x27;bar&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">dir</span>(data.<span class="property">name</span>) <span class="comment">//bar</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="代理拦截"><a href="#代理拦截" class="headerlink" title="代理拦截"></a>代理拦截</h1><p>代理（拦截器）是对象的访问控制，<code>setter/getter</code> 是对单个对象属性的控制，而代理是对整个对象的控制。</p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>转到：<a href="/JavaScript/js%E5%85%83%E7%BC%96%E7%A8%8B%EF%BC%9A%E4%BB%A3%E7%90%86/?highlight=%E4%BB%A3%E7%90%86">js元编程：代理</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> foo = &#123; <span class="attr">name</span>: <span class="string">&quot;foo&quot;</span>&#125;</span><br><span class="line"><span class="keyword">const</span> proxy = <span class="keyword">new</span> <span class="title class_">Proxy</span>(foo, &#123;</span><br><span class="line">  <span class="title function_">get</span>(<span class="params">obj, property</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> obj[property]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="title function_">set</span>(<span class="params">obj, property, value</span>) &#123;</span><br><span class="line">    obj[property] = value</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>                 <span class="comment">//严格模式下 set 必须返回布尔值</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">proxy.<span class="property">age</span> = <span class="number">10</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(foo)</span><br></pre></td></tr></table></figure>
+
+<h2 id="代理函数"><a href="#代理函数" class="headerlink" title="代理函数"></a>代理函数</h2><p>如果代理以函数方式执行时，会执行代理中定义 <code>apply</code> 方法。</p>
+<p>参数说明：函数，上下文对象，参数</p>
+<p>下面使用 apply 计算函数执行时间</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">factorial</span>(<span class="params">num</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> num == <span class="number">1</span> ? <span class="number">1</span> : num * <span class="title function_">factorial</span>(num - <span class="number">1</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> proxy = <span class="keyword">new</span> <span class="title class_">Proxy</span>(factorial, &#123;</span><br><span class="line">  <span class="title function_">apply</span>(<span class="params">func, obj, args</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">time</span>(<span class="string">&quot;run&quot;</span>)</span><br><span class="line">    func.<span class="title function_">apply</span>(obj,args)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">timeEnd</span>(<span class="string">&quot;rum&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">proxy.<span class="title function_">apply</span>(<span class="variable language_">this</span>, [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Wyatex
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://qghost.gitee.io/%E5%89%8D%E7%AB%AF/js%E7%AC%94%E8%AE%B0%EF%BC%9A%E5%AF%B9%E8%B1%A1-2/" title="js笔记：对象-2">https://qghost.gitee.io/前端/js笔记：对象-2/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/%E8%AE%BE%E8%AE%A1/%E8%AE%B0%E8%B4%A6%E5%A7%AC%E5%90%8E%E7%AB%AFAPI%E8%AE%BE%E8%AE%A1/" rel="prev" title="记账姬后端API V1设计">
+                  <i class="fa fa-chevron-left"></i> 记账姬后端API V1设计
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%87%8D%E5%AD%A6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0-1/" rel="next" title="重学操作系统笔记-1">
+                  重学操作系统笔记-1 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wyatex</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>

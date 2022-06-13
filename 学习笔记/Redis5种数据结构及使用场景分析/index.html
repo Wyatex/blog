@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"qghost.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="文章来自：http:&#x2F;&#x2F;www.chengxy-nds.top&#x2F;，技术资料共享，同进步">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis5种数据结构及使用场景分析">
+<meta property="og:url" content="https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Redis5%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="Wyatex&#96;s blog">
+<meta property="og:description" content="文章来自：http:&#x2F;&#x2F;www.chengxy-nds.top&#x2F;，技术资料共享，同进步">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-06-02T10:13:28.000Z">
+<meta property="article:modified_time" content="2022-06-13T08:38:12.708Z">
+<meta property="article:author" content="Wyatex">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Redis5%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E5%88%86%E6%9E%90/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Redis5%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E5%88%86%E6%9E%90/","path":"学习笔记/Redis5种数据结构及使用场景分析/","title":"Redis5种数据结构及使用场景分析"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Redis5种数据结构及使用场景分析 | Wyatex`s blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Wyatex`s blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">67</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">18</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">111</span></a></li><li class="menu-item menu-item-编程"><a href="/programming/" rel="section"><i class="fa fa-book fa-fw"></i>编程</a></li><li class="menu-item menu-item-干货"><a href="/resources/" rel="section"><i class="fa fa-paperclip fa-fw"></i>干货</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">Redis基础数据结构有哪些？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#String%EF%BC%88%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">String（字符串）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%9A"><span class="nav-number">1.1.1.</span> <span class="nav-text">应用场景：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%88String%EF%BC%89%E5%B8%B8%E7%94%A8%E7%9A%84%E5%91%BD%E4%BB%A4%EF%BC%9A"><span class="nav-number">1.1.2.</span> <span class="nav-text">字符串（String）常用的命令：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#list-%E5%88%97%E8%A1%A8"><span class="nav-number">1.2.</span> <span class="nav-text">list(列表)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ziplist-%E5%8E%8B%E7%BC%A9%E5%88%97%E8%A1%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">ziplist(压缩列表)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%9A-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">应用场景：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#list%E6%93%8D%E4%BD%9C%E7%9A%84%E5%B8%B8%E7%94%A8%E5%91%BD%E5%90%8D%EF%BC%9A"><span class="nav-number">1.2.3.</span> <span class="nav-text">list操作的常用命名：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hash%EF%BC%88%E5%AD%97%E5%85%B8%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">hash（字典）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%9A-2"><span class="nav-number">1.3.1.</span> <span class="nav-text">应用场景：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hash%E5%B8%B8%E7%94%A8%E7%9A%84%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4%EF%BC%9A"><span class="nav-number">1.3.2.</span> <span class="nav-text">hash常用的操作命令：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set%EF%BC%88%E9%9B%86%E5%90%88%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">set（集合）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%9A-3"><span class="nav-number">1.4.1.</span> <span class="nav-text">应用场景：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#set%E7%9A%84%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%EF%BC%9A"><span class="nav-number">1.4.2.</span> <span class="nav-text">set的常用命令：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zset-%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88"><span class="nav-number">1.5.</span> <span class="nav-text">zset(有序集合)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%9A-4"><span class="nav-number">1.5.1.</span> <span class="nav-text">应用场景：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zset%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88%E7%9A%84%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4%EF%BC%9A"><span class="nav-number">1.5.2.</span> <span class="nav-text">zset有序集合的常用操作命令：</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Wyatex"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Wyatex</p>
+  <div class="site-description" itemprop="description">这里是我用来做笔记的网站哟~</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wyatex" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wyatex" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wyatex@qq.com" title="E-Mail → mailto:wyatex@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.microloong.me/" title="https:&#x2F;&#x2F;blog.microloong.me" rel="noopener" target="_blank">MicroLOONG</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Redis5%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Wyatex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wyatex`s blog">
+      <meta itemprop="description" content="这里是我用来做笔记的网站哟~">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Redis5种数据结构及使用场景分析 | Wyatex`s blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Redis5种数据结构及使用场景分析
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-06-02 18:13:28" itemprop="dateCreated datePublished" datetime="2020-06-02T18:13:28+08:00">2020-06-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-13 16:38:12" itemprop="dateModified" datetime="2022-06-13T16:38:12+08:00">2022-06-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>文章来自：<a target="_blank" rel="noopener" href="http://www.chengxy-nds.top/">http://www.chengxy-nds.top/</a>，技术资料共享，同进步</p>
+<span id="more"></span>
+
+<h1 id="Redis基础数据结构有哪些？"><a href="#Redis基础数据结构有哪些？" class="headerlink" title="Redis基础数据结构有哪些？"></a>Redis基础数据结构有哪些？</h1><h2 id="String（字符串）"><a href="#String（字符串）" class="headerlink" title="String（字符串）"></a>String（字符串）</h2><p>在任何一种编程语言里，字符串<code>String</code>都是最基础的数据结构， 那你有想过<code>Redis</code>中存储一个字符串都进行了哪些操作嘛？</p>
+<p>在Redis中<code>String</code>是可以修改的，称为动态字符串(<code>Simple Dynamic String</code> 简称 <code>SDS</code>)（快拿小本本记名词，要考的），说是字符串但它的内部结构更像是一个 <code>ArrayList</code>，内部维护着一个字节数组，并且在其内部预分配了一定的空间，以减少内存的频繁分配。</p>
+<p>Redis的内存分配机制是这样：</p>
+<p>当字符串的长度小于 1MB时，每次扩容都是加倍现有的空间。<br>如果字符串长度超过 1MB时，每次扩容时只会扩展 1MB 的空间。<br>这样既保证了内存空间够用，还不至于造成内存的浪费，字符串最大长度为 512MB。</p>
+
+<blockquote>
+<p>以上图片源自网络，如有侵权联系删除<br>上图就是字符串的基本结构，其中 <code>content</code> 里面保存的是字符串内容，<code>0x\0</code>作为结束字符不会被计算len中。</p>
+</blockquote>
+<p>分析一下字符串的数据结构</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">struct SDS&#123;</span><br><span class="line">  T capacity;       <span class="comment">//数组容量</span></span><br><span class="line">  T len;            <span class="comment">//实际长度</span></span><br><span class="line">  <span class="type">byte</span> flages;      <span class="comment">//标志位,低三位表示类型</span></span><br><span class="line">  <span class="type">byte</span>[] content;   <span class="comment">//数组内容</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>capacity</code> 和 <code>len</code> 两个属性都是泛型，为什么不直接用<code>int</code>类型？因为<code>Redis</code>内部有很多优化方案，为更合理的使用内存，不同长度的字符串采用不同的数据类型表示，且在创建字符串的时候 <code>len</code> 会和 <code>capacity</code> 一样大，不产生冗余的空间，所以<code>String</code>值可以是字符串、数字（整数、浮点数) 或者 二进制。</p>
+<h3 id="应用场景："><a href="#应用场景：" class="headerlink" title="应用场景："></a>应用场景：</h3><p>存储key-value键值对，这个比较简单不细说了.</p>
+<h3 id="字符串（String）常用的命令："><a href="#字符串（String）常用的命令：" class="headerlink" title="字符串（String）常用的命令："></a>字符串（String）常用的命令：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">set   [key]  [value]    给指定key设置值（set 可覆盖老的值）</span><br><span class="line">get  [key]              获取指定key 的值</span><br><span class="line">del  [key]              删除指定key</span><br><span class="line">exists  [key]           判断是否存在指定key</span><br><span class="line">mset  [key1]  [value1]  [key2]  [value2] ...... 批量存键值对</span><br><span class="line">mget  [key1]  [key2] ......                     批量取key</span><br><span class="line">expire [key]  [time]                  给指定key 设置过期时间  单位秒</span><br><span class="line">setex    [key]  [time]  [value]       等价于 set + expire 命令组合</span><br><span class="line">setnx  [key]  [value]   如果key不存在则set 创建，否则返回0</span><br><span class="line">incr   [key]            如果value为整数 可用 incr命令每次自增1</span><br><span class="line">incrby  [key] [number]  使用incrby命令对整数值 进行增加 number</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="list-列表"><a href="#list-列表" class="headerlink" title="list(列表)"></a>list(列表)</h2><p>Redis中的list和Java中的<code>LinkedList</code>很像，底层都是一种链表结构， list的插入和删除操作非常快，时间复杂度为 0(1)，不像数组结构插入、删除操作需要移动数据。</p>
+<p>像归像，但是redis中的list底层可不是一个双向链表那么简单。</p>
+<p>当数据量较少的时候它的底层存储结构为一块连续内存，称之为<code>ziplist</code>(压缩列表)，它将所有的元素紧挨着一起存储，分配的是一块连续的内存；当数据量较多的时候将会变成quicklist(快速链表)结构。</p>
+<p>可单纯的链表也是有缺陷的，链表的前后指针 <code>prev</code> 和 <code>next</code> 会占用较多的内存，会比较浪费空间，而且会加重内存的碎片化。在redis 3.2之后就都改用<code>ziplist</code>+链表的混合结构，称之为 <code>quicklist</code>(快速链表)。</p>
+<p>下面具体介绍下两种链表</p>
+<h3 id="ziplist-压缩列表"><a href="#ziplist-压缩列表" class="headerlink" title="ziplist(压缩列表)"></a>ziplist(压缩列表)</h3><p>先看一下ziplist的数据结构，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct ziplist&lt;T&gt;&#123;</span><br><span class="line">    int32 zlbytes;              <span class="comment">//压缩列表占用字节数</span></span><br><span class="line">    int32 zltail_offset;        <span class="comment">//最后一个元素距离起始位置的偏移量,用于快速定位到最后一个节点</span></span><br><span class="line">    int16 zllength;             <span class="comment">//元素个数</span></span><br><span class="line">    T[] entries;                <span class="comment">//元素内容</span></span><br><span class="line">    int8 zlend;                 <span class="comment">//结束位 0xFF</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>int32 zlbytes</code>： 压缩列表占用字节数<br><code>int32 zltail_offset</code>： 最后一个元素距离起始位置的偏移量,用于快速定位到最后一个节点</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">`int16 zllength`</span>：元素个数</span><br><span class="line"><span class="string">`T[] entries`</span>：元素内容</span><br><span class="line"><span class="string">`int8 zlend`</span>：结束位 <span class="number">0xFF</span></span><br></pre></td></tr></table></figure>
+<p>压缩列表为了支持双向遍历，所以才会有 <code>ztail_offset</code> 这个字段，用来快速定位到最后一个元素，然后倒着遍历</p>
+
+<p><code>entry</code>的数据结构：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct entry&#123;</span><br><span class="line">    <span class="type">int</span>&lt;<span class="keyword">var</span>&gt; prevlen;             <span class="comment">//前一个 entry 的长度</span></span><br><span class="line">    <span class="type">int</span>&lt;<span class="keyword">var</span>&gt; encoding;            <span class="comment">//元素类型编码</span></span><br><span class="line">    optional <span class="type">byte</span>[] content;      <span class="comment">//元素内容</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>entry</code>它的 <code>prevlen</code> 字段表示前一个 <code>entry</code> 的字节长度，当压缩列表倒着遍历时，需要通过这<br>个字段来快速定位到下一个元素的位置。</p>
+<h3 id="应用场景：-1"><a href="#应用场景：-1" class="headerlink" title="应用场景："></a>应用场景：</h3><p>由于list它是一个按照插入顺序排序的列表，所以应用场景相对还较多的，例如：</p>
+<ul>
+<li>消息队列：lpop和rpush（或者反过来，lpush和rpop）能实现队列的功能</li>
+<li>朋友圈的点赞列表、评论列表、排行榜：lpush命令和lrange命令能实现最新列表的功能，每次通过lpush命令往列表里插入新的元素，然后通过lrange命令读取最新的元素列表。</li>
+</ul>
+<h3 id="list操作的常用命名："><a href="#list操作的常用命名：" class="headerlink" title="list操作的常用命名："></a>list操作的常用命名：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">rpush  [key] [value1] [value2] ......    链表右侧插入</span><br><span class="line"></span><br><span class="line">rpop    [key]   移除右侧列表头元素，并返回该元素</span><br><span class="line"></span><br><span class="line">lpop   [key]    移除左侧列表头元素，并返回该元素</span><br><span class="line"></span><br><span class="line">llen  [key]     返回该列表的元素个数</span><br><span class="line"></span><br><span class="line">lrem [key] [count] [value]  删除列表中与value相等的元素，count是删除的个数。 count&gt;0 表示从左侧开始查找，删除count个元素，count&lt;0 表示从右侧开始查找，删除count个相同元素，count=0 表示删除全部相同的元素</span><br><span class="line"></span><br><span class="line">(PS:   index 代表元素下标，index 可以为负数， index= 表示倒数第一个元素，同理 index=-2 表示倒数第二 个元素。)</span><br><span class="line"></span><br><span class="line">lindex [key] [index]                      获取list指定下标的元素 （需要遍历，时间复杂度为O(n)）</span><br><span class="line"></span><br><span class="line">lrange [key]  [start_index] [end_index]   获取list 区间内的所有元素 （时间复杂度为 O（n））</span><br><span class="line"></span><br><span class="line">ltrim  [key]  [start_index] [end_index]   保留区间内的元素，其他元素删除（时间复杂度为 O（n））</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="hash（字典）"><a href="#hash（字典）" class="headerlink" title="hash（字典）"></a>hash（字典）</h2><p><code>Redis</code>的<code>Hash</code>和<code>Java</code>的<code>HashMap</code>相识，都是数组+链表的结构（感觉和Golang也像），值得注意的是在 <code>Redis</code> 的 <code>Hash</code> 中 <code>value</code> 只能是字符串。用法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt; hset books java &quot;Effective java&quot; </span><br><span class="line">(integer) 1</span><br><span class="line">&gt; hset books golang &quot;concurrency in go&quot; </span><br><span class="line">(integer) 1</span><br><span class="line">&gt; hget books java </span><br><span class="line">&quot;Effective java&quot;</span><br><span class="line">&gt; hset user age 17 </span><br><span class="line">(integer) 1</span><br><span class="line">&gt; hincrby user age 1 #单个 key 可以进行计数 和 incr 命令基本一致 </span><br><span class="line">(integer) 18</span><br></pre></td></tr></table></figure>
+<p><code>Hash</code> 和<code>String</code>都可以用来存储用户信息 ，但不同的是<code>Hash</code>可以对用户信息的每个字段单独存储；<code>String</code>存的是用户全部信息经过序列化后的字符串，如果想要修改某个用户字段必须将用户信息字符串全部查询出来，解析成相应的用户信息对象，修改完后在序列化成字符串存入。而 <code>hash</code> 可以只对某个字段修改，从而节约网络流量，不过<code>hash</code>内存占用要大于 <code>String</code> ，这是 <code>hash</code> 的缺点。</p>
+<h3 id="应用场景：-2"><a href="#应用场景：-2" class="headerlink" title="应用场景："></a>应用场景：</h3><ul>
+<li>购物车：<code>hset [key] [field] [value]</code> 命令， 可以实现以<code>用户Id</code>，商品Id为<code>field</code>，商品数量为<code>value</code>，恰好构成了购物车的3个要素。</li>
+<li>存储对象：hash类型的<code>(key, field, value)</code>的结构与对象的<code>(对象id, 属性, 值)</code>的结构相似，也可以用来存储对象。</li>
+</ul>
+<h3 id="hash常用的操作命令："><a href="#hash常用的操作命令：" class="headerlink" title="hash常用的操作命令："></a>hash常用的操作命令：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">hset  [key]  [field] [value]      新建字段信息</span><br><span class="line"></span><br><span class="line">hget  [key]  [field]              获取字段信息</span><br><span class="line"></span><br><span class="line">hdel [key] [field]                删除字段</span><br><span class="line"></span><br><span class="line">hlen  [key]                       保存的字段个数</span><br><span class="line"></span><br><span class="line">hgetall  [key]        获取指定key 字典里的所有字段和值 （字段信息过多,会导致慢查询 慎用：亲身经历 曾经用过这个这个指令导致线上服务故障）</span><br><span class="line"></span><br><span class="line">hmset  [key] [field1] [value1] [field2] [value2] ......   批量创建</span><br><span class="line"></span><br><span class="line">hincr  [key] [field]              对字段值自增</span><br><span class="line"></span><br><span class="line">hincrby [key] [field] [number]    对字段值增加number</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="set（集合）"><a href="#set（集合）" class="headerlink" title="set（集合）"></a>set（集合）</h2><p><code>Redis</code> 中的 <code>set</code> 和<code>Java</code>中的 <code>HashSet</code> 有些类似，它内部的键值对是无序的、唯一的。它的内部实现相当于一个特殊的字典，字典中所有的value都是一个值 NULL。当集合中最后一个元素被移除之后，数据结构被自动删除，内存被回收。</p>
+<h3 id="应用场景：-3"><a href="#应用场景：-3" class="headerlink" title="应用场景："></a>应用场景：</h3><ul>
+<li>好友、关注、粉丝、感兴趣的人集合：<ol>
+<li>sinter命令可以获得A和B两个用户的共同好友；</li>
+<li>sismember命令可以判断A是否是B的好友；</li>
+<li>scard命令可以获取好友数量；</li>
+<li>关注时，smove命令可以将B从A的粉丝集合转移到A的好友集合</li>
+</ol>
+</li>
+<li>首页展示随机：美团首页有很多推荐商家，但是并不能全部展示，set类型适合存放所有需要展示的内容，而srandmember命令则可以从中随机获取几个。</li>
+<li>存储某活动中中奖的用户ID ，因为有去重功能，可以保证同一个用户不会中奖两次。</li>
+</ul>
+<h3 id="set的常用命令："><a href="#set的常用命令：" class="headerlink" title="set的常用命令："></a>set的常用命令：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sadd  [key]  [value]      向指定key的set中添加元素</span><br><span class="line"></span><br><span class="line">smembers [key]            获取指定key 集合中的所有元素</span><br><span class="line"></span><br><span class="line">sismember [key] [value]   判断集合中是否存在某个value</span><br><span class="line"></span><br><span class="line">scard [key]               获取集合的长度</span><br><span class="line"></span><br><span class="line">spop  [key]               弹出一个元素</span><br><span class="line"></span><br><span class="line">srem [key] [value]        删除指定元素</span><br></pre></td></tr></table></figure>
+
+<h2 id="zset-有序集合"><a href="#zset-有序集合" class="headerlink" title="zset(有序集合)"></a>zset(有序集合)</h2><p><code>zset</code>也叫<code>SortedSet</code>一方面它是个 <code>set</code> ，保证了内部 <code>value</code> 的唯一性，另方面它可以给每个 <code>value</code> 赋予一个<code>score</code>，代表这个<code>value</code>的排序权重。它的内部实现用的是一种叫作“跳跃列表”的数据结构。</p>
+<h3 id="应用场景：-4"><a href="#应用场景：-4" class="headerlink" title="应用场景："></a>应用场景：</h3><ul>
+<li><code>zset</code> 可以用做排行榜，但是和<code>list</code>不同的是<code>zset</code>它能够实现动态的排序，例如： 可以用来存储粉丝列表，<code>value</code> 值是粉丝的用户 ID，<code>score</code> 是关注时间，我们可以对粉丝列表按关注时间进行排序。</li>
+<li><code>zset</code> 还可以用来存储学生的成绩， <code>value</code> 值是学生的 ID, <code>score</code> 是他的考试成绩。 我们对成绩按分数进行排序就可以得到他的名次。</li>
+</ul>
+<h3 id="zset有序集合的常用操作命令："><a href="#zset有序集合的常用操作命令：" class="headerlink" title="zset有序集合的常用操作命令："></a>zset有序集合的常用操作命令：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">zadd [key] [score] [value]              向指定key的集合中增加元素</span><br><span class="line"></span><br><span class="line">zrange [key] [start_index] [end_index]  获取下标范围内的元素列表，按score 排序输出</span><br><span class="line"></span><br><span class="line">zrevrange [key] [start_index] [end_index]  获取范围内的元素列表 ，按score排序 逆序输出</span><br><span class="line"></span><br><span class="line">zcard [key]                             获取集合列表的元素个数</span><br><span class="line"></span><br><span class="line">zrank [key] [value]  获                 取元素再集合中的排名</span><br><span class="line"></span><br><span class="line">zrangebyscore [key] [score1] [score2]   输出score范围内的元素列表</span><br><span class="line"></span><br><span class="line">zrem [key] [value]                      删除元素</span><br><span class="line"></span><br><span class="line">zscore [key] [value]                    获取元素的score</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>完结</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Wyatex
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Redis5%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8F%8A%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E5%88%86%E6%9E%90/" title="Redis5种数据结构及使用场景分析">https://qghost.gitee.io/学习笔记/Redis5种数据结构及使用场景分析/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+              <a href="/tags/Redis/" rel="tag"># Redis</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/%E5%89%8D%E7%AB%AF/%E5%8D%81%E4%B8%AA%E5%AE%9E%E7%94%A8%E7%9A%84ES6%E7%89%B9%E6%80%A7/" rel="prev" title="十个实用的ES6特性">
+                  <i class="fa fa-chevron-left"></i> 十个实用的ES6特性
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%9A%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F-Go/" rel="next" title="设计模式：装饰者模式(Go)">
+                  设计模式：装饰者模式(Go) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wyatex</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>

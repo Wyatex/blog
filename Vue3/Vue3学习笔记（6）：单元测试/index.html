@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"qghost.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="这节讲一下如何用 jest 进行单元测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue3学习笔记（6）：单元测试">
+<meta property="og:url" content="https://qghost.gitee.io/Vue3/Vue3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%886%EF%BC%89%EF%BC%9A%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/index.html">
+<meta property="og:site_name" content="Wyatex&#96;s blog">
+<meta property="og:description" content="这节讲一下如何用 jest 进行单元测试">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-24T11:36:24.000Z">
+<meta property="article:modified_time" content="2022-06-13T08:38:12.747Z">
+<meta property="article:author" content="Wyatex">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="Vue3">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://qghost.gitee.io/Vue3/Vue3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%886%EF%BC%89%EF%BC%9A%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://qghost.gitee.io/Vue3/Vue3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%886%EF%BC%89%EF%BC%9A%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/","path":"Vue3/Vue3学习笔记（6）：单元测试/","title":"Vue3学习笔记（6）：单元测试"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Vue3学习笔记（6）：单元测试 | Wyatex`s blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Wyatex`s blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">67</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">18</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">111</span></a></li><li class="menu-item menu-item-编程"><a href="/programming/" rel="section"><i class="fa fa-book fa-fw"></i>编程</a></li><li class="menu-item menu-item-干货"><a href="/resources/" rel="section"><i class="fa fa-paperclip fa-fw"></i>干货</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-vue-cli-%E7%9A%84%E9%A2%84%E8%AE%BE"><span class="nav-number">1.</span> <span class="nav-text">使用 vue-cli 的预设</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jest-%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">jest 的配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95"><span class="nav-number">3.</span> <span class="nav-text">单元测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E5%A3%B0%E6%98%8E"><span class="nav-number">3.1.</span> <span class="nav-text">测试声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%AD%E8%A8%80"><span class="nav-number">3.2.</span> <span class="nav-text">断言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E8%AE%BE%E5%92%8C%E6%B8%85%E7%90%86"><span class="nav-number">3.3.</span> <span class="nav-text">预设和清理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E6%B5%8B%E8%AF%95"><span class="nav-number">4.</span> <span class="nav-text">异步测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#done"><span class="nav-number">4.1.</span> <span class="nav-text">done</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#promise"><span class="nav-number">4.2.</span> <span class="nav-text">promise</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#async%E3%80%81await-%E8%AF%AD%E6%B3%95%E7%B3%96"><span class="nav-number">4.3.</span> <span class="nav-text">async、await 语法糖</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vue-test-utils-%E6%B5%8B%E8%AF%95-vue3-%E7%BB%84%E4%BB%B6"><span class="nav-number">5.</span> <span class="nav-text">vue-test-utils 测试 vue3 组件</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Wyatex"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Wyatex</p>
+  <div class="site-description" itemprop="description">这里是我用来做笔记的网站哟~</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wyatex" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wyatex" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wyatex@qq.com" title="E-Mail → mailto:wyatex@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.microloong.me/" title="https:&#x2F;&#x2F;blog.microloong.me" rel="noopener" target="_blank">MicroLOONG</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://qghost.gitee.io/Vue3/Vue3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%886%EF%BC%89%EF%BC%9A%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Wyatex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wyatex`s blog">
+      <meta itemprop="description" content="这里是我用来做笔记的网站哟~">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Vue3学习笔记（6）：单元测试 | Wyatex`s blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue3学习笔记（6）：单元测试
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-24 19:36:24" itemprop="dateCreated datePublished" datetime="2021-10-24T19:36:24+08:00">2021-10-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-13 16:38:12" itemprop="dateModified" datetime="2022-06-13T16:38:12+08:00">2022-06-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Vue3/" itemprop="url" rel="index"><span itemprop="name">Vue3</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>这节讲一下如何用 jest 进行单元测试</p>
+<span id="more"></span>
+
+<h1 id="使用-vue-cli-的预设"><a href="#使用-vue-cli-的预设" class="headerlink" title="使用 vue-cli 的预设"></a>使用 vue-cli 的预设</h1><p>在执行：<code>vue create xxx</code>时，选上：<code>Unit Test</code>，框架选择<code>Jest</code>框架。<br>初始化完成后可以看到<code>/tests/unit</code>目录下有一个：<code>example.spec.ts</code>文件：</p>
+<figure class="highlight ts"><figcaption><span>example.spec.ts</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; shallowMount &#125; <span class="keyword">from</span> <span class="string">&#x27;@vue/test-utils&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">HelloWorld</span> <span class="keyword">from</span> <span class="string">&#x27;@/components/HelloWorld.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">describe</span>(<span class="string">&#x27;HelloWorld.vue&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">it</span>(<span class="string">&#x27;renders props.msg when passed&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> msg = <span class="string">&#x27;new message&#x27;</span></span><br><span class="line">    <span class="keyword">const</span> wrapper = <span class="title function_">shallowMount</span>(<span class="title class_">HelloWorld</span>, &#123;</span><br><span class="line">      <span class="attr">props</span>: &#123; msg &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="title function_">expect</span>(wrapper.<span class="title function_">text</span>()).<span class="title function_">toMatch</span>(msg)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="jest-的配置"><a href="#jest-的配置" class="headerlink" title="jest 的配置"></a>jest 的配置</h1><p>跑 jest 的单元测试主要通过根目录下的：<code>jest.config.js</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">preset</span>: <span class="string">&#x27;@vue/cli-plugin-unit-jest/presets/typescript-and-babel&#x27;</span>,</span><br><span class="line">  <span class="attr">transform</span>: &#123;</span><br><span class="line">    <span class="string">&#x27;^.+\\.vue$&#x27;</span>: <span class="string">&#x27;vue-jest&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们去到 preset 的目录<code>/node_modules/@vue/cli-plugin-unit-jest/presets/typescript-and-babel</code>看到，有一个 jest-preset.js:</p>
+<figure class="highlight js"><figcaption><span>jest-preset.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> deepmerge = <span class="built_in">require</span>(<span class="string">&#x27;deepmerge&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> defaultTsPreset = <span class="built_in">require</span>(<span class="string">&#x27;../typescript/jest-preset&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title function_">deepmerge</span>(defaultTsPreset, &#123;</span><br><span class="line">  <span class="attr">globals</span>: &#123;</span><br><span class="line">    <span class="string">&#x27;ts-jest&#x27;</span>: &#123;</span><br><span class="line">      <span class="attr">babelConfig</span>: <span class="literal">true</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>可以看到这个预设主要是在基础预设上加上了<code>ts-jest</code>的配置。继续看：<code>/typescript/jest-preset</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> deepmerge = <span class="built_in">require</span>(<span class="string">&#x27;deepmerge&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> defaultPreset = <span class="built_in">require</span>(<span class="string">&#x27;../default/jest-preset&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title function_">deepmerge</span>(defaultPreset, &#123;</span><br><span class="line">  <span class="attr">moduleFileExtensions</span>: [<span class="string">&#x27;ts&#x27;</span>, <span class="string">&#x27;tsx&#x27;</span>],</span><br><span class="line">  <span class="attr">transform</span>: &#123;</span><br><span class="line">    <span class="string">&#x27;^.+\\.tsx?$&#x27;</span>: <span class="built_in">require</span>.<span class="title function_">resolve</span>(<span class="string">&#x27;ts-jest&#x27;</span>),</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>可以看到这个<code>moduleFileExtensions</code>指定了去寻找 ts 文件和 tsx 文件。<br><code>transform</code> 用来指定编译代码，这里指定了 <code>tsx</code> 交给<code>ts-jest</code>这个依赖来编译。</p>
+<p>继续往<code>/default/jest-preset</code>看，可以看到：</p>
+<figure class="highlight js"><figcaption><span>jest-preset</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="comment">// 在我们写代码的时候，其实可以不写后缀名，这里的 moduleFileExtensions 会自动帮我们补后缀名。</span></span><br><span class="line">  <span class="attr">moduleFileExtensions</span>: [</span><br><span class="line">    <span class="string">&#x27;js&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;jsx&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;json&#x27;</span>,</span><br><span class="line">    <span class="comment">// tell Jest to handle *.vue files</span></span><br><span class="line">    <span class="string">&#x27;vue&#x27;</span>,</span><br><span class="line">  ],</span><br><span class="line">  <span class="comment">// 然后 transform 还是指定需要编译的文件，比如这个 .vue 文件使用 vue-jest 编译。</span></span><br><span class="line">  <span class="attr">transform</span>: &#123;</span><br><span class="line">    <span class="comment">// process *.vue files with vue-jest</span></span><br><span class="line">    <span class="string">&#x27;^.+\\.vue$&#x27;</span>: <span class="built_in">require</span>.<span class="title function_">resolve</span>(<span class="string">&#x27;vue-jest&#x27;</span>),</span><br><span class="line">    <span class="string">&#x27;.+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$&#x27;</span>:</span><br><span class="line">      <span class="built_in">require</span>.<span class="title function_">resolve</span>(<span class="string">&#x27;jest-transform-stub&#x27;</span>),</span><br><span class="line">    <span class="string">&#x27;^.+\\.jsx?$&#x27;</span>: <span class="built_in">require</span>.<span class="title function_">resolve</span>(<span class="string">&#x27;babel-jest&#x27;</span>),</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 指定哪些不需要编译的</span></span><br><span class="line">  <span class="attr">transformIgnorePatterns</span>: [<span class="string">&#x27;/node_modules/&#x27;</span>],</span><br><span class="line">  <span class="comment">// 把@映射到/src目录</span></span><br><span class="line">  <span class="comment">// support the same @ -&gt; src alias mapping in source code</span></span><br><span class="line">  <span class="attr">moduleNameMapper</span>: &#123;</span><br><span class="line">    <span class="string">&#x27;^@/(.*)$&#x27;</span>: <span class="string">&#x27;&lt;rootDir&gt;/src/$1&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 在什么环境下进行测试，比如jsdom这个</span></span><br><span class="line">  <span class="attr">testEnvironment</span>: <span class="string">&#x27;jest-environment-jsdom-fifteen&#x27;</span>,</span><br><span class="line">  <span class="comment">// 快照测试:把测试结果序列化到一个文件，以后跑单测时比较输出的字符串时候和之前的一样，保证稳定性。</span></span><br><span class="line">  <span class="comment">// serializer for snapshots</span></span><br><span class="line">  <span class="attr">snapshotSerializers</span>: [<span class="string">&#x27;jest-serializer-vue&#x27;</span>],</span><br><span class="line">  <span class="comment">// jest找哪里哪些文件去跑测试</span></span><br><span class="line">  <span class="attr">testMatch</span>: [<span class="string">&#x27;**/tests/unit/**/*.spec.[jt]s?(x)&#x27;</span>, <span class="string">&#x27;**/__tests__/*.[jt]s?(x)&#x27;</span>],</span><br><span class="line">  <span class="comment">// 类似模拟浏览器的环境，通过浏览器加载一些js文件</span></span><br><span class="line">  <span class="comment">// https://github.com/facebook/jest/issues/6766</span></span><br><span class="line">  <span class="attr">testURL</span>: <span class="string">&#x27;http://localhost/&#x27;</span>,</span><br><span class="line">  <span class="comment">// 启动了watch后，每次保存都会自动跑一次测试</span></span><br><span class="line">  <span class="attr">watchPlugins</span>: [</span><br><span class="line">    <span class="built_in">require</span>.<span class="title function_">resolve</span>(<span class="string">&#x27;jest-watch-typeahead/filename&#x27;</span>),</span><br><span class="line">    <span class="built_in">require</span>.<span class="title function_">resolve</span>(<span class="string">&#x27;jest-watch-typeahead/testname&#x27;</span>),</span><br><span class="line">  ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到这些配置非常像 webpack。</p>
+<h1 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h1><h2 id="测试声明"><a href="#测试声明" class="headerlink" title="测试声明"></a>测试声明</h2><p>jest 有三种 api，分别是：<code>describe、it、test</code>。</p>
+<p>describe 指一整个套件，it 包含在 describe 里面，特指单个测试。test 是单独的一个测试。</p>
+<p>大部分情况都是使用 describe 和 it 去测试，test 可能只会用在一些小项目里，测一下简单的东西。</p>
+<h2 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h2><p>断言指判断结果是否和我们预期的一样，比如：</p>
+<figure class="highlight ts"><figcaption><span>example.spec.ts</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; shallowMount &#125; <span class="keyword">from</span> <span class="string">&#x27;@vue/test-utils&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">HelloWorld</span> <span class="keyword">from</span> <span class="string">&#x27;@/components/HelloWorld.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">describe</span>(<span class="string">&#x27;HelloWorld.vue&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">it</span>(<span class="string">&#x27;renders props.msg when passed&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> msg = <span class="string">&#x27;new message&#x27;</span></span><br><span class="line">    <span class="keyword">const</span> wrapper = <span class="title function_">shallowMount</span>(<span class="title class_">HelloWorld</span>, &#123;</span><br><span class="line">      <span class="attr">props</span>: &#123; msg &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="title function_">expect</span>(wrapper.<span class="title function_">text</span>()).<span class="title function_">toMatch</span>(msg)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>比如这个：<code>expect(wrapper.text()).toMatch(msg)</code>，指的是期待：<code>wrapper.text()</code>的结果要 msg 匹配。</p>
+<p>除了 toMatch 还有 toBe、toEqual 等 api。可以看<a target="_blank" rel="noopener" href="https://jestjs.io/zh-Hans/docs/expect">官方文档</a>的介绍。</p>
+<p>如果需要反转一下匹配结果，比如需要结果不等于什么，只需要在 toxxx 前面加上 not，比如：<code>expect(wrapper.text()).not.toMatch(msg)</code></p>
+<h2 id="预设和清理"><a href="#预设和清理" class="headerlink" title="预设和清理"></a>预设和清理</h2><p>包括几个 api：<code>beforeEach/afterEach、beforeAll/afterAll</code><br>beforeEach 指每个单元测试执行前都会执行，同理 afterEach 是测试后执行。beforeAll 所有测试开始前只执行一次，afterAll 是所有测试执行完后执行一次。<br>要注意这些都有作用域，通常写到 describe 里面，比如：</p>
+<figure class="highlight ts"><figcaption><span>example.spec.ts</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; shallowMount &#125; <span class="keyword">from</span> <span class="string">&#x27;@vue/test-utils&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">HelloWorld</span> <span class="keyword">from</span> <span class="string">&#x27;@/components/HelloWorld.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">describe</span>(<span class="string">&#x27;HelloWorld.vue&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">beforeAll</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;测试还没开始&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="title function_">beforeEach</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;某个it测试还没开始&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="title class_">AfterEach</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;某个it测试已经结束&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="title function_">afterAll</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;所有测试已完成&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="title function_">it</span>(<span class="string">&#x27;renders props.msg when passed&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> msg = <span class="string">&#x27;new message&#x27;</span></span><br><span class="line">    <span class="keyword">const</span> wrapper = <span class="title function_">shallowMount</span>(<span class="title class_">HelloWorld</span>, &#123;</span><br><span class="line">      <span class="attr">props</span>: &#123; msg &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="title function_">expect</span>(wrapper.<span class="title function_">text</span>()).<span class="title function_">toMatch</span>(msg)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="异步测试"><a href="#异步测试" class="headerlink" title="异步测试"></a>异步测试</h1><p>默认情况下测试都是同步测试，如果写上异步的代码可能会出现一些问题，比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">describe</span>(<span class="string">&#x27;HelloWorld.vue&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">it</span>(<span class="string">&#x27;renders props.msg when passed&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> msg = <span class="string">&#x27;new message&#x27;</span></span><br><span class="line">    <span class="keyword">const</span> wrapper = <span class="title function_">shallowMount</span>(<span class="title class_">HelloWorld</span>, &#123;</span><br><span class="line">      <span class="attr">props</span>: &#123; msg &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">expect</span>(wrapper.<span class="title function_">text</span>()).<span class="title function_">toMatch</span>(<span class="string">&#x27;123&#x27;</span>)</span><br><span class="line">    &#125;, <span class="number">123</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>理论上这个测试是不应该通过的，但是跑起来发现还是可以通过，原因是 jest 认为我们再跑同步测试，所以 setTimeout 里面的代码并没有去执行，解决方法如下。</p>
+<h2 id="done"><a href="#done" class="headerlink" title="done"></a>done</h2><p>可以传入一个参数 done，然后测试结束后执行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">describe</span>(<span class="string">&#x27;HelloWorld.vue&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">it</span>(<span class="string">&#x27;renders props.msg when passed&#x27;</span>, <span class="function">(<span class="params">done</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> msg = <span class="string">&#x27;new message&#x27;</span></span><br><span class="line">    <span class="keyword">const</span> wrapper = <span class="title function_">shallowMount</span>(<span class="title class_">HelloWorld</span>, &#123;</span><br><span class="line">      <span class="attr">props</span>: &#123; msg &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">expect</span>(wrapper.<span class="title function_">text</span>()).<span class="title function_">toMatch</span>(<span class="string">&#x27;123&#x27;</span>)</span><br><span class="line">      <span class="title function_">done</span>()</span><br><span class="line">    &#125;, <span class="number">123</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="promise"><a href="#promise" class="headerlink" title="promise"></a>promise</h2><p>可以在函数的返回值使用 Promise 去解决：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">describe</span>(<span class="string">&#x27;HelloWorld.vue&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">it</span>(<span class="string">&#x27;renders props.msg when passed&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> msg = <span class="string">&#x27;new message&#x27;</span></span><br><span class="line">    <span class="keyword">const</span> wrapper = <span class="title function_">shallowMount</span>(<span class="title class_">HelloWorld</span>, &#123;</span><br><span class="line">      <span class="attr">props</span>: &#123; msg &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">expect</span>(wrapper.<span class="title function_">text</span>()).<span class="title function_">toMatch</span>(<span class="string">&#x27;msg&#x27;</span>)</span><br><span class="line">      <span class="title function_">resolve</span>(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>测试可以看到也是不通过，说明 Promise 的方法还是有用的。</p>
+<h2 id="async、await-语法糖"><a href="#async、await-语法糖" class="headerlink" title="async、await 语法糖"></a>async、await 语法糖</h2><p>可以使用上这些新的语法糖：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">describe</span>(<span class="string">&#x27;HelloWorld.vue&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">it</span>(<span class="string">&#x27;renders props.msg when passed&#x27;</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> msg = <span class="string">&#x27;new message&#x27;</span></span><br><span class="line">    <span class="keyword">const</span> wrapper = <span class="title function_">shallowMount</span>(<span class="title class_">HelloWorld</span>, &#123;</span><br><span class="line">      <span class="attr">props</span>: &#123; msg &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">await</span> wrapper.<span class="title function_">setProps</span>(&#123;</span><br><span class="line">      <span class="attr">msg</span>: <span class="string">&#x27;123&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="title function_">expect</span>(wrapper.<span class="title function_">text</span>()).<span class="title function_">toMatch</span>(msg)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>因为 vue 修改 dom 不是同步的，如果改了值再想拿到 dom 的值需要 nextTick 这个 api，这也是一个异步操作，所以我们用 await 来等待 dom 修改完成。<br>测试是不通过的，然后将 toMatch 的值设为<code>&#39;123&#39;</code>再跑就能通过了。</p>
+<h1 id="vue-test-utils-测试-vue3-组件"><a href="#vue-test-utils-测试-vue3-组件" class="headerlink" title="vue-test-utils 测试 vue3 组件"></a>vue-test-utils 测试 vue3 组件</h1>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Wyatex
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://qghost.gitee.io/Vue3/Vue3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%886%EF%BC%89%EF%BC%9A%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" title="Vue3学习笔记（6）：单元测试">https://qghost.gitee.io/Vue3/Vue3学习笔记（6）：单元测试/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+              <a href="/tags/Vue3/" rel="tag"># Vue3</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/uncategorized/JsonSchema%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="JsonSchema学习笔记">
+                  <i class="fa fa-chevron-left"></i> JsonSchema学习笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E6%95%99%E7%A8%8B/%E5%9C%A8%E4%BA%91%E7%AB%AF%E7%BC%96%E7%A8%8B-2-%EF%BC%9ACloudStudio%E8%B0%83%E8%AF%95C%E8%AF%AD%E8%A8%80/" rel="next" title="在云端编程(2)：CloudStudio调试C语言">
+                  在云端编程(2)：CloudStudio调试C语言 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wyatex</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>

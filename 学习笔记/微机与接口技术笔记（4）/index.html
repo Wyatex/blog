@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"qghost.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="这章内容讲可编程并行接口8255A">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微机与接口技术笔记（4）">
+<meta property="og:url" content="https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%884%EF%BC%89/index.html">
+<meta property="og:site_name" content="Wyatex&#96;s blog">
+<meta property="og:description" content="这章内容讲可编程并行接口8255A">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-11-21T02:33:44.000Z">
+<meta property="article:modified_time" content="2022-06-13T08:38:12.999Z">
+<meta property="article:author" content="Wyatex">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="微机">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%884%EF%BC%89/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%884%EF%BC%89/","path":"学习笔记/微机与接口技术笔记（4）/","title":"微机与接口技术笔记（4）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>微机与接口技术笔记（4） | Wyatex`s blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Wyatex`s blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">67</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">18</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">111</span></a></li><li class="menu-item menu-item-编程"><a href="/programming/" rel="section"><i class="fa fa-book fa-fw"></i>编程</a></li><li class="menu-item menu-item-干货"><a href="/resources/" rel="section"><i class="fa fa-paperclip fa-fw"></i>干货</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8A%AF%E7%89%87%E5%BC%95%E8%84%9A"><span class="nav-number">2.</span> <span class="nav-text">芯片引脚</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">内部结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A%E7%BB%84%E5%92%8CB%E7%BB%84"><span class="nav-number">3.1.</span> <span class="nav-text">A组和B组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BA%BF%E7%BC%93%E5%86%B2%E5%99%A8"><span class="nav-number">3.2.</span> <span class="nav-text">数据总线缓冲器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%EF%BC%8F%E5%86%99%E6%8E%A7%E5%88%B6%E9%80%BB%E8%BE%91"><span class="nav-number">3.3.</span> <span class="nav-text">读／写控制逻辑</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%AD%97%E5%8F%8A%E7%8A%B6%E6%80%81%E5%AD%97"><span class="nav-number">4.</span> <span class="nav-text">控制字及状态字</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F%E9%80%89%E6%8B%A9%E6%8E%A7%E5%88%B6%E5%AD%97"><span class="nav-number">4.1.</span> <span class="nav-text">工作方式选择控制字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3C%E6%8C%89%E4%BD%8D%E7%BD%AE%E4%BD%8D%EF%BC%8F%E5%A4%8D%E4%BD%8D%E6%8E%A7%E5%88%B6%E5%AD%97"><span class="nav-number">4.2.</span> <span class="nav-text">端口C按位置位／复位控制字</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8255A%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="nav-number">5.</span> <span class="nav-text">8255A的工作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F0"><span class="nav-number">5.1.</span> <span class="nav-text">方式0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F1"><span class="nav-number">5.2.</span> <span class="nav-text">方式1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F1%E8%BE%93%E5%85%A5"><span class="nav-number">5.2.1.</span> <span class="nav-text">方式1输入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F1%E8%BE%93%E5%87%BA"><span class="nav-number">5.2.2.</span> <span class="nav-text">方式1输出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F2"><span class="nav-number">5.3.</span> <span class="nav-text">方式2</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="nav-number">6.</span> <span class="nav-text">练习题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%BE%E5%90%8E%E9%A2%98"><span class="nav-number">7.</span> <span class="nav-text">课后题</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Wyatex"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Wyatex</p>
+  <div class="site-description" itemprop="description">这里是我用来做笔记的网站哟~</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wyatex" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wyatex" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wyatex@qq.com" title="E-Mail → mailto:wyatex@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.microloong.me/" title="https:&#x2F;&#x2F;blog.microloong.me" rel="noopener" target="_blank">MicroLOONG</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%884%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Wyatex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wyatex`s blog">
+      <meta itemprop="description" content="这里是我用来做笔记的网站哟~">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="微机与接口技术笔记（4） | Wyatex`s blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          微机与接口技术笔记（4）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-11-21 10:33:44" itemprop="dateCreated datePublished" datetime="2020-11-21T10:33:44+08:00">2020-11-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-13 16:38:12" itemprop="dateModified" datetime="2022-06-13T16:38:12+08:00">2022-06-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>这章内容讲可编程并行接口8255A</p>
+<span id="more"></span>
+
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>8255A是Intel公司生产的通用可编程并行接口芯片,8255A采用40脚双列直插封装，单一+5V电源，全部输入&#x2F;输出与TTL电平兼容。</p>
+<p>它有三个输入&#x2F;输出端口：端口A、端口B、端口C。每个端口都可通过编程设定为输入端口或输出端口，但有各自不同的方式和特点。<strong>端口C可作为一个独立的端口使用，但通常是配合端口A和端口B的工作，为这两个端口的输入&#x2F;输出提供控制联络信号。</strong></p>
+<h1 id="芯片引脚"><a href="#芯片引脚" class="headerlink" title="芯片引脚"></a>芯片引脚</h1><p>8255A芯片有40根引脚：</p>
+<ol>
+<li>电源与地线2根：Vcc（26脚）、GND（7脚）。</li>
+<li>与外设相连的共24根。<ul>
+<li>PA7～PA0：端口A数据信号（8根）。</li>
+<li>PB7～PB0：端口B数据信号（8根）。</li>
+<li>PC7～PC0：端口C数据信号（8根）。</li>
+</ul>
+</li>
+<li>RESET(35脚)：复位信号,高电平有效。当RESET信号有效时,内部所有寄存器都被清零。同时,3个数据端口被自动设置为输入端口。</li>
+<li>D7～D0：三态双向数据线，在8086系统中，采用16位数据总线，D7～D0通常是接在16位数据总线的低8位上。</li>
+<li>CS（6脚）：片选信号，低电平有效。该信号来自译码器的输出，只有当CS有效时，读信号RD和写信WR号才对8255A有效。</li>
+<li>RD（5脚）：读信号，低电平有效。它控制从8255A读出数据或状态信息。</li>
+<li>WR（36脚）：写信号，低电平有效。它控制把数据或控制命令字写入8255A。</li>
+<li>A1、A0（8、9脚）：端口选择信号。8255A内部共有4个端口（即寄存器）：3个数据端口（端口A、端口B、端口C）和1个控制端口，当片选信号CS有效时，规定A1、A0为00、01、10、11时，分别选中端口A、端口B、端口C和控制端口。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>A1</th>
+<th>A0</th>
+<th>RD</th>
+<th>WR</th>
+<th>CS</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>端口A→数据总线</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>端口B→数据总线</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>端口C→数据总线</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>数据总线→端口A</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>数据总线→端口B</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>数据总线→端口C</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>数据总线→控制字寄存器</td>
+</tr>
+<tr>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>1</td>
+<td>数据总线为三态（高阻）</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>非法状态</td>
+</tr>
+<tr>
+<td>X</td>
+<td>X</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>数据总线为三态（高阻）</td>
+</tr>
+</tbody></table>
+<h1 id="内部结构"><a href="#内部结构" class="headerlink" title="内部结构"></a>内部结构</h1><p>8255A的内部结构包括四个部分：数据总线缓冲器、读写控制逻辑、A组控制器（包括端口A和端口C的上半部）和B组控制器（包括端口B和端口C的下半部）。 </p>
+
+
+<h2 id="A组和B组"><a href="#A组和B组" class="headerlink" title="A组和B组"></a>A组和B组</h2><p><strong>端口A和端口C的高4位（PC7～PC4）构成A组</strong>，由A组控制部件来对它进行控制；<strong>端口B和端口C的低4位（PC3～PC0）构成B组</strong>，由B组控制部件对它进行控制。这两个控制部件各有一个控制单元，接收来自数据总线送来的控制字，并根据控制字确定各端口的工作状态和工作方式。</p>
+<h2 id="数据总线缓冲器"><a href="#数据总线缓冲器" class="headerlink" title="数据总线缓冲器"></a>数据总线缓冲器</h2><p>数据总线缓冲器是一个双向三态的8位缓冲器，它与CPU系统数据总线相连，是8255A与CPU之间传输数据的必经之路。<strong>输入数据、输出数据、控制命令字都是通过数据总线缓冲器进行传送的</strong>。</p>
+<h2 id="读／写控制逻辑"><a href="#读／写控制逻辑" class="headerlink" title="读／写控制逻辑"></a>读／写控制逻辑</h2><p><strong>读／写控制逻辑接收来自CPU地址总线的信号和控制信号，并发出命令到A组和B组</strong>，把CPU发出的控制命令字或输出的数据通过数据总线缓冲器送到相应的端口，或者把外设的状态或输入的数据从相应的端口通过数据总线缓冲器送到CPU。</p>
+<p><strong>在微机80386以上的32位外部数据总线的系统中，则应将8255A的A1端与地址总线的A3相连，将8255A的A0端与地址总线A2相连，并使CPU访问8255A时地址总线的A1、A0两位总是为00。</strong></p>
+<h1 id="控制字及状态字"><a href="#控制字及状态字" class="headerlink" title="控制字及状态字"></a>控制字及状态字</h1><p><strong>可编程就是用指令的方法先对芯片进行初始化，设置芯片的端口是处于输入数据状态还是处于输出数据状态，以及每个端口的工作方式。要使8255A工作，必须把工作命令控制字写入8255A的控制字寄存器。</strong></p>
+<p>8255A共有两种控制字：</p>
+<ul>
+<li>工作方式选择控制字，可使8255A的3个数据端口工作在不同的方式。</li>
+<li>端口C按位置位&#x2F;复位控制字，可使C端口中的任何一位进行置位或复位。</li>
+</ul>
+<h2 id="工作方式选择控制字"><a href="#工作方式选择控制字" class="headerlink" title="工作方式选择控制字"></a>工作方式选择控制字</h2><p>8255A的3种基本工作方式：由方式选择控制字来决定。<br>方式0：基本的输入&#x2F;输出方式。<br>方式1：选通的输入&#x2F;输出方式。<br>方式2：双向的传输方式。</p>
+<ul>
+<li>端口A可以工作于方式0、方式1、方式2共三种工作方式，可以作为输入端口或输出端口。</li>
+<li>端口B可以工作于方式0、方式1两种工作方式，可以作为输入端口或输出端口。</li>
+<li>端口C分成高4位(PC7～PC4)和低4位(PC3～PC0)，可分别设置成输入端口或输出端口；端口C的高4位与端口A配合组成A组，端口C的低4位与端口B配合组成B组。</li>
+<li><strong>D7＝1（特征位），表明是设定工作方式选择控制字；D7＝0为端口C按位置位／复位控制字</strong>。</li>
+</ul>
+<p>通过对8255A工作方式控制字的设置可将PA、PB和PC 3个端口分别定义为3种不同工作方式的组合，工作方式选择控制字格式及各位含义如图所示。</p>
+
+
+<p>在使用8255A芯片前，必须先对其进行初始化。<strong>初始化的程序很简单，只要CPU执行一条输出指令，把控制字写入控制寄存器就可以了</strong>。</p>
+<blockquote>
+<p>例题： 按下述要求对8255A进行初始化。要求A口设定为输出数据，工作方式为方式0；B口设定为输入数据，工作方式为方式1；C口设定为高四位输入，低四位输出。(地址为200H~203H)</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MOV  DX , 203H   ;8255控制口地址送DX</span><br><span class="line">MOV  AL ,8EH     ;写工作方式控制字10001110B</span><br><span class="line">OUT  DX , AL     ;控制字送到控制口</span><br></pre></td></tr></table></figure>
+
+<h2 id="端口C按位置位／复位控制字"><a href="#端口C按位置位／复位控制字" class="headerlink" title="端口C按位置位／复位控制字"></a>端口C按位置位／复位控制字</h2><p>端口C按位置位／复位控制字可实现对端口C的每一位进行控制。置位是使该位为1，复位是使该位为0。</p>
+<ul>
+<li>D7位是特征位。D7＝1，为工作方式控制字；D7＝0为端口C按位置位／复位控制字。</li>
+<li>D6、D5、D4三位无意义，可为任意值。</li>
+<li>D3、D2、D1按二进制编码，用来选择对端口C的哪一位进行操作。选择的位将由D0位规定是置位(D0&#x3D;1)还是复位(D0&#x3D;0)。</li>
+<li>D0位用来选择对所选定的端口C的哪一位是置位(D0&#x3D;1)还是复位(D0&#x3D;0)。</li>
+</ul>
+
+
+<p><strong>需要注意如下三点</strong>：</p>
+<ul>
+<li><strong>端口C按位置位／复位控制字，必须写入控制寄存器，而不是写入端口C</strong>。</li>
+<li>当C端口被设置为输出时，端口C按位置位／复位控制字，<strong>可以对C口的某一根端口线按位操作</strong>，也就是说，使C口某一根端口线输出高低电平，而不影响其他端口线输出高低电平。</li>
+<li>当A端口工作在方式1或方式2，B端口工作在方式1时候，端口C按位置位／复位控制字，可以使内部的“中断允许触发器” 置“1”或置“0”</li>
+</ul>
+<blockquote>
+<p>例题：要求通过8255A芯片C口的PC2位产生一个方脉冲信号。（地址为200H~203H)</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">MOV    DX,203H         ;控制口地址送DX</span><br><span class="line">AA:    MOV   AL,05H    ;对PC2置位的控制字00000101B</span><br><span class="line">OUT    DX,AL</span><br><span class="line">CALL   DELAY1          ;调用延时程序（省略）</span><br><span class="line">MOV    AL,04H          ;对PC2复位的控制字00000100B</span><br><span class="line">OUT    DX,AL</span><br><span class="line">CALL   DELAY2          ;调用延时程序（省略）</span><br><span class="line">JMP    AA</span><br></pre></td></tr></table></figure>
+
+<h1 id="8255A的工作方式"><a href="#8255A的工作方式" class="headerlink" title="8255A的工作方式"></a>8255A的工作方式</h1><p>8255A有3种工作方式，可以通过编程来进行设置。</p>
+<ul>
+<li>方式0为简单I&#x2F;O，查询方式，端口A、端口B、端口C均可使用。</li>
+<li>方式1为选通I&#x2F;O，中断方式，端口A、端口B可以使用。</li>
+<li>方式2为双向I&#x2F;O，中断方式，只有端口A可以使用。</li>
+</ul>
+<p>工作方式的选择可通过向控制端口写入控制字来实现。在不同的工作方式下，8255A的3个I&#x2F;O端口的排列如图所示。</p>
+
+
+<h2 id="方式0"><a href="#方式0" class="headerlink" title="方式0"></a>方式0</h2><p>方式0也叫基本输入&#x2F;输出方式。一种方式，不需要应答联络信号,端口A、端口B和端口C的高4位及低4位都可以作为输入或输出端口。</p>
+<blockquote>
+<p>例: 8255A的PB口为开关量输入，PA口为开关量输出，要求能随时将PB口的开关状态通过PA口的发光二极管显示出来，试编写程序。<br>开关状态显示程序清单如下所示。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">CODE    SEGMENT</span><br><span class="line">        ASSUME  CS:CODE </span><br><span class="line">START:</span><br><span class="line">        MOV DX,203H    ;8255A控制口地址</span><br><span class="line">        MOV AL,82H     ;控制字10000010B （PA口输出,PB口输入，方式0）</span><br><span class="line">        OUT DX,AL </span><br><span class="line">BG:     MOV DX,201H    ;PB口地址</span><br><span class="line">        IN  AL,DX      ;读开关状态</span><br><span class="line">        MOV DX,202H    ;PA口地址</span><br><span class="line">        OUT DX,AL      ;输出开关状态</span><br><span class="line">        JMP BG         ;循环</span><br><span class="line">CODE    ENDS</span><br><span class="line">        END START   </span><br></pre></td></tr></table></figure>
+
+<h2 id="方式1"><a href="#方式1" class="headerlink" title="方式1"></a>方式1</h2><p>方式1也叫选通的输入&#x2F;输方式。</p>
+<h3 id="方式1输入"><a href="#方式1输入" class="headerlink" title="方式1输入"></a>方式1输入</h3><p>当端口A和端口B工作于“方式1输入”时，端口A和端口B可分别作为独立的输入端口，必须有端口C配合端口A和端口B工作。<strong>端口C的PC3<del>PC5用作端口A的应答联络线，PC0</del>PC2则用作端口B的应答联络线，PC6和PC7仍可作为基本输入&#x2F;输出方式即方式0，可通过编程设置为输入或输出。</strong></p>
+
+
+<h3 id="方式1输出"><a href="#方式1输出" class="headerlink" title="方式1输出"></a>方式1输出</h3><p>当端口A和端口B工作于方式1输出时，工作方式选择控制字与端口C控制信号的定义如图所示。</p>
+
+
+<h2 id="方式2"><a href="#方式2" class="headerlink" title="方式2"></a>方式2</h2><p>方式2又称双向传输方式，<strong>只有端口A才能工作于方式2。在方式2，外设既可以在8位数据线上往CPU发送数据，又可以从CPU接收数据。</strong><br>当端口A工作于方式2时，端口C的PC­7～PC3用来提供相应的控制和状态信号，配合端口A的工作。此时端口B以及端口C的PC2­～PC­­0­­­则可工作于方式0或方式1，如果端口B工作于方式0时，端口C的PC2～PC0­可用作数据输入&#x2F;输出；如果端口B工作于方式1时，端口C的PC2～PC0­用来为端口B提供控制和状态信号。</p>
+
+
+<blockquote>
+<p>方式2是一种双向传输工作方式。如果一个并行外部设备既可以作为输入设备，又可以作为输出设备，并且输入输出动作不会同时进行，那么，将这个外部设备的8255A的端口A相连，并让它工作于方式2就很合适。例如，软盘系统就是这样一种外设。</p>
+</blockquote>
+<h1 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h1><ol>
+<li>8255A能实现双向传送功能的工作方式为 <code>方式2</code> ？</li>
+<li>8255A在方式0工作时，端口A、B和C的输入&#x2F;输出可以有 <code>16</code> 种组合。</li>
+<li>在8255A中，可以进行按位置位&#x2F;复位的端口是 <code>端口C</code> 。</li>
+<li>8255A控制字的最高位D7&#x3D; <code>1</code> 时，表示设置工作方式选择控制字。</li>
+</ol>
+<h1 id="课后题"><a href="#课后题" class="headerlink" title="课后题"></a>课后题</h1><p><strong>8255A有哪几种工作方式？有何差别？</strong></p>
+<p>答：8255A有三种工作方式：</p>
+<ol>
+<li>方式0为简单I&#x2F;O，查询方式</li>
+<li>方式1为选通I&#x2F;O，中断方式</li>
+<li>方式2为双向I&#x2F;O，中断方式</li>
+</ol>
+<p>差别：方式0不需要应答联络信号，端口A，B，C均可使用；方式1的端口A、B仍作为两个独立的8位I&#x2F;O通道可单独连接外设，而端口C则需要有6位（两个3位）分别作为A、B口的应答联络线，其余2位仍可作为基本I&#x2F;O即方式0；方式2又称为双向传输方式，只有端口A才能工作与方式2，外设既可以往CPU发送数据，又可以从CPU接受数据，即该外设可兼做输入和输出设备</p>
+<p><strong>若8255A的端口A定义为方式0、输入，端口B定义为方式1、输出，端口C的上半部定义为方式0、输出，试编写初始化程序（端口地址为200H~203H）。</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MOV     DX,203H   ; 8255控制口地址送DX</span><br><span class="line">MOV     AL,94H    ; 写工作方式控制字： 1001 0400B</span><br><span class="line">OUT     DX,AL     ; 控制字送到控制口</span><br></pre></td></tr></table></figure>
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Wyatex
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%884%EF%BC%89/" title="微机与接口技术笔记（4）">https://qghost.gitee.io/学习笔记/微机与接口技术笔记（4）/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+              <a href="/tags/%E5%BE%AE%E6%9C%BA/" rel="tag"># 微机</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SQL-%E8%AF%AD%E6%B3%95%E9%80%9F%E6%88%90%E6%89%8B%E5%86%8C/" rel="prev" title="SQL 语法速成手册">
+                  <i class="fa fa-chevron-left"></i> SQL 语法速成手册
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/" rel="next" title="微机与接口技术笔记（5）">
+                  微机与接口技术笔记（5） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wyatex</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>

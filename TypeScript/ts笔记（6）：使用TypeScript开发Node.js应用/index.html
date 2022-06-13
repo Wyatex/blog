@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"qghost.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="下面讲解项目经历的常见 TypeScript 错误汇总分析、如何使用 TypeScript 开发 Node.js 应用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ts笔记（6）：常见TypeScript错误、开发Node.js应用">
+<meta property="og:url" content="https://qghost.gitee.io/TypeScript/ts%E7%AC%94%E8%AE%B0%EF%BC%886%EF%BC%89%EF%BC%9A%E4%BD%BF%E7%94%A8TypeScript%E5%BC%80%E5%8F%91Node.js%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="Wyatex&#96;s blog">
+<meta property="og:description" content="下面讲解项目经历的常见 TypeScript 错误汇总分析、如何使用 TypeScript 开发 Node.js 应用">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-15T07:26:58.000Z">
+<meta property="article:modified_time" content="2022-06-13T08:38:12.876Z">
+<meta property="article:author" content="Wyatex">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="TypeScript">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://qghost.gitee.io/TypeScript/ts%E7%AC%94%E8%AE%B0%EF%BC%886%EF%BC%89%EF%BC%9A%E4%BD%BF%E7%94%A8TypeScript%E5%BC%80%E5%8F%91Node.js%E5%BA%94%E7%94%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://qghost.gitee.io/TypeScript/ts%E7%AC%94%E8%AE%B0%EF%BC%886%EF%BC%89%EF%BC%9A%E4%BD%BF%E7%94%A8TypeScript%E5%BC%80%E5%8F%91Node.js%E5%BA%94%E7%94%A8/","path":"TypeScript/ts笔记（6）：使用TypeScript开发Node.js应用/","title":"ts笔记（6）：常见TypeScript错误、开发Node.js应用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ts笔记（6）：常见TypeScript错误、开发Node.js应用 | Wyatex`s blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Wyatex`s blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">67</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">18</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">111</span></a></li><li class="menu-item menu-item-编程"><a href="/programming/" rel="section"><i class="fa fa-book fa-fw"></i>编程</a></li><li class="menu-item menu-item-干货"><a href="/resources/" rel="section"><i class="fa fa-paperclip fa-fw"></i>干货</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81-TypeScript-%E9%94%99%E8%AF%AF%E6%B1%87%E6%80%BB%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">常见 TypeScript 错误汇总分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF"><span class="nav-number">1.1.</span> <span class="nav-text">常见错误</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TS2456%EF%BC%9A%E7%94%B1%E4%BA%8E%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8%E4%BA%86%E8%87%AA%E8%BA%AB%E9%80%A0%E6%88%90%E7%9A%84-TS2456-%E7%B1%BB%E5%9E%8B%E9%94%99%E8%AF%AF"><span class="nav-number">1.1.1.</span> <span class="nav-text">TS2456：由于类型别名循环引用了自身造成的 TS2456 类型错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TS2554%EF%BC%9A%E5%BD%A2%E5%8F%82%E5%92%8C%E5%AE%9E%E5%8F%82%E4%B8%AA%E6%95%B0%E4%B8%8D%E5%8C%B9%E9%85%8D"><span class="nav-number">1.1.2.</span> <span class="nav-text">TS2554：形参和实参个数不匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TS1169%EF%BC%9A%E5%9C%A8%E6%8E%A5%E5%8F%A3%E7%B1%BB%E5%9E%8B%E5%AE%9A%E4%B9%89%E4%B8%AD%E7%94%B1%E4%BA%8E%E4%BD%BF%E7%94%A8%E4%BA%86%E9%9D%9E%E5%AD%97%E9%9D%A2%E9%87%8F%E6%88%96%E8%80%85%E9%9D%9E%E5%94%AF%E4%B8%80-symbol-%E7%B1%BB%E5%9E%8B%E4%BD%9C%E4%B8%BA%E5%B1%9E%E6%80%A7%E5%90%8D%E9%80%A0%E6%88%90"><span class="nav-number">1.1.3.</span> <span class="nav-text">TS1169：在接口类型定义中由于使用了非字面量或者非唯一 symbol 类型作为属性名造成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TS2345%EF%BC%9A%E5%9C%A8%E4%BC%A0%E5%8F%82%E6%97%B6%E7%94%B1%E4%BA%8E%E7%B1%BB%E5%9E%8B%E4%B8%8D%E5%85%BC%E5%AE%B9%E9%80%A0%E6%88%90"><span class="nav-number">1.1.4.</span> <span class="nav-text">TS2345：在传参时由于类型不兼容造成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TS2589%EF%BC%9A%E7%94%B1%E6%B3%9B%E5%9E%8B%E5%AE%9E%E4%BE%8B%E5%8C%96%E9%80%92%E5%BD%92%E5%B5%8C%E5%A5%97%E8%BF%87%E6%B7%B1%E9%80%A0%E6%88%90%E7%9A%84"><span class="nav-number">1.1.5.</span> <span class="nav-text">TS2589：由泛型实例化递归嵌套过深造成的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TS2322"><span class="nav-number">1.1.6.</span> <span class="nav-text">TS2322</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TS2352%EF%BC%9A"><span class="nav-number">1.1.7.</span> <span class="nav-text">TS2352：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95"><span class="nav-number">1.2.</span> <span class="nav-text">单元测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E4%BD%BF%E7%94%A8-TypeScript-%E5%BC%80%E5%8F%91-Node-js-%E5%BA%94%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">手把手教你使用 TypeScript 开发 Node.js 应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91-NPM-%E6%A8%A1%E5%9D%97"><span class="nav-number">2.1.</span> <span class="nav-text">开发 NPM 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E6%A8%A1%E5%9D%97"><span class="nav-number">2.1.1.</span> <span class="nav-text">初始化模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96-tsconfig"><span class="nav-number">2.1.2.</span> <span class="nav-text">初始化 tsconfig</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E8%AE%BE%E8%AE%A1%E5%92%8C%E7%BC%96%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.1.3.</span> <span class="nav-text">接口设计和编码实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95-1"><span class="nav-number">2.2.</span> <span class="nav-text">单元测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E8%B7%AF%E5%BE%84%E5%88%AB%E5%90%8D"><span class="nav-number">2.3.</span> <span class="nav-text">处理路径别名</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Wyatex"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Wyatex</p>
+  <div class="site-description" itemprop="description">这里是我用来做笔记的网站哟~</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wyatex" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wyatex" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wyatex@qq.com" title="E-Mail → mailto:wyatex@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.microloong.me/" title="https:&#x2F;&#x2F;blog.microloong.me" rel="noopener" target="_blank">MicroLOONG</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://qghost.gitee.io/TypeScript/ts%E7%AC%94%E8%AE%B0%EF%BC%886%EF%BC%89%EF%BC%9A%E4%BD%BF%E7%94%A8TypeScript%E5%BC%80%E5%8F%91Node.js%E5%BA%94%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Wyatex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wyatex`s blog">
+      <meta itemprop="description" content="这里是我用来做笔记的网站哟~">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ts笔记（6）：常见TypeScript错误、开发Node.js应用 | Wyatex`s blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ts笔记（6）：常见TypeScript错误、开发Node.js应用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-15 15:26:58" itemprop="dateCreated datePublished" datetime="2021-11-15T15:26:58+08:00">2021-11-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-13 16:38:12" itemprop="dateModified" datetime="2022-06-13T16:38:12+08:00">2022-06-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/TypeScript/" itemprop="url" rel="index"><span itemprop="name">TypeScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>下面讲解项目经历的常见 TypeScript 错误汇总分析、如何使用 TypeScript 开发 Node.js 应用</p>
+<span id="more"></span>
+
+<h1 id="常见-TypeScript-错误汇总分析"><a href="#常见-TypeScript-错误汇总分析" class="headerlink" title="常见 TypeScript 错误汇总分析"></a>常见 TypeScript 错误汇总分析</h1><h2 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h2><p>ypeScript 错误信息由错误码和详细信息组成。其中，错误码是以“TS”开头 + 数字（一般是 4 位数字）结尾这样的格式组成的字符串，用来作为特定类型错误的专属代号。如果你想查看所有的错误信息和错误码，可以点击 <a target="_blank" rel="noopener" href="https://github.com/Microsoft/TypeScript/blob/main/src/compiler/diagnosticMessages.json">TypeScript 源码仓库</a>。当然，随着 TypeScript 版本的更新，也会逐渐增加更多新的类型错误。</p>
+<h3 id="TS2456：由于类型别名循环引用了自身造成的-TS2456-类型错误"><a href="#TS2456：由于类型别名循环引用了自身造成的-TS2456-类型错误" class="headerlink" title="TS2456：由于类型别名循环引用了自身造成的 TS2456 类型错误"></a>TS2456：由于类型别名循环引用了自身造成的 TS2456 类型错误</h3><p>类似函数循环调用自己，如果没有正确的终止条件，就会一直处于无限循环的状态，比如：<code>type T = Readonly&lt;T&gt;;</code></p>
+<p>当然，如果在类型别名的定义中设定了正确的终止条件，我们就可以使用循环引用的特殊数据结构，如下示例：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">JSON</span> = <span class="built_in">string</span> | <span class="built_in">number</span> | <span class="built_in">boolean</span> | <span class="literal">null</span> | <span class="title class_">JSON</span>[] | &#123; [<span class="attr">key</span>: <span class="built_in">string</span>]: <span class="title class_">JSON</span> &#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">json1</span>: <span class="title class_">JSON</span> = <span class="string">&#x27;json&#x27;</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">json2</span>: <span class="title class_">JSON</span> = [<span class="string">&#x27;str&#x27;</span>, <span class="number">1</span>, <span class="literal">true</span>, <span class="literal">null</span>]</span><br><span class="line"><span class="keyword">const</span> <span class="attr">json3</span>: <span class="title class_">JSON</span> = &#123; <span class="attr">key</span>: <span class="string">&#x27;value&#x27;</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：第 2 个例子只能在 TypeScript 3.7 以上的版本使用，如果版本小于 3.7 仍会提示 TS2456 错误。</p>
+</blockquote>
+<h3 id="TS2554：形参和实参个数不匹配"><a href="#TS2554：形参和实参个数不匹配" class="headerlink" title="TS2554：形参和实参个数不匹配"></a>TS2554：形参和实参个数不匹配</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">toString</span>(<span class="params">x: <span class="built_in">number</span> | <span class="literal">undefined</span></span>): <span class="built_in">string</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (x === <span class="literal">undefined</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> x.<span class="title function_">toString</span>()</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">toString</span>() <span class="comment">// TS2554: Expected 1 arguments, but got 0.</span></span><br><span class="line"><span class="title function_">toString</span>(<span class="literal">undefined</span>)</span><br><span class="line"><span class="title function_">toString</span>(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>如果在编程的过程中函数的参数是可选的，最好使用可选参数的语法:</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">toString</span>(<span class="params">x?: <span class="built_in">number</span></span>): <span class="built_in">string</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (x === <span class="literal">undefined</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> x.<span class="title function_">toString</span>()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">toString</span>(<span class="params">x = <span class="string">&#x27;&#x27;</span></span>): <span class="built_in">string</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> x.<span class="title function_">toString</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>值得一提的是，在 TypeScript 4.1 大版本的更新中，Promise 构造的 resolve 参数不再是默认可选的了，所以如以下示例第 2 行所示，在未指定入参的情况下，调用 resolve 会提示类型错误 （注意：为了以示区分，官方使用了 TS2794 错误码指代这个错误）。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">resolve</span>() <span class="comment">// TS2794: Expected 1 arguments, but got 0. Did you forget to include &#x27;void&#x27; in your type argument to &#x27;Promise&#x27;?</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 如果我们不需要参数，只需要给 Promise 的泛型参数传入 void 即可</span></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Promise</span>&lt;<span class="built_in">void</span>&gt;(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">resolve</span>()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="TS1169：在接口类型定义中由于使用了非字面量或者非唯一-symbol-类型作为属性名造成"><a href="#TS1169：在接口类型定义中由于使用了非字面量或者非唯一-symbol-类型作为属性名造成" class="headerlink" title="TS1169：在接口类型定义中由于使用了非字面量或者非唯一 symbol 类型作为属性名造成"></a>TS1169：在接口类型定义中由于使用了非字面量或者非唯一 symbol 类型作为属性名造成</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">interface Obj &#123;</span><br><span class="line">  [key in &#x27;id&#x27; | &#x27;name&#x27;]: any // TS1169: A computed property name in an interface must refer to an expression whose type is a literal type or a &#x27;unique symbol&#x27; type.</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为 interface 类型的属性必须是字面量类型(string、number) 或者是 unique symbol 类型</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">symbol</span>: unique <span class="built_in">symbol</span> = <span class="title class_">Symbol</span>()</span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Obj</span> &#123;</span><br><span class="line">  [<span class="attr">key</span>: <span class="built_in">string</span>]: <span class="built_in">any</span></span><br><span class="line">  [<span class="attr">key</span>: <span class="built_in">number</span>]: <span class="built_in">any</span></span><br><span class="line">  [<span class="built_in">symbol</span>]: <span class="built_in">any</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是，在 type 关键字声明的类型别名中，我们却可以使用映射类型定义属性，如下示例：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Obj</span> = &#123;</span><br><span class="line">  <span class="comment">// 定义了一个包含 id 和 name 属性的类型别名 Obj</span></span><br><span class="line">  [key <span class="keyword">in</span> <span class="string">&#x27;id&#x27;</span> | <span class="string">&#x27;name&#x27;</span>]: <span class="built_in">any</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="TS2345：在传参时由于类型不兼容造成"><a href="#TS2345：在传参时由于类型不兼容造成" class="headerlink" title="TS2345：在传参时由于类型不兼容造成"></a>TS2345：在传参时由于类型不兼容造成</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> A &#123;</span><br><span class="line">  x = <span class="string">&#x27;x&#x27;</span>,</span><br><span class="line">  y = <span class="string">&#x27;y&#x27;</span>,</span><br><span class="line">  z = <span class="string">&#x27;z&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">enum</span> B &#123;</span><br><span class="line">  x = <span class="string">&#x27;x&#x27;</span>,</span><br><span class="line">  y = <span class="string">&#x27;y&#x27;</span>,</span><br><span class="line">  z = <span class="string">&#x27;z&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params">val: A</span>) &#123;&#125;</span><br><span class="line"><span class="title function_">fn</span>(B.<span class="property">x</span>) <span class="comment">// TS2345: Argument of type &#x27;B.x&#x27; is not assignable to parameter of type &#x27;A&#x27;.</span></span><br></pre></td></tr></table></figure>
+
+<p>这是因为枚举是在运行时真正存在的对象，因此 TypeScript 并不会判断两个枚举是否可以互相兼容。此时解决这个错误的方式也很简单，我们只需要让这两个枚举类型互相兼容就行，比如使用类型断言绕过 TypeScript 的类型检查:</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params">val: A</span>) &#123;&#125;</span><br><span class="line"><span class="title function_">fn</span>(B.<span class="property">x</span> <span class="keyword">as</span> <span class="built_in">unknown</span> <span class="keyword">as</span> A)</span><br></pre></td></tr></table></figure>
+
+<h3 id="TS2589：由泛型实例化递归嵌套过深造成的"><a href="#TS2589：由泛型实例化递归嵌套过深造成的" class="headerlink" title="TS2589：由泛型实例化递归嵌套过深造成的"></a>TS2589：由泛型实例化递归嵌套过深造成的</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">RepeatX</span>&lt;N <span class="keyword">extends</span> <span class="built_in">number</span>, T <span class="keyword">extends</span> <span class="built_in">any</span>[] = []&gt; = T[<span class="string">&#x27;length&#x27;</span>] <span class="keyword">extends</span> N</span><br><span class="line">  ? T</span><br><span class="line">  : <span class="title class_">RepeatX</span>&lt;N, [...T, <span class="string">&#x27;X&#x27;</span>]&gt;</span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">T1</span> = <span class="title class_">RepeatX</span>&lt;<span class="number">5</span>&gt; <span class="comment">// =&gt; [&quot;X&quot;, &quot;X&quot;, &quot;X&quot;, &quot;X&quot;, &quot;X&quot;]</span></span><br><span class="line"><span class="comment">// TS2589: Type instantiation is excessively deep and possibly infinite.</span></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">T2</span> = <span class="title class_">RepeatX</span>&lt;<span class="number">50</span>&gt; <span class="comment">// =&gt; any</span></span><br></pre></td></tr></table></figure>
+
+<p>因为 TypeScript 在处理递归类型的时候，最多实例化 50 层，如果超出了递归层数的限制，TypeScript 便不会继续实例化，并且类型会变为 top 类型 any。对于上面的错误，我们使用 @ts-ignore 注释忽略即可。</p>
+<h3 id="TS2322"><a href="#TS2322" class="headerlink" title="TS2322"></a>TS2322</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">CSSProperties</span> &#123;</span><br><span class="line">  <span class="attr">display</span>: <span class="string">&#x27;block&#x27;</span> | <span class="string">&#x27;flex&#x27;</span> | <span class="string">&#x27;grid&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> style = &#123;</span><br><span class="line">  <span class="attr">display</span>: <span class="string">&#x27;flex&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// TS2322: Type &#x27;&#123; display: string; &#125;&#x27; is not assignable to type &#x27;CSSProperties&#x27;.</span></span><br><span class="line"><span class="comment">//  Types of property &#x27;display&#x27; are incompatible.</span></span><br><span class="line"><span class="comment">//   Type &#x27;string&#x27; is not assignable to type &#x27;&quot;block&quot; | &quot;flex&quot; | &quot;grid&quot;&#x27;.</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">cssStyle</span>: <span class="title class_">CSSProperties</span> = style</span><br></pre></td></tr></table></figure>
+
+<p>两种解决这个错误的方法</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法 1</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">style</span>: <span class="title class_">CSSProperties</span> = &#123;</span><br><span class="line">  <span class="attr">display</span>: <span class="string">&#x27;flex&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 方法 2</span></span><br><span class="line"><span class="keyword">const</span> style = &#123;</span><br><span class="line">  <span class="attr">display</span>: <span class="string">&#x27;flex&#x27;</span> <span class="keyword">as</span> <span class="string">&#x27;flex&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// typeof style = &#123; display: &#x27;flex&#x27; &#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="TS2352："><a href="#TS2352：" class="headerlink" title="TS2352："></a>TS2352：</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="attr">x</span>: <span class="built_in">string</span> | <span class="literal">undefined</span></span><br><span class="line"><span class="keyword">if</span> (x) &#123;</span><br><span class="line">  x.<span class="title function_">trim</span>()</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    x.<span class="title function_">trim</span>() <span class="comment">// TS2532: Object is possibly &#x27;undefined&#x27;.</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">  <span class="title function_">greet</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> <span class="attr">person</span>: <span class="title class_">Person</span> | <span class="built_in">string</span></span><br><span class="line"><span class="keyword">if</span> (person <span class="keyword">instanceof</span> <span class="title class_">Person</span>) &#123;</span><br><span class="line">  person.<span class="title function_">greet</span>()</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">innerFn</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    person.<span class="title function_">greet</span>() <span class="comment">// TS2532: Object is possibly &#x27;undefined&#x27;.</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>针对这种错误的处理方式也很简单，将类型收缩的代码放入函数体内部即可，如下示例：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="attr">x</span>: <span class="built_in">string</span> | <span class="literal">undefined</span></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (x) &#123;</span><br><span class="line">    x.<span class="title function_">trim</span>() <span class="comment">// OK</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">  <span class="title function_">greet</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> <span class="attr">person</span>: <span class="title class_">Person</span> | <span class="literal">undefined</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">innerFn</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (person <span class="keyword">instanceof</span> <span class="title class_">Person</span>) &#123;</span><br><span class="line">    person.<span class="title function_">greet</span>() <span class="comment">// Ok</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h2><p>自 TS 3.9 版本起，官方支持了与 @ts-ignore 注释相反功能的 @ts-expect-error 注释。使用 @ts-expect-error 注释，我们可以标记代码中应该有类型错误的部分。与 ts-ignore 不同的是，如果下一行代码中没有错误，则会提示 TS2578 的错误，如下示例：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// @ts-expect-error</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">x</span>: <span class="built_in">number</span> = <span class="string">&#x27;42&#x27;</span></span><br><span class="line"><span class="comment">// TS2578: Unused &#x27;@ts-expect-error&#x27; directive.</span></span><br><span class="line"><span class="comment">// @ts-expect-error</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">y</span>: <span class="built_in">number</span> = <span class="number">42</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>备注：@ts-expect-error 注释命令在编写预期失败的单元测试中很有用处。</p>
+</blockquote>
+<h1 id="手把手教你使用-TypeScript-开发-Node-js-应用"><a href="#手把手教你使用-TypeScript-开发-Node-js-应用" class="headerlink" title="手把手教你使用 TypeScript 开发 Node.js 应用"></a>手把手教你使用 TypeScript 开发 Node.js 应用</h1><h2 id="开发-NPM-模块"><a href="#开发-NPM-模块" class="headerlink" title="开发 NPM 模块"></a>开发 NPM 模块</h2><p>在开发阶段，我们使用 ts-node 直接运行 TypeScript 源码就行。构建时，我们使用官方转译工具 tsc 将 TypeScript 源码转译为 JavaScript，并使用 TypeScript + Jest 做单元测试。</p>
+<h3 id="初始化模块"><a href="#初始化模块" class="headerlink" title="初始化模块"></a>初始化模块</h3><p>执行“npm init”命令初始化 NPM 模块。通过命令行工具或者 IDE 创建 src 目录用来存放所有的 TypeScript 源码。TypeScript 转译为 JavaScript 后，lib 目录一般不需要手动创建，因为转译工具会自动创建，此时我们只需要修改 tsconfig.json 中相应的配置即可。此外，我们还需要按照如下命令手动创建单元测试文件目录 <code>__tests__</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir src; // 创建放 TypeScript 源码的目录</span><br><span class="line">touch src/cli.ts // CLI 命令入口文件</span><br><span class="line">touch src/http-serve.ts // CLI 命令入口文件</span><br><span class="line">mkdir lib; // 转译工具自动创建放 JavaScript 代码的目录</span><br><span class="line">mkdir __tests__; // 单元测试文件目录</span><br></pre></td></tr></table></figure>
+
+<p>接下来我们可以按照如下命令先行安装项目需要的基本依赖。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install typescript -D;</span><br><span class="line">npm install ts-node -D;</span><br><span class="line">npm install jest@24 -D;</span><br><span class="line">npm install ts-jest@24 -D;</span><br><span class="line">npm install @types/jest -D;</span><br></pre></td></tr></table></figure>
+
+<p>安装完依赖后，我们需要把模块的 main&#x2F;bin 等参数、start&#x2F;build&#x2F;test 等命令写入 package.json 中，如下代码所示：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="attr">&quot;bin&quot;</span><span class="punctuation">:</span> <span class="string">&quot;lib/bin.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;main&quot;</span><span class="punctuation">:</span> <span class="string">&quot;lib/http-serve.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;files&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;lib&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="string">&quot;tsc -p tsconfig.prod.json&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;start&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ts-node src/cli.ts&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;test&quot;</span><span class="punctuation">:</span> <span class="string">&quot;jest --all&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  ...</span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="初始化-tsconfig"><a href="#初始化-tsconfig" class="headerlink" title="初始化 tsconfig"></a>初始化 tsconfig</h3><p>如果我们已经安装了全局的 TypeScript，那么就可以直接使用全局的 tsc 命令初始化。</p>
+<p>当然，我们也可以直接使用当前模块目录下安装的 TypeScript 来初始化 tsconfig 配置。这里我推荐全局安装 npx，可以更方便地调用安装在当前目录下的各种 CLI 工具，如下代码所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tsc --init; // 使用全局</span><br><span class="line"></span><br><span class="line">npm install npx -g; // 安装 npx</span><br><span class="line">npx tsc --init; // 或者使用 npx 调用当前目录下 node_modules 目录里安装的 tsc 版本</span><br></pre></td></tr></table></figure>
+
+<p>此外，一般我们会把 target 参数设置为 es5，module 参数设置为 commonjs，这样转译后模块的代码和格式就可以兼容较低版本的 Node.js 了。然后，我们需要把 tsc 转译代码的目标目录 outDir 指定为 “.&#x2F;lib”。</p>
+<p>除了构建行为相关的配置之外，我们还需要按照如下命令将 esModuleInterop 配置为 true，以便在类型检测层面兼容 CommonJS 和 ES 模块的引用关系，最终适用于 Node.js 开发的 tsconfig。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;compilerOptions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;target&quot;</span><span class="punctuation">:</span> <span class="string">&quot;es5&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;module&quot;</span><span class="punctuation">:</span> <span class="string">&quot;commonjs&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;declaration&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;sourceMap&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;outDir&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./lib&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;rootDir&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./src&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;strict&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;esModuleInterop&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;skipLibCheck&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;forceConsistentCasingInFileNames&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>下面我们需要手动创建一个 tsconfig.prod.json，告诉 tsc 在转译源码时忽略 <code>__tests__</code> 目录。当然，我们也可以根据实际情况把其他文件、目录添加到 exclude 配置中，如下代码所示：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;extends&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./tsconfig.json&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;exclude&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;__tests__&quot;</span><span class="punctuation">,</span> <span class="string">&quot;lib&quot;</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>出于统一和可控性考虑，我们可以将通用的 tsconfig 配置抽离为单独的 NPM 或直接使用第三方封装的配置，再通过 extends 参数进行复用，比如可以安装<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/@tsconfig/node10%E7%AD%89%EF%BC%8C%E5%9C%A8%E5%BD%93%E5%89%8D%E6%A8%A1%E5%9D%97%E7%9A%84">https://www.npmjs.com/package/@tsconfig/node10等，在当前模块的</a> tsconfig.json 中，我们只需保留路径相关的配置即可，其他配置可以继承自 node_modules 中安装的 tsconfig 模块，如下代码所示：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;extends&quot;</span><span class="punctuation">:</span> <span class="string">&quot;@tsconfig/node10&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;compilerOptions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;baseUrl&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;outDir&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./lib&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>接下来，我们需要使用 Node.js 内置的 http 模块和第三方 ecstatic、commander 模块实现 http-serve 静态文件服务器。</p>
+<h3 id="接口设计和编码实现"><a href="#接口设计和编码实现" class="headerlink" title="接口设计和编码实现"></a>接口设计和编码实现</h3><p>首先，我们需要安装以下相关依赖</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install @types/node -D;</span><br><span class="line">npm install commander -S;</span><br><span class="line">npm install ecstatic -S;</span><br></pre></td></tr></table></figure>
+
+<p>不幸的是，ecstatic 并不是一个对 TypeScript 友好的模块，因为它没有内置类型声明文件，也没有第三方贡献的 @types&#x2F;ecstatic 类型声明模块。因此，我们需要在项目根目录下新建一个 types.d.ts 用来补齐缺失的类型声明，如下代码所示：</p>
+<figure class="highlight ts"><figcaption><span>types.d.ts</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span> <span class="variable language_">module</span> <span class="string">&#x27;ecstatic&#x27;</span> &#123;</span><br><span class="line">  <span class="keyword">export</span> <span class="keyword">default</span> (options?: &#123;</span><br><span class="line">    root?: <span class="built_in">string</span></span><br><span class="line">    baseDir?: <span class="built_in">string</span></span><br><span class="line">    autoIndex?: <span class="built_in">boolean</span></span><br><span class="line">    showDir?: <span class="built_in">boolean</span></span><br><span class="line">    showDotfiles?: <span class="built_in">boolean</span></span><br><span class="line">    humanReadable?: <span class="built_in">boolean</span></span><br><span class="line">    hidePermissions?: <span class="built_in">boolean</span></span><br><span class="line">    si?: <span class="built_in">boolean</span></span><br><span class="line">    cache?: <span class="built_in">string</span> | <span class="built_in">number</span></span><br><span class="line">    cors?: <span class="built_in">boolean</span></span><br><span class="line">    gzip?: <span class="built_in">boolean</span></span><br><span class="line">    brotli?: <span class="built_in">boolean</span></span><br><span class="line">    defaultExt?: <span class="string">&#x27;html&#x27;</span> | (<span class="built_in">string</span> &amp; &#123;&#125;)</span><br><span class="line">    handleError?: <span class="built_in">boolean</span></span><br><span class="line">    serverHeader?: <span class="built_in">boolean</span></span><br><span class="line">    contentType?: <span class="string">&#x27;application/octet-stream&#x27;</span> | (<span class="built_in">string</span> &amp; &#123;&#125;)</span><br><span class="line">    weakEtags?: <span class="built_in">boolean</span></span><br><span class="line">    weakCompare?: <span class="built_in">boolean</span></span><br><span class="line">    handleOptionsMethod?: <span class="built_in">boolean</span></span><br><span class="line">  &#125;) =&gt; <span class="built_in">any</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>很多时候因为类型声明补全的成本较高，所以我们也可以通过一行 “declare module ‘ecstatic’;”快速绕过 ts(2307) 错误提示。</p>
+<blockquote>
+<p>注意：在业务实践中，如果碰到某个模块缺失类型声明文件，则会提示一个 ts(2307) 的错误，此时我们可以先尝试通过 npm i @types&#x2F;模块名 -D 安装可能存在的第三方补齐类型声明。如果找不到，再通过 declare module 手动补齐。</p>
+</blockquote>
+<p>接下来，我们在 src&#x2F;http-serve.ts 中实现主逻辑。</p>
+<p>首先，我们约定模块接收的参数及需要对外暴露的接口，如下示例：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> <span class="title class_">IHttpServerOptions</span> &#123;</span><br><span class="line">  <span class="comment">/** 静态文件目录，默认是当前目录 */</span></span><br><span class="line">  root?: <span class="built_in">string</span></span><br><span class="line">  <span class="comment">/** 缓存时间 */</span></span><br><span class="line">  cache?: <span class="built_in">number</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/** 对外暴露的方法 */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> <span class="title class_">IHttpServer</span> &#123;</span><br><span class="line">  <span class="comment">/** 启动服务 */</span></span><br><span class="line">  <span class="title function_">listen</span>(<span class="attr">port</span>: <span class="built_in">number</span>): <span class="built_in">void</span></span><br><span class="line">  <span class="comment">/** 关闭服务 */</span></span><br><span class="line">  <span class="title function_">close</span>(): <span class="built_in">void</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上定义的接口都可以通过 export 关键字对外导出，并基于接口约定实现主逻辑类 HttpServer，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="title class_">HttpServer</span> <span class="keyword">implements</span> <span class="title class_">IHttpServer</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="attr">server</span>: http.<span class="property">Server</span></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">options: IHttpServerOptions</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> root = options.<span class="property">root</span> || process.<span class="title function_">cwd</span>()</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">server</span> = http.<span class="title function_">createServer</span>(</span><br><span class="line">      <span class="title function_">ecstatic</span>(&#123;</span><br><span class="line">        root,</span><br><span class="line">        <span class="attr">cache</span>: options.<span class="property">cache</span> === <span class="literal">undefined</span> ? <span class="number">3600</span> : options.<span class="property">cache</span>,</span><br><span class="line">        <span class="attr">showDir</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">defaultExt</span>: <span class="string">&#x27;html&#x27;</span>,</span><br><span class="line">        <span class="attr">gzip</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">contentType</span>: <span class="string">&#x27;application/octet-stream&#x27;</span>,</span><br><span class="line">      &#125;)</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">listen</span>(<span class="params">port: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">server</span>.<span class="title function_">listen</span>(port)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">close</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">server</span>.<span class="title function_">close</span>()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后，为了让 TypeScript 代码可以在 ts-node 中顺利跑起来，我们可以在 src&#x2F;http-serve.ts 引入模块依赖之前，显式地引入手动补齐的缺失的类型声明文件，如下代码所示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// &lt;reference path=&quot;../types.d.ts&quot; /&gt;</span></span><br><span class="line"><span class="keyword">import</span> http <span class="keyword">from</span> <span class="string">&#x27;http&#x27;</span></span><br><span class="line"><span class="keyword">import</span> ecstatic <span class="keyword">from</span> <span class="string">&#x27;ecstatic&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>接下来，我们基于上边实现的 http-serve.ts 和 commander 模块编码实现 src&#x2F;cli.ts，具体示例如下：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; program &#125; <span class="keyword">from</span> <span class="string">&#x27;commander&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">HttpServer</span>, &#123; <span class="title class_">IHttpServerOptions</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./http-serve&#x27;</span></span><br><span class="line">program</span><br><span class="line">  .<span class="title function_">option</span>(<span class="string">&#x27;--cache, &lt;cache&gt;&#x27;</span>, <span class="string">&#x27;设置缓存时间，秒数&#x27;</span>)</span><br><span class="line">  .<span class="title function_">option</span>(<span class="string">&#x27;--root, &lt;root&gt;&#x27;</span>, <span class="string">&#x27;静态文件目录&#x27;</span>)</span><br><span class="line">  .<span class="title function_">option</span>(<span class="string">&#x27;-p, --port, &lt;port&gt;&#x27;</span>, <span class="string">&#x27;监听端口&#x27;</span>, <span class="string">&#x27;3000&#x27;</span>)</span><br><span class="line">  .<span class="title function_">action</span>(</span><br><span class="line">    <span class="function">(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">      options: Omit&lt;IHttpServerOptions, <span class="string">&#x27;cache&#x27;</span>&gt; &amp; &#123;</span></span></span><br><span class="line"><span class="params"><span class="function">        cache?: <span class="built_in">string</span></span></span></span><br><span class="line"><span class="params"><span class="function">        port: <span class="built_in">string</span></span></span></span><br><span class="line"><span class="params"><span class="function">      &#125;</span></span></span><br><span class="line"><span class="params"><span class="function">    </span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> &#123; root, cache, port &#125; = options</span><br><span class="line">      <span class="keyword">const</span> server = <span class="keyword">new</span> <span class="title class_">HttpServer</span>(&#123;</span><br><span class="line">        root,</span><br><span class="line">        <span class="attr">cache</span>: cache &amp;&amp; <span class="built_in">parseInt</span>(cache),</span><br><span class="line">      &#125;)</span><br><span class="line">      server.<span class="title function_">listen</span>(+port)</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`监听 <span class="subst">$&#123;port&#125;</span>`</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  )</span><br><span class="line">program.<span class="title function_">parse</span>(process.<span class="property">argv</span>)</span><br></pre></td></tr></table></figure>
+
+<p>接下来我们可以通过 npm start 直接运行 src&#x2F;cli.ts 或通过 npm run build 将 TypeScript 代码转译为 JavaScript 代码，并运行 node lib&#x2F;cli.js 启动静态服务，浏览器访问服务效果图如下：</p>
+<h2 id="单元测试-1"><a href="#单元测试-1" class="headerlink" title="单元测试"></a>单元测试</h2><p>一个健壮的项目往往离不开充分的单元测试，接下来我们将学习如何使用 TypeScript + Jest 为 http-serve 模块编写单测。</p>
+<p>在前面的步骤中，我们已经安装了 Jest 相关的依赖，并且配置好了 npm run test 命令，此时可以在项目的根目录下通过如下代码新建一个 jest.config.js 配置。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">collectCoverageFrom</span>: [<span class="string">&#x27;src/**/*.&#123;ts&#125;&#x27;</span>],</span><br><span class="line">  <span class="attr">setupFiles</span>: [<span class="string">&#x27;&lt;rootDir&gt;/__tests__/setup.ts&#x27;</span>],</span><br><span class="line">  <span class="attr">testMatch</span>: [<span class="string">&#x27;&lt;rootDir&gt;/__tests__/**/?(*.)(spec|test).ts&#x27;</span>],</span><br><span class="line">  <span class="attr">testEnvironment</span>: <span class="string">&#x27;node&#x27;</span>,</span><br><span class="line">  <span class="attr">testURL</span>: <span class="string">&#x27;http://localhost:4444&#x27;</span>,</span><br><span class="line">  <span class="attr">transform</span>: &#123;</span><br><span class="line">    <span class="string">&#x27;^.+\\.ts$&#x27;</span>: <span class="string">&#x27;ts-jest&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">transformIgnorePatterns</span>: [</span><br><span class="line">    <span class="string">&#x27;[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|ts|tsx)$&#x27;</span>,</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">moduleNameMapper</span>: &#123;&#125;,</span><br><span class="line">  <span class="attr">moduleFileExtensions</span>: [<span class="string">&#x27;js&#x27;</span>, <span class="string">&#x27;ts&#x27;</span>],</span><br><span class="line">  <span class="attr">globals</span>: &#123;</span><br><span class="line">    <span class="string">&#x27;ts-jest&#x27;</span>: &#123;</span><br><span class="line">      <span class="attr">tsConfig</span>: <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>).<span class="title function_">join</span>(process.<span class="title function_">cwd</span>(), <span class="string">&#x27;tsconfig.test.json&#x27;</span>),</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一般来说，运行 Node.js 端的模块转译单测代码使用的 tsconfig.test.json 配置和转译生成代码使用的 tsconfig.prod.json 配置完全一样，因此我们可以直接将 tsconfig.prod.json 复制到 tsconfig.test.json。</p>
+<p>配置好 Jest 后，我们就可以把 http-serve 模块单元测试编入 <code>/_tests_/http-serve.test.ts</code> 中，具体示例如下（更多的 Jest 使用说明，请查看官方文档）：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> http <span class="keyword">from</span> <span class="string">&#x27;http&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">HttpServer</span> <span class="keyword">from</span> <span class="string">&#x27;../src/http-serve&#x27;</span></span><br><span class="line"><span class="title function_">describe</span>(<span class="string">&#x27;http-serve&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> <span class="attr">server</span>: <span class="title class_">HttpServer</span></span><br><span class="line">  <span class="title function_">beforeEach</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    server = <span class="keyword">new</span> <span class="title class_">HttpServer</span>(&#123;&#125;)</span><br><span class="line">    server.<span class="title function_">listen</span>(<span class="number">8099</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="title function_">afterEach</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    server.<span class="title function_">close</span>()</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="title function_">it</span>(<span class="string">&#x27;should listen port&#x27;</span>, <span class="function">(<span class="params">done</span>) =&gt;</span> &#123;</span><br><span class="line">    http</span><br><span class="line">      .<span class="title function_">request</span>(&#123;</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;GET&#x27;</span>,</span><br><span class="line">        <span class="attr">hostname</span>: <span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">        <span class="attr">port</span>: <span class="number">8099</span>,</span><br><span class="line">      &#125;)</span><br><span class="line">      .<span class="title function_">end</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">done</span>()</span><br><span class="line">      &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：源码中使用的路径别名，比如用“@&#x2F;module”代替“src&#x2F;sub-directory&#x2F;module”，这样可以缩短引用路径，这就需要我们调整相应的配置。</p>
+</blockquote>
+<h2 id="处理路径别名"><a href="#处理路径别名" class="headerlink" title="处理路径别名"></a>处理路径别名</h2><p>首先，我们需要在 tsconfig.json 中添加如下所示 paths 配置，这样 TypeScript 就可以解析别名模块。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;compilerOptions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    ...<span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;baseUrl&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;paths&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;@/*&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;src/sub-directory/*&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    ...</span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意：需要显式设置 baseUrl，不然会提示一个无法解析相对路径的错误。</strong></p>
+</blockquote>
+<p>接下来我们在 jest.config.js 中通过如下代码配置相应的规则，告知 Jest 如何解析别名模块。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  ...,</span><br><span class="line">  <span class="attr">moduleNameMapper</span>: &#123;</span><br><span class="line">    <span class="string">&#x27;^@/(.*)$&#x27;</span>: <span class="string">&#x27;&lt;rootDir&gt;/src/sub-directory/$1&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为 tsc 在转译代码的时候不会把别名替换成真实的路径，所以我们引入额外的工具处理别名。此时我们可以按照如下命令安装 tsc-alias 和 tsconfig-paths 分别供 tsc 和 ts-node 处理别名。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install tsc-alias -D;</span><br><span class="line">npm install tsconfig-paths -D;</span><br></pre></td></tr></table></figure>
+
+<p>最后，我们需要修改 package.json scripts 配置，如下代码所示：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  ...<span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="string">&quot;tsc -p tsconfig.prod.json &amp;&amp; tsc-alias -p tsconfig.prod.json&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;start&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node -r tsconfig-paths/register -r ts-node/register src/cli.ts&quot;</span><span class="punctuation">,</span></span><br><span class="line">    ...</span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  ...</span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>项目源码地址：<a target="_blank" rel="noopener" href="https://github.com/gogoyqj/http-serve">https://github.com/gogoyqj/http-serve</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Wyatex
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://qghost.gitee.io/TypeScript/ts%E7%AC%94%E8%AE%B0%EF%BC%886%EF%BC%89%EF%BC%9A%E4%BD%BF%E7%94%A8TypeScript%E5%BC%80%E5%8F%91Node.js%E5%BA%94%E7%94%A8/" title="ts笔记（6）：常见TypeScript错误、开发Node.js应用">https://qghost.gitee.io/TypeScript/ts笔记（6）：使用TypeScript开发Node.js应用/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+              <a href="/tags/TypeScript/" rel="tag"># TypeScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/TypeScript/ts%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89%EF%BC%9A%E5%AE%98%E6%96%B9%E5%B7%A5%E5%85%B7%E7%B1%BB%E3%80%81%E6%89%93%E9%80%A0%E8%87%AA%E5%B7%B1%E7%9A%84%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B/" rel="prev" title="ts笔记（5）：官方工具类、打造自己的工具类型">
+                  <i class="fa fa-chevron-left"></i> ts笔记（5）：官方工具类、打造自己的工具类型
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E5%89%8D%E7%AB%AF/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-2/" rel="next" title="CSS学习笔记-2">
+                  CSS学习笔记-2 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wyatex</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>
