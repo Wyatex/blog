@@ -13,34 +13,48 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,400,400italic,700,700italic%7CZCOOL+QingKe+HuangYou:300,300italic,400,400italic,700,700italic%7CNoto+Sans+Simplified+Chinese:300,300italic,400,400italic,700,700italic%7CJetBrains+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"qghost.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wyatex.work","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="这章内容讲可编程定时器&#x2F;计数器8253">
 <meta property="og:type" content="article">
 <meta property="og:title" content="微机与接口技术笔记（5）">
-<meta property="og:url" content="https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/index.html">
+<meta property="og:url" content="https://wyatex.work/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/index.html">
 <meta property="og:site_name" content="Wyatex&#96;s blog">
 <meta property="og:description" content="这章内容讲可编程定时器&#x2F;计数器8253">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wyatex.work/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/1.png">
+<meta property="og:image" content="https://wyatex.work/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/2.png">
+<meta property="og:image" content="https://wyatex.work/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/3.png">
+<meta property="og:image" content="https://wyatex.work/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/4.png">
+<meta property="og:image" content="https://wyatex.work/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/5.png">
+<meta property="og:image" content="https://wyatex.work/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/6.png">
+<meta property="og:image" content="https://wyatex.work/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/7.png">
+<meta property="og:image" content="https://wyatex.work/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/8.png">
+<meta property="og:image" content="https://wyatex.work/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/9.png">
+<meta property="og:image" content="https://wyatex.work/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/10.png">
+<meta property="og:image" content="https://wyatex.work/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/11.png">
+<meta property="og:image" content="https://wyatex.work/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/12.png">
+<meta property="og:image" content="https://wyatex.work/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/13.png">
 <meta property="article:published_time" content="2020-11-21T12:35:45.000Z">
 <meta property="article:modified_time" content="2022-06-13T08:38:13.009Z">
 <meta property="article:author" content="Wyatex">
 <meta property="article:tag" content="学习笔记">
 <meta property="article:tag" content="微机">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wyatex.work/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/1.png">
 
 
-<link rel="canonical" href="https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/">
+<link rel="canonical" href="https://wyatex.work/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/","path":"学习笔记/微机与接口技术笔记（5）/","title":"微机与接口技术笔记（5）"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wyatex.work/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/","path":"学习笔记/微机与接口技术笔记（5）/","title":"微机与接口技术笔记（5）"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>微机与接口技术笔记（5） | Wyatex`s blog</title>
@@ -88,7 +102,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">67</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">18</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">111</span></a></li><li class="menu-item menu-item-编程"><a href="/programming/" rel="section"><i class="fa fa-book fa-fw"></i>编程</a></li><li class="menu-item menu-item-干货"><a href="/resources/" rel="section"><i class="fa fa-paperclip fa-fw"></i>干货</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">69</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">18</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">114</span></a></li><li class="menu-item menu-item-编程"><a href="/programming/" rel="section"><i class="fa fa-book fa-fw"></i>编程</a></li><li class="menu-item menu-item-干货"><a href="/resources/" rel="section"><i class="fa fa-paperclip fa-fw"></i>干货</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -160,7 +174,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-count">114</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -171,7 +185,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">69</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -231,7 +245,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://wyatex.work/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -306,7 +320,7 @@
 </ol>
 <p>8253的读、写操作，<strong>对系统时钟没有特殊要求</strong>，因此可以应用于任何一种微机系统中，可作为可编程<strong>定时器、计数器还可以作分频器、方波发生器以及单脉冲发生器等</strong>。</p>
 <h1 id="引脚"><a href="#引脚" class="headerlink" title="引脚"></a>引脚</h1><p>8253引脚如图。8253芯片有24根引脚，没有复位信号RESET引脚。 </p>
-
+<img src="/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/1.png" class="" title="引脚图">
 
 <p>各引脚信号定义如下：</p>
 <ul>
@@ -388,18 +402,18 @@
 <p><strong>GATE0～2</strong>：门控信号，输入，由外部信号通过GATE端控制计数器的启动计数和停止计数的操作。</p>
 <p><strong>OUT0～2</strong>：时间到或计数结束输出引脚。当计数器计数到0时，在OUT引脚有输出。在不同的模式下，可输出不同电平的信号。</p>
 <h1 id="内部结构"><a href="#内部结构" class="headerlink" title="内部结构"></a>内部结构</h1><p>8253的内部结构由数据总线缓冲器、读／写逻辑电路、控制字寄存器和三个计数通道所组成。</p>
-
+<img src="/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/2.png" class="" title="内部结构">
 
 <h2 id="数据总线缓冲器"><a href="#数据总线缓冲器" class="headerlink" title="数据总线缓冲器"></a>数据总线缓冲器</h2><p>数据总线缓冲器是8位、双向、三态的缓冲器，通过8根数据线D0～D7接收CPU向控制寄存器写入的控制字，向计数器写入的计数初值,也可把计数器的当前计数值读入CPU。</p>
 <h2 id="读／写逻辑电路"><a href="#读／写逻辑电路" class="headerlink" title="读／写逻辑电路"></a>读／写逻辑电路</h2><p>读／写控制逻辑电路从系统总线接收输入信号，经过译码，产生对8253各部分的控制信息。</p>
 <h2 id="控制字寄存器"><a href="#控制字寄存器" class="headerlink" title="控制字寄存器"></a>控制字寄存器</h2><p>当地址信号A1和A0都为1时，访问控制字寄存器。控制字寄存器接收从CPU发来的控制字，控制字决定了8253的工作方式、计数方式以及使用哪个计数器等。<strong>控制字寄存器只能写入不能读出</strong>。 </p>
 <h2 id="计数通道"><a href="#计数通道" class="headerlink" title="计数通道"></a>计数通道</h2><p>8253有3个相互独立的同样的计数电路，分别称作<strong>计数器0、计数器1和计数器2</strong>。</p>
 <p>每个计数器包含一个8位的<strong>控制寄存器</strong>(控制单元)，它存放计数器的工作方式控制字；一个16位的<strong>初值寄存器CR</strong>(时间常数寄存器)，8253工作之前要对它设置初值；一个16位计数<strong>执行单元CE</strong>，它接收计数初值寄存器CR送来的内容，并对该内容执行减1操作；一个16位<strong>输出锁存器OL</strong>，它锁存CE的内容，使CPU能从输出锁存器内读出一个稳定的计数值。</p>
-
+<img src="/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/3.png" class="" title="计数器的内部结构">
 
 <h1 id="8253的控制字和读写操作"><a href="#8253的控制字和读写操作" class="headerlink" title="8253的控制字和读写操作"></a>8253的控制字和读写操作</h1><h2 id="8253的控制字"><a href="#8253的控制字" class="headerlink" title="8253的控制字"></a>8253的控制字</h2><p>8253的控制字主要用于：<br><strong>选择哪个计数器通道工作，决定用8位的计数值或是用16位的计数值，按二进制计数或按十进制计数(BCD码)，工作在那种方式</strong>。 </p>
 <p>8253是由主机编程设定的，通过把一个8位的控制字写<br>入8253的控制字寄存器，使8253按照某种给定的方式工作。</p>
-
+<img src="/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/4.png" class="" title="控制字（重点要记）">
 
 <p>8253控制字各位的详细意义如下：</p>
 <ol>
@@ -483,35 +497,35 @@
 <li>在时钟脉冲的下降沿计数器进行计数。</li>
 </ol>
 <h2 id="方式0-——-计数到零产生中断请求"><a href="#方式0-——-计数到零产生中断请求" class="headerlink" title="方式0 —— 计数到零产生中断请求"></a>方式0 —— 计数到零产生中断请求</h2><p>在方式0下，可利用OUT的上升沿作为中断请求信号。门控信号决定计数的启&#x2F;停，影响是否暂停减一。装入初值决定计数过程重新开始，改变计算值是立即有效的，计数过程时序图所示。</p>
-
+<img src="/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/5.png" class="" title="方式0计数过程时序图">
 
 <h2 id="方式1-——-可重触发的单稳态触发器"><a href="#方式1-——-可重触发的单稳态触发器" class="headerlink" title="方式1 —— 可重触发的单稳态触发器"></a>方式1 —— 可重触发的单稳态触发器</h2><p>方式1是在GATE门控信号的作用下才开始计数，计数过程时序所示。</p>
-
+<img src="/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/6.png" class="" title="方式1计数过程时序图">
 
 <h2 id="方式2-——-分频器"><a href="#方式2-——-分频器" class="headerlink" title="方式2 —— 分频器"></a>方式2 —— 分频器</h2><p>在方式2下，用门控信号达到同步计数的目的，方式2计数过程时序如图所示。</p>
-
+<img src="/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/7.png" class="" title="方式2计数过程时序图">
 
 <h2 id="方式3-——-方波发生器"><a href="#方式3-——-方波发生器" class="headerlink" title="方式3 —— 方波发生器"></a>方式3 —— 方波发生器</h2><p>方式3和方式2的工作过程类似，两者的主要区别是输出的脉冲<br>宽度不同，方式3计数过程时序图如图所示。GATE&#x3D;1,允许计数，GATE&#x3D;0,禁止计数。</p>
-
+<img src="/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/8.png" class="" title="方式3计数过程时序图">
 <blockquote>
 <p>简单来说就是没有0值，1下一个计数会自动重新装载初值，计数为偶数时前半部分out为高电平，后半部分为低电平，奇数时高电平多一个计数值。</p>
 </blockquote>
 <h2 id="方式4-——-软件触发选通方式"><a href="#方式4-——-软件触发选通方式" class="headerlink" title="方式4 —— 软件触发选通方式"></a>方式4 —— 软件触发选通方式</h2><p>方式4为软件触发选通方式，其计数过程时序图所示。</p>
-
+<img src="/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/9.png" class="" title="方式4计数过程时序图">
 
 <h2 id="方式5-——-硬件触发选通方式"><a href="#方式5-——-硬件触发选通方式" class="headerlink" title="方式5 —— 硬件触发选通方式"></a>方式5 —— 硬件触发选通方式</h2><p>方式5为硬件触发选通方式，完全由GATE端引入的触发信号控制定时和计数，其计数过程时序图所示。</p>
-
+<img src="/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/10.png" class="" title="方式5计数过程时序图">
 
 <h1 id="六种工作方式小结"><a href="#六种工作方式小结" class="headerlink" title="六种工作方式小结"></a>六种工作方式小结</h1><p>通过对上面的6种工作方式的分析，可以看出门控信号和写入新的初值会影响计数过程的进行，不同的工作方式，会得到不同的输出波形。在8253的应用中，必须正确使用门控信号和写入新的初值这种触发方式，才能保证各计数器的正常操作；必须了解输出波形的形态，才能正确应用到各种控制场合。为此，把6种工作方式作如下小结。</p>
 <h2 id="OUT的输出波形"><a href="#OUT的输出波形" class="headerlink" title="OUT的输出波形"></a>OUT的输出波形</h2><p>在六种工作方式中，只有方式0在写入控制字后OUT输出为低电平，其他五种方式OUT输出都为高电平。方式2、方式4和方式5都是输出宽度为一个CLK周期的负脉冲，输出波形都相同，但方式2是连续工作的，方式4是由软件触发的，方式5是由硬件门控脉冲触发的。计数初值N与输出波形的关系见表。</p>
-
+<img src="/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/11.png" class="" title="计数初值N与输出波形的关系">
 
 <h2 id="GATE门控信号的作用"><a href="#GATE门控信号的作用" class="headerlink" title="GATE门控信号的作用"></a>GATE门控信号的作用</h2><p>一般情况下，GATE信号为低电平时禁止计数，为高电平时允许计数，方式1和方式5则需要有由低变高的上升沿触发脉冲来启动计数。GATE信号对各种工作方式的影响如表所示。 </p>
-
+<img src="/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/12.png" class="" title="GATE信号作用">
 
 <h2 id="计数初值的设置"><a href="#计数初值的设置" class="headerlink" title="计数初值的设置"></a>计数初值的设置</h2><p>任何一种工作方式，只有在写入计数初值后才能开始计数。门控信号GATE保持为高电平，方式0、方式2、方式3和方式4在写入计数初值后，计数过程就开始了；而方式1和方式5需要有外部GATE触发，才能开始计数。 </p>
 <h2 id="计数过程中改变计数值的影响"><a href="#计数过程中改变计数值的影响" class="headerlink" title="计数过程中改变计数值的影响"></a>计数过程中改变计数值的影响</h2><p>8253在计数过程中写入新的计数初值，对计数过程的影响见表所示。</p>
-
+<img src="/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/13.png" class="" title="对计数过程的影响表">
 
 <h1 id="课后题"><a href="#课后题" class="headerlink" title="课后题"></a>课后题</h1><ol>
 <li>设8253计数器的时钟输入频率为1.91MHz，为产生25kHz的方波输出信号，应向计数器装入的计数初值为<strong>76</strong>。</li>
@@ -538,7 +552,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://qghost.gitee.io/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/" title="微机与接口技术笔记（5）">https://qghost.gitee.io/学习笔记/微机与接口技术笔记（5）/</a>
+      <a href="https://wyatex.work/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BE%AE%E6%9C%BA%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89/" title="微机与接口技术笔记（5）">https://wyatex.work/学习笔记/微机与接口技术笔记（5）/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！

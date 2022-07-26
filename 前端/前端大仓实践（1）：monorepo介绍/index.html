@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,400,400italic,700,700italic%7CZCOOL+QingKe+HuangYou:300,300italic,400,400italic,700,700italic%7CNoto+Sans+Simplified+Chinese:300,300italic,400,400italic,700,700italic%7CJetBrains+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wyatex.work","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="什么是 MONOREPOmonorepo 是一个包含较小项目的项目 - 而每个项目可以是从单个应用程序到可重用包（例如函数，组件）的任何内容。合并项目的做法可以追溯到 2000 年初，当时它被称为共享代码库。 monorepo 的名字源于 mono（单个）和 repo（存储库）这两个词。虽然前者是不言自明的，但后者来自版本控制系统（例如 git），其中 project：存储库以 n：n 关系（po">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端大仓实践（1）：monorepo介绍">
+<meta property="og:url" content="https://wyatex.work/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E5%A4%A7%E4%BB%93%E5%AE%9E%E8%B7%B5%EF%BC%881%EF%BC%89%EF%BC%9Amonorepo%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="Wyatex&#96;s blog">
+<meta property="og:description" content="什么是 MONOREPOmonorepo 是一个包含较小项目的项目 - 而每个项目可以是从单个应用程序到可重用包（例如函数，组件）的任何内容。合并项目的做法可以追溯到 2000 年初，当时它被称为共享代码库。 monorepo 的名字源于 mono（单个）和 repo（存储库）这两个词。虽然前者是不言自明的，但后者来自版本控制系统（例如 git），其中 project：存储库以 n：n 关系（po">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wyatex.work/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E5%A4%A7%E4%BB%93%E5%AE%9E%E8%B7%B5%EF%BC%881%EF%BC%89%EF%BC%9Amonorepo%E4%BB%8B%E7%BB%8D/1.webp">
+<meta property="og:image" content="https://wyatex.work/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E5%A4%A7%E4%BB%93%E5%AE%9E%E8%B7%B5%EF%BC%881%EF%BC%89%EF%BC%9Amonorepo%E4%BB%8B%E7%BB%8D/2.webp">
+<meta property="article:published_time" content="2022-06-18T01:48:34.000Z">
+<meta property="article:modified_time" content="2022-06-18T02:04:51.051Z">
+<meta property="article:author" content="Wyatex">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="monorepo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wyatex.work/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E5%A4%A7%E4%BB%93%E5%AE%9E%E8%B7%B5%EF%BC%881%EF%BC%89%EF%BC%9Amonorepo%E4%BB%8B%E7%BB%8D/1.webp">
+
+
+<link rel="canonical" href="https://wyatex.work/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E5%A4%A7%E4%BB%93%E5%AE%9E%E8%B7%B5%EF%BC%881%EF%BC%89%EF%BC%9Amonorepo%E4%BB%8B%E7%BB%8D/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wyatex.work/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E5%A4%A7%E4%BB%93%E5%AE%9E%E8%B7%B5%EF%BC%881%EF%BC%89%EF%BC%9Amonorepo%E4%BB%8B%E7%BB%8D/","path":"前端/前端大仓实践（1）：monorepo介绍/","title":"前端大仓实践（1）：monorepo介绍"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>前端大仓实践（1）：monorepo介绍 | Wyatex`s blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Wyatex`s blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">69</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">18</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">114</span></a></li><li class="menu-item menu-item-编程"><a href="/programming/" rel="section"><i class="fa fa-book fa-fw"></i>编程</a></li><li class="menu-item menu-item-干货"><a href="/resources/" rel="section"><i class="fa fa-paperclip fa-fw"></i>干货</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-MONOREPO"><span class="nav-number">1.</span> <span class="nav-text">什么是 MONOREPO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8-MONOREPO"><span class="nav-number">2.</span> <span class="nav-text">为什么使用 MONOREPO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MONOREPO-%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">MONOREPO 的结构</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Wyatex"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Wyatex</p>
+  <div class="site-description" itemprop="description">这里是我用来做笔记的网站哟~</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">114</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wyatex" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wyatex" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wyatex@qq.com" title="E-Mail → mailto:wyatex@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.microloong.me/" title="https:&#x2F;&#x2F;blog.microloong.me" rel="noopener" target="_blank">MicroLOONG</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wyatex.work/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E5%A4%A7%E4%BB%93%E5%AE%9E%E8%B7%B5%EF%BC%881%EF%BC%89%EF%BC%9Amonorepo%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Wyatex">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wyatex`s blog">
+      <meta itemprop="description" content="这里是我用来做笔记的网站哟~">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="前端大仓实践（1）：monorepo介绍 | Wyatex`s blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          前端大仓实践（1）：monorepo介绍
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-06-18 09:48:34 / 修改时间：10:04:51" itemprop="dateCreated datePublished" datetime="2022-06-18T09:48:34+08:00">2022-06-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="什么是-MONOREPO"><a href="#什么是-MONOREPO" class="headerlink" title="什么是 MONOREPO"></a>什么是 MONOREPO</h1><p>monorepo 是一个包含较小项目的项目 - 而每个项目可以是从单个应用程序到可重用包（例如函数，组件）的任何内容。合并项目的做法可以追溯到 2000 年初，当时它被称为共享代码库。</p>
+<p>monorepo 的名字源于 mono（单个）和 repo（存储库）这两个词。虽然前者是不言自明的，但后者来自版本控制系统（例如 git），其中 project：存储库以 n：n 关系（polyrepo）或 n：1 关系（monorepo）托管。</p>
+<p>通常，monorepo 被误认为是 monolith。但是，在整体式应用程序中，所有较小的项目都合并到一个大项目中。相比之下，monorepo 可以将其较小的项目合并到多个项目中。</p>
+<span id="more"></span>
+
+<img src="/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E5%A4%A7%E4%BB%93%E5%AE%9E%E8%B7%B5%EF%BC%881%EF%BC%89%EF%BC%9Amonorepo%E4%BB%8B%E7%BB%8D/1.webp" class="">
+
+<h1 id="为什么使用-MONOREPO"><a href="#为什么使用-MONOREPO" class="headerlink" title="为什么使用 MONOREPO"></a>为什么使用 MONOREPO</h1><p>对于大规模代码库，使用 monorepo 有两个主要优点。首先，共享包可以在没有联机注册表的本地计算机上的多个应用程序中使用（例如 npm）。开发人员体验在这里得到了极大的改善，因为所有内容都位于同一代码库中，而无需通过第三方更新依赖项。当共享包更新时，它会立即反映在依赖于它的所有应用程序中。</p>
+<p>其次，它改善了代码库之间的协作。处理不同项目的团队可以改进其他团队的代码库，而无需处理多个存储库。它还提高了可访问性而不必担心不同的设置，并且为跨团队引入了更灵活的源代码所有权。另一个好处是能跨许多项目进行代码重构。</p>
+<h1 id="MONOREPO-的结构"><a href="#MONOREPO-的结构" class="headerlink" title="MONOREPO 的结构"></a>MONOREPO 的结构</h1><p>monorepo 可以包含多个应用（apps），而每个应用都可以访问共享的包。这是一个非常常见的单存储库结构：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- apps/</span><br><span class="line">--- app-one</span><br><span class="line">--- app-two</span><br><span class="line">- packages/</span><br><span class="line">--- package-one</span><br><span class="line">--- package-two</span><br><span class="line">--- package-three</span><br></pre></td></tr></table></figure>
+
+<p>一个包，它只是一个文件夹，可以是任何东西，从 UI 组件（例如框架特定的组件）到函数（例如实用程序）到配置（例如 ESLint，TypeScript）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- apps/</span><br><span class="line">--- app-one</span><br><span class="line">--- app-two</span><br><span class="line">- packages/</span><br><span class="line">--- ui</span><br><span class="line">--- utilities</span><br><span class="line">--- eslint-config</span><br><span class="line">--- ts-config</span><br></pre></td></tr></table></figure>
+
+<p>一个包可以是另一个包的依赖项。例如，ui  包可能使用 utilities 包中的函数，因此  ui  包依赖于 utilities 包。ui  和 utilities 包都可以使用其他  *-config  包中的配置。</p>
+<p>这些 apps 通常不相互依赖，而是仅选择加入 packages。如果包相互依赖，monorepo 管道（请参阅  Monorepo 工具）可以强制实施“仅当 utilities 生成成功完成时才开始  ui  生成”等方案。</p>
+<img src="/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E5%A4%A7%E4%BB%93%E5%AE%9E%E8%B7%B5%EF%BC%881%EF%BC%89%EF%BC%9Amonorepo%E4%BB%8B%E7%BB%8D/2.webp" class="">
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Wyatex
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wyatex.work/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E5%A4%A7%E4%BB%93%E5%AE%9E%E8%B7%B5%EF%BC%881%EF%BC%89%EF%BC%9Amonorepo%E4%BB%8B%E7%BB%8D/" title="前端大仓实践（1）：monorepo介绍">https://wyatex.work/前端/前端大仓实践（1）：monorepo介绍/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+              <a href="/tags/monorepo/" rel="tag"># monorepo</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E6%89%93%E5%8C%85%EF%BC%9Avite/" rel="prev" title="前端打包：vite">
+                  <i class="fa fa-chevron-left"></i> 前端打包：vite
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/uncategorized/Webpack5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next" title="Webpack5学习笔记">
+                  Webpack5学习笔记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wyatex</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>
