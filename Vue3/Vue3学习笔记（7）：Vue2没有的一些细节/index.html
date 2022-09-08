@@ -21,15 +21,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"wyatex.work","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="基础v-bind 动态绑定多个值1234const objectOfAttrs &#x3D; &amp;#123;  id: &amp;#x27;container&amp;#x27;,  class: &amp;#x27;wrapper&amp;#x27;,&amp;#125;  1&lt;div v-bind&#x3D;&quot;objectOfAttrs&quot;&gt;&lt;&#x2F;div&gt;  v-for使用解构 1234&lt;li v-for&#x3D;&amp;">
+    <meta name="description" content="再学习一波Vue3新版文档，记录一下一些我还没见过的内容">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vue3学习笔记（7）：Vue2没有的或者改变的一些细节">
 <meta property="og:url" content="https://wyatex.work/Vue3/Vue3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%887%EF%BC%89%EF%BC%9AVue2%E6%B2%A1%E6%9C%89%E7%9A%84%E4%B8%80%E4%BA%9B%E7%BB%86%E8%8A%82/index.html">
 <meta property="og:site_name" content="Wyatex&#96;s blog">
-<meta property="og:description" content="基础v-bind 动态绑定多个值1234const objectOfAttrs &#x3D; &amp;#123;  id: &amp;#x27;container&amp;#x27;,  class: &amp;#x27;wrapper&amp;#x27;,&amp;#125;  1&lt;div v-bind&#x3D;&quot;objectOfAttrs&quot;&gt;&lt;&#x2F;div&gt;  v-for使用解构 1234&lt;li v-for&#x3D;&amp;">
+<meta property="og:description" content="再学习一波Vue3新版文档，记录一下一些我还没见过的内容">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-19T03:29:10.000Z">
-<meta property="article:modified_time" content="2022-08-19T09:46:34.522Z">
+<meta property="article:modified_time" content="2022-08-19T09:55:18.514Z">
 <meta property="article:author" content="Wyatex">
 <meta property="article:tag" content="前端">
 <meta property="article:tag" content="学习笔记">
@@ -196,7 +196,7 @@
     </div>
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
-          <a href="https://blog.microloong.me/" title="https:&#x2F;&#x2F;blog.microloong.me" rel="noopener" target="_blank">MicroLOONG</a>
+          <a href="https://blog.microloong.tech/" title="https:&#x2F;&#x2F;blog.microloong.tech" rel="noopener" target="_blank">MicroLOONG</a>
         </li>
     </ul>
   </div>
@@ -262,7 +262,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-08-19 11:29:10 / 修改时间：17:46:34" itemprop="dateCreated datePublished" datetime="2022-08-19T11:29:10+08:00">2022-08-19</time>
+      <time title="创建时间：2022-08-19 11:29:10 / 修改时间：17:55:18" itemprop="dateCreated datePublished" datetime="2022-08-19T11:29:10+08:00">2022-08-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -284,7 +284,11 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h2 id="v-bind-动态绑定多个值"><a href="#v-bind-动态绑定多个值" class="headerlink" title="v-bind 动态绑定多个值"></a>v-bind 动态绑定多个值</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> objectOfAttrs = &#123;</span><br><span class="line">  <span class="attr">id</span>: <span class="string">&#x27;container&#x27;</span>,</span><br><span class="line">  <span class="attr">class</span>: <span class="string">&#x27;wrapper&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>再学习一波Vue3新版文档，记录一下一些我还没见过的内容</p>
+<span id="more"></span>
+
+
+<h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h2 id="v-bind-动态绑定多个值"><a href="#v-bind-动态绑定多个值" class="headerlink" title="v-bind 动态绑定多个值"></a>v-bind 动态绑定多个值</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> objectOfAttrs = &#123;</span><br><span class="line">  <span class="attr">id</span>: <span class="string">&#x27;container&#x27;</span>,</span><br><span class="line">  <span class="attr">class</span>: <span class="string">&#x27;wrapper&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-bind</span>=<span class="string">&quot;objectOfAttrs&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -365,8 +369,8 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/uncategorized/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%EF%BC%881%EF%BC%89%EF%BC%9AJest/" rel="prev" title="单元测试1Jest">
-                  <i class="fa fa-chevron-left"></i> 单元测试1Jest
+                <a href="/uncategorized/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%EF%BC%881%EF%BC%89%EF%BC%9AJest/" rel="prev" title="单元测试（1）Jest">
+                  <i class="fa fa-chevron-left"></i> 单元测试（1）Jest
                 </a>
             </div>
             <div class="post-nav-item">
